@@ -1,7 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { ExperienceStory } from "@/components/ExperienceStory";
 import { JourneySection } from "@/components/JourneySection";
@@ -12,24 +11,9 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StackSection } from "@/components/StackSection";
 import { copy, profile } from "@/data/profile";
 
-const PortfolioCanvas = dynamic(
-  () => import("@/components/experience/PortfolioCanvas").then((module) => module.PortfolioCanvas),
-  { ssr: false },
-);
-
 export function HomeExperience() {
   const [introReady, setIntroReady] = useState(false);
-  const [motionAllowed, setMotionAllowed] = useState(false);
-  const calloutSvgRef = useRef<SVGSVGElement>(null);
   const handleIntroComplete = useCallback(() => setIntroReady(true), []);
-
-  useEffect(() => {
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setMotionAllowed(!preference.matches);
-    updatePreference();
-    preference.addEventListener("change", updatePreference);
-    return () => preference.removeEventListener("change", updatePreference);
-  }, []);
 
   useEffect(() => {
     const layer = document.querySelector<HTMLElement>(".ambient-layer");
@@ -61,12 +45,11 @@ export function HomeExperience() {
             <i className="ambient-glow ambient-glow--violet" />
             <i className="ambient-glow ambient-glow--blue" />
           </div>
-          {motionAllowed && <PortfolioCanvas calloutSvgRef={calloutSvgRef} />}
           <a className="skip-link" href="#main-content">{copy.skipToContent}</a>
           <Navigation />
           <Preloader onComplete={handleIntroComplete} />
           <main id="main-content" className="portfolio-main">
-            <ExperienceStory introReady={introReady} calloutSvgRef={calloutSvgRef} />
+            <ExperienceStory introReady={introReady} />
             <ServicesSection />
             <StackSection />
             <JourneySection />
