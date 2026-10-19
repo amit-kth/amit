@@ -49,13 +49,24 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           const supporting = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-enter]"));
           intro.from(supporting, { y: 14, opacity: 0, duration: 0.62, stagger: 0.07, ease: "power3.out" }, "-=0.52");
 
-          const photo = section.closest(".experience-story__stage")?.querySelector<HTMLElement>(".photo-stage");
-          if (photo) {
-            intro.fromTo(photo, { y: 24, opacity: 0.5 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.68");
+          const heroArt = section.closest(".experience-story__stage")?.querySelector<HTMLElement>(".hero-art");
+          if (heroArt) {
+            intro.fromTo(
+              heroArt,
+              { y: 34, rotation: -3, scale: 0.94, opacity: 0 },
+              { y: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" },
+              "-=0.64",
+            );
+            const nodes = heroArt.querySelectorAll<HTMLElement>("[data-hero-art-node]");
+            intro.from(nodes, { y: 14, scale: 0.92, opacity: 0, duration: 0.58, stagger: 0.11, ease: "back.out(1.6)" }, "-=0.62");
+            const route = heroArt.querySelector<SVGPathElement>(".hero-art__route-path");
+            if (route) {
+              intro.fromTo(route, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.15, ease: "power2.inOut" }, "-=0.86");
+            }
           }
 
           const magneticButtons = Array.from(section.querySelectorAll<HTMLAnchorElement>(".hero-actions .button"));
-          const magneticCleanups: Array<() => void> = [];
+          const cleanups: Array<() => void> = [];
           if (conditions?.desktop) {
             for (const button of magneticButtons) {
               const xTo = gsap.quickTo(button, "x", { duration: 0.38, ease: "power3.out" });
@@ -69,28 +80,49 @@ export function HeroSection({ introReady }: HeroSectionProps) {
               const leave = () => { xTo(0); yTo(0); };
               button.addEventListener("pointermove", move, { passive: true });
               button.addEventListener("pointerleave", leave, { passive: true });
-              magneticCleanups.push(() => {
+              cleanups.push(() => {
                 button.removeEventListener("pointermove", move);
                 button.removeEventListener("pointerleave", leave);
               });
             }
-          }
 
-          if (photo && conditions?.desktop) {
-            gsap.to(photo, {
-              yPercent: -5,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section.closest(".experience-story__stage") ?? section,
-                start: "top top",
-                end: "bottom top",
-                scrub: 0.55,
-              },
-            });
+            if (heroArt) {
+              const rotateXTo = gsap.quickTo(heroArt, "rotationX", { duration: 0.7, ease: "power3.out" });
+              const rotateYTo = gsap.quickTo(heroArt, "rotationY", { duration: 0.7, ease: "power3.out" });
+              const move = (event: PointerEvent) => {
+                if (event.pointerType === "touch") return;
+                const rect = heroArt.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                rotateXTo(y * -3.5);
+                rotateYTo(x * 4.5);
+              };
+              const reset = () => {
+                rotateXTo(0);
+                rotateYTo(0);
+              };
+              section.addEventListener("pointermove", move, { passive: true });
+              section.addEventListener("pointerleave", reset, { passive: true });
+              cleanups.push(() => {
+                section.removeEventListener("pointermove", move);
+                section.removeEventListener("pointerleave", reset);
+              });
+
+              gsap.to(heroArt, {
+                yPercent: -4,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: section.closest(".experience-story__stage") ?? section,
+                  start: "top top",
+                  end: "bottom top",
+                  scrub: 0.55,
+                },
+              });
+            }
           }
 
           return () => {
-            magneticCleanups.forEach((cleanup) => cleanup());
+            cleanups.forEach((cleanup) => cleanup());
             split.revert();
           };
         },

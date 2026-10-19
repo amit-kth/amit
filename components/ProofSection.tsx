@@ -26,15 +26,36 @@ export function ProofSection() {
           scrollTrigger: { trigger: section, start: "top 78%", once: true },
         },
       );
-      gsap.fromTo(section.querySelector(".proof-section__range-fill"),
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: section, start: "top 78%", once: true },
-        },
-      );
+      const rangeFill = section.querySelector<HTMLElement>(".proof-section__range-fill");
+      if (rangeFill) {
+        gsap.fromTo(rangeFill,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: section, start: "top 78%", once: true },
+          },
+        );
+      }
+
+      const counters = Array.from(section.querySelectorAll<HTMLElement>("[data-count-to]"));
+      for (const element of counters) {
+        const target = Number(element.dataset.countTo);
+        const suffix = element.dataset.countSuffix ?? "";
+        const counter = { value: 0 };
+        gsap.fromTo(counter,
+          { value: 0 },
+          {
+            value: target,
+            duration: 1.15,
+            ease: "power2.out",
+            snap: { value: 1 },
+            onUpdate: () => { element.textContent = `${Math.round(counter.value)}${suffix}`; },
+            scrollTrigger: { trigger: section, start: "top 78%", once: true },
+          },
+        );
+      }
     }, section);
     return () => context.revert();
   }, []);
@@ -60,11 +81,11 @@ export function ProofSection() {
         <dl className="proof-section__details" data-proof-reveal>
           <div>
             <dt>{experienceStat.label}</dt>
-            <dd>{experienceStat.value}</dd>
+            <dd data-count-to={experienceStat.countTo} data-count-suffix={experienceStat.suffix}>{experienceStat.value}</dd>
           </div>
           <div>
             <dt>{reactStat.label}</dt>
-            <dd>{reactStat.value}</dd>
+            <dd data-count-to={reactStat.countTo} data-count-suffix={reactStat.suffix}>{reactStat.value}</dd>
           </div>
         </dl>
       </div>

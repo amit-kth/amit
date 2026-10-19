@@ -66,7 +66,6 @@ export const copy = {
   scroll: "Scroll to explore",
   backToTop: "Back to top",
   preloaderLabel: "AMIT VERMA, FRONTEND DEVELOPER",
-  portraitAlt: "A cut-out portrait placeholder for Amit Verma",
   servicesEyebrow: "01 / What I do",
   servicesTitle: "WHAT I DO",
   contact: "Contact",
