@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { profile } from "@/data/profile";
-import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
+import { gsap, registerGsapPlugins, ScrollTrigger, SplitText } from "@/lib/gsap-client";
 
 type HeroSectionProps = {
   introReady: boolean;
@@ -49,6 +49,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           const supporting = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-enter]"));
           intro.from(supporting, { y: 14, opacity: 0, duration: 0.62, stagger: 0.07, ease: "power3.out" }, "-=0.52");
 
+          const cleanups: Array<() => void> = [];
           const heroArt = section.closest(".experience-story__stage")?.querySelector<HTMLElement>(".hero-art");
           if (heroArt) {
             intro.fromTo(
@@ -59,14 +60,46 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             );
             const nodes = heroArt.querySelectorAll<HTMLElement>("[data-hero-art-node]");
             intro.from(nodes, { y: 14, scale: 0.92, opacity: 0, duration: 0.58, stagger: 0.11, ease: "back.out(1.6)" }, "-=0.62");
+
             const route = heroArt.querySelector<SVGPathElement>(".hero-art__route-path");
+            const trail = heroArt.querySelector<SVGPathElement>(".hero-art__route-trail");
+            const runner = heroArt.querySelector<SVGGElement>(".hero-art__runner-group");
             if (route) {
               intro.fromTo(route, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.15, ease: "power2.inOut" }, "-=0.86");
+            }
+
+            if (route && runner) {
+              const routeLoop = gsap.timeline({ paused: true, repeat: -1 });
+              const motionPath = { path: route, align: route, alignOrigin: [0.5, 0.5], autoRotate: false };
+              routeLoop.to(runner, { motionPath, duration: 5.2, ease: "none" }, 0);
+              if (trail) routeLoop.to(trail, { strokeDashoffset: -1, duration: 5.2, ease: "none" }, 0);
+
+              const playRoute = () => { if (!document.hidden) routeLoop.play(); };
+              const pauseRoute = () => routeLoop.pause();
+              const routeTrigger = ScrollTrigger.create({
+                trigger: heroArt,
+                start: "top bottom",
+                end: "bottom top",
+                onEnter: playRoute,
+                onEnterBack: playRoute,
+                onLeave: pauseRoute,
+                onLeaveBack: pauseRoute,
+              });
+              const onVisibility = () => {
+                if (document.hidden || !routeTrigger.isActive) pauseRoute();
+                else playRoute();
+              };
+              document.addEventListener("visibilitychange", onVisibility);
+              if (routeTrigger.isActive) playRoute();
+              cleanups.push(() => {
+                document.removeEventListener("visibilitychange", onVisibility);
+                routeTrigger.kill();
+                routeLoop.kill();
+              });
             }
           }
 
           const magneticButtons = Array.from(section.querySelectorAll<HTMLAnchorElement>(".hero-actions .button"));
-          const cleanups: Array<() => void> = [];
           if (conditions?.desktop) {
             for (const button of magneticButtons) {
               const xTo = gsap.quickTo(button, "x", { duration: 0.38, ease: "power3.out" });

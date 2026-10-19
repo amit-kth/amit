@@ -11,13 +11,38 @@ export function HeroVisual() {
       </div>
 
       <svg className="hero-art__route" viewBox="0 0 650 520" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="hero-route-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#4D7A06" />
+            <stop offset="48%" stopColor="#D8664D" />
+            <stop offset="100%" stopColor="#765DB5" />
+          </linearGradient>
+          <filter id="hero-route-glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="3" result="softGlow" />
+            <feMerge>
+              <feMergeNode in="softGlow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <ellipse className="hero-art__orbit-track hero-art__orbit-track--one" cx="330" cy="255" rx="238" ry="154" />
+        <ellipse className="hero-art__orbit-track hero-art__orbit-track--two" cx="330" cy="255" rx="204" ry="188" />
         <path
           className="hero-art__route-path"
           pathLength="1"
           d="M122 147 C 237 99, 261 195, 310 257 S 390 361, 514 320"
         />
+        <path
+          className="hero-art__route-trail"
+          pathLength="1"
+          d="M122 147 C 237 99, 261 195, 310 257 S 390 361, 514 320"
+        />
         <circle className="hero-art__route-dot hero-art__route-dot--start" cx="122" cy="147" r="6" />
         <circle className="hero-art__route-dot hero-art__route-dot--end" cx="514" cy="320" r="6" />
+        <g className="hero-art__runner-group">
+          <circle className="hero-art__runner-halo" cx="122" cy="147" r="13" />
+          <circle className="hero-art__runner" cx="122" cy="147" r="6" filter="url(#hero-route-glow)" />
+        </g>
       </svg>
 
       <article className="hero-art__panel hero-art__panel--design" data-hero-art-node>

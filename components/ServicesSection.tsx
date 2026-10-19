@@ -15,9 +15,21 @@ const serviceVariants: Record<(typeof services)[number]["id"], string> = {
 
 function moveSpotlight(event: ReactPointerEvent<HTMLElement>) {
   if (event.pointerType === "touch") return;
-  const bounds = event.currentTarget.getBoundingClientRect();
-  event.currentTarget.style.setProperty("--spot-x", `${event.clientX - bounds.left}px`);
-  event.currentTarget.style.setProperty("--spot-y", `${event.clientY - bounds.top}px`);
+  const card = event.currentTarget;
+  const bounds = card.getBoundingClientRect();
+  const localX = event.clientX - bounds.left;
+  const localY = event.clientY - bounds.top;
+  const tiltX = (localX / bounds.width - 0.5) * 4;
+  const tiltY = (0.5 - localY / bounds.height) * 4;
+  card.style.setProperty("--spot-x", `${localX}px`);
+  card.style.setProperty("--spot-y", `${localY}px`);
+  card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+  card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+}
+
+function resetSpotlight(event: ReactPointerEvent<HTMLElement>) {
+  event.currentTarget.style.setProperty("--tilt-x", "0deg");
+  event.currentTarget.style.setProperty("--tilt-y", "0deg");
 }
 
 export function ServicesSection() {
@@ -66,6 +78,7 @@ export function ServicesSection() {
               key={service.id}
               role="listitem"
               onPointerMove={moveSpotlight}
+              onPointerLeave={resetSpotlight}
             >
               <div className="service-card__topline">
                 <span>{service.number} <i>/</i> 04</span>

@@ -36,7 +36,7 @@ function StackMarquee({ items, direction, index }: StackMarqueeProps) {
           if (direction === "right") gsap.set(track, { xPercent: -50 });
           const tween = gsap.to(track, {
             xPercent: direction === "left" ? -50 : 0,
-            duration: conditions?.mobile ? 62 : 52,
+            duration: conditions?.mobile ? 42 : 34,
             ease: "none",
             repeat: -1,
             paused: true,
