@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { MotionConfig } from "framer-motion";
 import { ContactSection } from "@/components/ContactSection";
@@ -17,6 +17,28 @@ import { copy, profile } from "@/data/profile";
 export function HomeExperience() {
   const [introReady, setIntroReady] = useState(false);
   const handleIntroComplete = useCallback(() => setIntroReady(true), []);
+
+  useEffect(() => {
+    const layer = document.querySelector<HTMLElement>(".ambient-layer");
+    if (!layer) return;
+    const move = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      const x = (event.clientX / Math.max(1, window.innerWidth) - 0.5) * 12;
+      const y = (event.clientY / Math.max(1, window.innerHeight) - 0.5) * 10;
+      layer.style.setProperty("--blob-pointer-x", `${x.toFixed(1)}px`);
+      layer.style.setProperty("--blob-pointer-y", `${y.toFixed(1)}px`);
+    };
+    const reset = () => {
+      layer.style.setProperty("--blob-pointer-x", "0px");
+      layer.style.setProperty("--blob-pointer-y", "0px");
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("blur", reset);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("blur", reset);
+    };
+  }, []);
 
   return (
     <SmoothScrollProvider>
