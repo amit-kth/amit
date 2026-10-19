@@ -188,7 +188,7 @@ export function Navigation() {
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
-            transition={{ duration: 0.56, ease: [0.77, 0, 0.175, 1] }}
+            transition={{ duration: 0.42, ease: [0.77, 0, 0.175, 1] }}
           >
             <div className="site-menu__top">
               <a

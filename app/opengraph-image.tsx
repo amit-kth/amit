@@ -17,27 +17,27 @@ export default function OpenGraphImage() {
         height: "100%",
         padding: "52px 64px",
         overflow: "hidden",
-        background: "#F4FBE4",
-        color: "#14240C",
+        background: "#F4F1EA",
+        color: "#20211F",
         fontFamily: "Arial, sans-serif",
       }}>
-        <div style={{ position: "absolute", top: -170, right: -40, width: 560, height: 560, borderRadius: 280, background: "radial-gradient(circle, rgba(182,242,58,0.38) 0%, rgba(182,242,58,0) 70%)" }} />
-        <div style={{ position: "absolute", bottom: -280, right: 120, width: 540, height: 540, borderRadius: 270, background: "radial-gradient(circle, rgba(167,222,172,0.32) 0%, rgba(167,222,172,0) 70%)" }} />
+        <div style={{ position: "absolute", top: -170, right: -40, width: 560, height: 560, borderRadius: 280, background: "radial-gradient(circle, rgba(182,86,62,0.15) 0%, rgba(182,86,62,0) 70%)" }} />
+        <div style={{ position: "absolute", bottom: -280, right: 120, width: 540, height: 540, borderRadius: 270, background: "radial-gradient(circle, rgba(112,94,145,0.16) 0%, rgba(112,94,145,0) 70%)" }} />
         <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 18, letterSpacing: "0.12em", fontWeight: 700 }}>
           <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ display: "flex", width: 44, height: 44, alignItems: "center", justifyContent: "center", borderRadius: 14, background: "#B6F23A", color: "#14240C", fontSize: 15 }}>{profile.brandMark}</span>
+            <span style={{ display: "flex", width: 44, height: 44, alignItems: "center", justifyContent: "center", borderRadius: 14, background: "#B6F23A", color: "#20211F", fontSize: 15 }}>{profile.brandMark}</span>
             <span>{profile.hero.portfolioLabel}</span>
           </span>
-          <span style={{ color: "#526346", fontSize: 15, fontWeight: 500, letterSpacing: "0.04em" }}>{profile.location}</span>
+          <span style={{ color: "#666660", fontSize: 15, fontWeight: 500, letterSpacing: "0.04em" }}>{profile.location}</span>
         </div>
         <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 18 }}>
-          <span style={{ color: "#4D7A06", fontSize: 18, fontWeight: 700, letterSpacing: "0.12em" }}>{profile.techSummary.toUpperCase()}</span>
+          <span style={{ color: "#B6533E", fontSize: 18, fontWeight: 700, letterSpacing: "0.12em" }}>{profile.techSummary.toUpperCase()}</span>
           <span style={{ maxWidth: 990, fontSize: 112, fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.055em" }}>{profile.name}</span>
-          <span style={{ maxWidth: 820, color: "#526346", fontSize: 23, lineHeight: 1.4 }}>{profile.seo.description}</span>
+          <span style={{ maxWidth: 820, color: "#666660", fontSize: 23, lineHeight: 1.4 }}>{profile.seo.description}</span>
         </div>
         <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 16 }}>
           <span>{profile.email}</span>
-          <span style={{ color: "#4D7A06", fontWeight: 700 }}>{profile.experienceYears} YEARS / {profile.userScale} USERS</span>
+          <span style={{ color: "#705E91", fontWeight: 700 }}>{profile.experienceYears} YEARS / {profile.userScale} USERS</span>
         </div>
       </div>
     ),
