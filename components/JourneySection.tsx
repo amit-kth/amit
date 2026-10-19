@@ -48,9 +48,10 @@ export function JourneySection() {
           for (const row of rows) {
             const year = row.querySelector<HTMLElement>(".journey-row__year-fill");
             gsap.fromTo(row,
-              { y: conditions?.mobile ? 20 : 34 },
+              { y: conditions?.mobile ? 20 : 34, opacity: 0 },
               {
                 y: 0,
+                opacity: 1,
                 duration: conditions?.mobile ? 0.58 : 0.72,
                 ease: "power3.out",
                 scrollTrigger: { trigger: row, start: "top 88%", once: true },
@@ -82,7 +83,7 @@ export function JourneySection() {
       <div className="section-shell journey-section__layout">
         <aside className="journey-side">
           <div className="section-marker">
-            <span className="section-marker__number">05</span>
+            <span className="section-marker__number">04</span>
             <span>{copy.journey}</span>
           </div>
           <div className="journey-side__sticky">

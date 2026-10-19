@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDownRight, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, X } from "lucide-react";
 import { copy, navigation, profile } from "@/data/profile";
 import { useLenis } from "@/components/SmoothScrollProvider";
 import { gsap, registerGsapPlugins, ScrollTrigger } from "@/lib/gsap-client";
@@ -224,6 +224,16 @@ export function Navigation() {
                   </a>
                 ))}
               </nav>
+              <aside className="site-menu__connect">
+                <p className="eyebrow">Open to senior frontend roles</p>
+                <a href={`mailto:${profile.email}`} onClick={() => closeMenu()}>
+                  {profile.email}<ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+                <div className="site-menu__socials">
+                  <a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={13} aria-hidden="true" /></a>
+                  <a href={profile.links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} aria-hidden="true" /></a>
+                </div>
+              </aside>
             </div>
             <div className="site-menu__bottom">
               <span>{copy.localTime}: {localTime}</span>

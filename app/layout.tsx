@@ -1,22 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-500.css";
+import "@fontsource/ibm-plex-mono/latin-600.css";
 import { profile } from "@/data/profile";
 import { getRequestSiteUrl } from "@/lib/site-url";
 import "./globals.css";
-
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-mono",
-  display: "swap",
-});
 
 const siteName = `${profile.name} — Portfolio`;
 
@@ -56,13 +45,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "light",
-  themeColor: "#F4FBE4",
+  colorScheme: "dark",
+  themeColor: "#10130F",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${plexMono.variable}`}>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );

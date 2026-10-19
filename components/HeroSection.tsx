@@ -2,12 +2,15 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { education, profile } from "@/data/profile";
+import { profile } from "@/data/profile";
 import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
 
 type HeroSectionProps = {
   introReady: boolean;
 };
+
+const [firstName, ...surnameParts] = profile.name.split(" ");
+const surname = surnameParts.join(" ");
 
 export function HeroSection({ introReady }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -42,8 +45,14 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             duration: conditions?.mobile ? 0.68 : 0.82,
             stagger: conditions?.mobile ? 0.04 : 0.08,
           });
+
           const supporting = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-enter]"));
-          intro.from(supporting, { y: 14, duration: 0.62, stagger: 0.07, ease: "power3.out" }, "-=0.52");
+          intro.from(supporting, { y: 14, opacity: 0, duration: 0.62, stagger: 0.07, ease: "power3.out" }, "-=0.52");
+
+          const photo = section.closest(".experience-story__stage")?.querySelector<HTMLElement>(".photo-stage");
+          if (photo) {
+            intro.fromTo(photo, { y: 24, opacity: 0.5 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.68");
+          }
 
           const magneticButtons = Array.from(section.querySelectorAll<HTMLAnchorElement>(".hero-actions .button"));
           const magneticCleanups: Array<() => void> = [];
@@ -67,17 +76,15 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             }
           }
 
-          const glow = section.querySelector<HTMLElement>(".hero-orbit");
-          if (glow && conditions?.desktop) {
-            gsap.to(glow, {
-              yPercent: -12,
-              scale: 1.04,
+          if (photo && conditions?.desktop) {
+            gsap.to(photo, {
+              yPercent: -5,
               ease: "none",
               scrollTrigger: {
-                trigger: section,
+                trigger: section.closest(".experience-story__stage") ?? section,
                 start: "top top",
                 end: "bottom top",
-                scrub: 0.5,
+                scrub: 0.55,
               },
             });
           }
@@ -99,25 +106,28 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       <div className="hero-section__inner">
         <div className="hero-kicker" data-hero-enter>
           <span className="status-dot" aria-hidden="true" />
-          <span>Open to work</span>
+          <span>{profile.hero.roleLabel}</span>
         </div>
         <div className="hero-main">
           <div className="hero-main__copy">
-            <h1 className="hero-title" id="hero-title" ref={titleRef}>{profile.name}</h1>
-            <p className="hero-role" data-hero-enter>{profile.title} · UI/UX Mindset</p>
+            <h1 className="hero-title" id="hero-title" ref={titleRef} aria-label={profile.name}>
+              <span className="hero-title__line">{firstName}</span>
+              <span className="hero-title__line hero-title__line--accent">{surname}</span>
+            </h1>
             <p className="hero-tagline" data-hero-enter>{profile.hero.tagline}</p>
-            <dl className="hero-facts" data-hero-enter>
-              <div><dt>Experience</dt><dd>{profile.experienceYears}+ Years</dd></div>
-              <div><dt>Location</dt><dd>{profile.location}</dd></div>
-              <div className="hero-fact--education"><dt>Education</dt><dd>{education.qualification}, {education.institution}</dd></div>
-            </dl>
+            <p className="hero-intro" data-hero-enter>{profile.hero.locationLine}</p>
             <div className="hero-actions" data-hero-enter>
-              <a className="button button--primary" href="#journey">View Journey<ArrowDownRight size={17} aria-hidden="true" /></a>
-              <a className="button button--quiet" href="/resume.txt" download>Download Resume<ArrowUpRight size={16} aria-hidden="true" /></a>
+              <a className="button button--primary" href="#journey">
+                View journey<ArrowDownRight size={17} aria-hidden="true" />
+              </a>
+              <a className="button button--quiet" href={profile.links.resume} download>
+                Download résumé<ArrowUpRight size={16} aria-hidden="true" />
+              </a>
             </div>
           </div>
         </div>
       </div>
+      <span className="hero-section__folio" aria-hidden="true">{profile.hero.portfolioLabel} <i /> {profile.location}</span>
     </section>
   );
 }

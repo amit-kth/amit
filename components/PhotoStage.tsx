@@ -5,6 +5,8 @@ export function PhotoStage() {
   return (
     <div className="photo-stage" aria-hidden="false">
       <div className="photo-stage__halo" aria-hidden="true" />
+      <div className="photo-stage__orbit photo-stage__orbit--one" aria-hidden="true" />
+      <div className="photo-stage__orbit photo-stage__orbit--two" aria-hidden="true" />
       <Image
         className="photo-stage__image"
         src={IMAGE_SRC}
@@ -13,8 +15,13 @@ export function PhotoStage() {
         priority
         placeholder="blur"
         blurDataURL={PORTRAIT_BLUR_DATA_URL}
-        sizes="(max-width: 767px) 100vw, (max-width: 1200px) 52vw, 680px"
+        sizes="(max-width: 767px) 100vw, (max-width: 1200px) 55vw, 760px"
       />
+      <div className="photo-stage__note glass-panel" aria-hidden="true">
+        <span>UI/UX design</span>
+        <i />
+        <span>Frontend</span>
+      </div>
     </div>
   );
 }

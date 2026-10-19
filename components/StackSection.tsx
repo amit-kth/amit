@@ -103,7 +103,7 @@ export function StackSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const marqueeContent = [
     stackGroups[0].items,
-    [...stackGroups[1].items, ...stackGroups[4].items.slice(0, 6)],
+    [...stackGroups[1].items, ...stackGroups[4].items],
     [...stackGroups[2].items, ...stackGroups[3].items],
   ] as const;
 
