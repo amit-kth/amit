@@ -1,7 +1,8 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
+import { ShinyButton } from "@/components/ui/shiny-button";
 import { copy, profile } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
@@ -96,18 +97,23 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             {profile.hero.locationLine}
           </p>
           <div className="mx-auto mt-4 flex w-full max-w-[360px] flex-col justify-center gap-2 sm:mt-6 sm:w-auto sm:max-w-none sm:flex-row" data-hero-enter>
+            <ShinyButton
+              label={copy.downloadResume}
+              href={profile.links.resume}
+              download
+              compact
+              cornerRadius={32}
+              fillColor="var(--voltage-violet)"
+              labelColor="var(--pure-white)"
+              accentColor="var(--lavender-mist)"
+              accentSoftColor="var(--magenta-spark)"
+              className="inline-flex min-h-10 w-full items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--midnight-ink)] sm:min-h-11 sm:w-auto"
+            />
             <a
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[var(--voltage-violet)] px-5 text-xs sm:min-h-11 font-semibold text-[var(--pure-white)] shadow-[0_8px_22px_rgba(95,37,158,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--ultra-violet)] hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-[var(--mist)] bg-[rgba(255,255,255,0.82)] px-5 text-xs font-semibold text-[var(--midnight-ink)] transition sm:min-h-11 sm:w-auto duration-200 hover:-translate-y-0.5 hover:border-[var(--lavender-mist)] hover:bg-[var(--pure-white)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               href="#journey"
             >
               View journey<ArrowDownRight size={16} aria-hidden="true" />
-            </a>
-            <a
-              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-[var(--mist)] bg-[rgba(255,255,255,0.82)] px-5 text-xs font-semibold text-[var(--midnight-ink)] transition sm:min-h-11 duration-200 hover:-translate-y-0.5 hover:border-[var(--lavender-mist)] hover:bg-[var(--pure-white)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-              href={profile.links.resume}
-              download
-            >
-              Download résumé<ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
         </div>
