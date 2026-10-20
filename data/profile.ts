@@ -54,7 +54,7 @@ export const copy = {
   scroll: "Scroll to explore",
   backToTop: "Back to top",
   preloaderLabel: "Frontend Developer · UI/UX Designer",
-  servicesTitle: "WHAT I DO",
+  servicesTitle: "What I Do?",
   contact: "Contact",
   journeyCaption: "From designer to frontend developer",
   journeyTitle: "JOURNEY",

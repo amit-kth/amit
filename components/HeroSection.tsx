@@ -74,11 +74,11 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       <div className="grid min-h-0 flex-1 place-items-center py-3 sm:py-7 lg:py-8">
         <div className="w-full max-w-[1020px] text-center">
           <div
-            className="mx-auto inline-flex min-h-8 items-center justify-center gap-2 rounded-full border border-[rgba(95,37,158,0.18)] bg-[rgba(255,255,255,0.78)] px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.09em] text-[var(--ultra-violet)]"
+            className="mx-auto inline-flex min-h-8 items-center justify-center gap-2 rounded-full border border-[rgba(95,37,158,0.18)] bg-[rgba(255,255,255,0.78)] px-3 py-1.5 text-[10px] uppercase tracking-[0.09em] text-[var(--ultra-violet)]"
             data-hero-enter
           >
             <span className="size-1.5 rounded-full bg-[var(--voltage-violet)]" aria-hidden="true" />
-            <span>{profile.location}</span>
+            <span>{profile.experienceYears}+ Yrs Experience</span>
           </div>
           <h1
             className="mx-auto mt-4 block max-w-[1020px] text-center text-[clamp(2.5rem,6vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.085em] text-[var(--midnight-ink)] normal-case sm:mt-6"
@@ -111,14 +111,6 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             </a>
           </div>
         </div>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[rgba(17,24,39,0.12)] pt-3 font-mono text-[8px] uppercase tracking-[0.07em] text-[var(--graphite)]">
-        <span>{profile.experienceYears} years in frontend</span>
-        <span className="hidden text-center text-[var(--ultra-violet)] sm:inline">{profile.techSummary}</span>
-        <a className="inline-flex items-center gap-1.5 whitespace-nowrap text-[var(--ultra-violet)] transition hover:gap-2.5 motion-reduce:transition-none" href="#what-i-do">
-          {copy.scroll}<ArrowDownRight size={14} aria-hidden="true" />
-        </a>
       </div>
     </section>
   );
