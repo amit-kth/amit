@@ -3,7 +3,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { copy, profile, stackGroups } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
-import { SectionCard } from "@/components/ui/section-card";
 import { gsap, registerGsapPlugins, ScrollTrigger } from "@/lib/gsap-client";
 
 type SkillMarqueeProps = {
@@ -66,6 +65,7 @@ function SkillMarquee({ items, direction, index }: SkillMarqueeProps) {
         trigger.kill();
       };
     }, root);
+
     return () => context.revert();
   }, [direction, reducedMotion]);
 
@@ -87,8 +87,7 @@ function SkillMarquee({ items, direction, index }: SkillMarqueeProps) {
               <div className="flex shrink-0 items-center gap-5 px-4 sm:gap-8 sm:px-6" key={copyIndex} aria-hidden={copyIndex === 1}>
                 {items.map((item, itemIndex) => (
                   <span className="inline-flex items-center gap-5 whitespace-nowrap text-[clamp(1.25rem,3.2vw,3.4rem)] font-semibold leading-none tracking-[-0.06em] text-[var(--graphite)] sm:gap-8" key={`${item}-${itemIndex}`}>
-                    {item}
-                    <i className="size-1.5 shrink-0 rotate-45 rounded-[2px] bg-[var(--voltage-violet)] sm:size-2" aria-hidden="true" />
+                    {item}<i className="size-1.5 shrink-0 rotate-45 rounded-[2px] bg-[var(--voltage-violet)] sm:size-2" aria-hidden="true" />
                   </span>
                 ))}
               </div>
@@ -108,28 +107,50 @@ const marqueeContent = [
 
 export function StackSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section || reducedMotion) return;
+
+    registerGsapPlugins();
+    const context = gsap.context(() => {
+      const heading = section.querySelector<HTMLElement>("[data-stack-heading]");
+      if (heading) {
+        gsap.fromTo(heading, { y: 18, autoAlpha: 0 }, {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: { trigger: section, start: "top 80%", once: true },
+        });
+      }
+    }, section);
+
+    return () => context.revert();
+  }, [reducedMotion]);
 
   return (
-    <section className="px-[clamp(14px,3vw,32px)] py-2 md:py-3" id="skills" ref={sectionRef} aria-labelledby="stack-title">
-      <SectionCard className="p-5 sm:p-7 lg:p-9">
-        <header className="mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--ultra-violet)]">{copy.stackEyebrow}</p>
-            <h2 className="mt-2 text-[clamp(2.4rem,5vw,4.25rem)] font-semibold leading-none tracking-[-0.075em] text-[var(--midnight-ink)]" id="stack-title">
-              {copy.stackTitle}
-            </h2>
-          </div>
-          <p className="font-mono text-[8px] uppercase tracking-[0.08em] leading-relaxed text-[var(--slate)] sm:text-right">
-            {profile.techSummary}<br />{profile.experienceYears} years in frontend
-          </p>
-        </header>
+    <section className="relative overflow-hidden bg-[var(--pure-white)] py-[clamp(74px,8vw,120px)]" id="skills" ref={sectionRef} aria-labelledby="stack-title">
+      <header className="mx-auto mb-8 grid max-w-[1480px] gap-5 px-[clamp(20px,5vw,84px)] sm:mb-11 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.5fr)] md:items-end" data-stack-heading>
+        <div>
+          <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--ultra-violet)]">{copy.stackEyebrow}</p>
+          <h2 className="mt-2 text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.86] tracking-[-0.09em] text-[var(--midnight-ink)]" id="stack-title">
+            {copy.stackTitle}<span className="text-[var(--voltage-violet)]">.</span>
+          </h2>
+        </div>
+        <p className="max-w-[300px] font-mono text-[8px] uppercase leading-[1.8] tracking-[0.09em] text-[var(--slate)] md:justify-self-end md:text-right">
+          {profile.techSummary}<br />{profile.experienceYears} years in frontend
+        </p>
+      </header>
 
-        <div className="overflow-hidden rounded-[22px] border border-[var(--mist)] bg-[var(--pure-white)] px-3 sm:px-5" role="group" aria-label="Skills and tools">
+      <div className="overflow-hidden border-y border-[var(--mist)] bg-[var(--fog)] px-[clamp(20px,5vw,84px)]" role="group" aria-label="Skills and tools">
+        <div className="mx-auto max-w-[1480px]">
           <SkillMarquee items={marqueeContent[0]} direction="left" index="01" />
           <SkillMarquee items={marqueeContent[1]} direction="right" index="02" />
           <SkillMarquee items={marqueeContent[2]} direction="left" index="03" />
         </div>
-      </SectionCard>
+      </div>
     </section>
   );
 }

@@ -47,7 +47,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
 
   return (
     <section
-      className="relative z-10 flex h-full min-h-0 flex-col items-stretch justify-between px-5 py-4 sm:px-8 sm:py-7 lg:px-12 lg:py-9"
+      className="relative z-10 flex h-full min-h-0 flex-col items-stretch justify-between px-5 pt-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:px-8 sm:pt-7 lg:px-12 lg:pt-9"
       id="hero"
       ref={sectionRef}
       aria-labelledby="hero-title"

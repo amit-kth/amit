@@ -3,7 +3,6 @@
 import { useLayoutEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
-import { SectionCard } from "@/components/ui/section-card";
 import { copy, profile } from "@/data/profile";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
@@ -19,56 +18,60 @@ export function ContactSection() {
     const context = gsap.context(() => {
       gsap.fromTo(
         section.querySelectorAll<HTMLElement>("[data-contact-reveal]"),
-        { y: 16, autoAlpha: 0 },
+        { y: 22, autoAlpha: 0 },
         {
           y: 0,
           autoAlpha: 1,
-          duration: 0.55,
+          duration: 0.62,
           stagger: 0.07,
           ease: "power3.out",
           scrollTrigger: { trigger: section, start: "top 76%", once: true },
         },
       );
     }, section);
+
     return () => context.revert();
   }, [reducedMotion]);
 
   return (
-    <section className="px-[clamp(14px,3vw,32px)] py-2 md:py-3" id="contact" ref={sectionRef} aria-labelledby="contact-title">
-      <SectionCard className="grid grid-cols-1 gap-5 p-5 sm:p-7 md:grid-cols-[minmax(100px,0.25fr)_minmax(0,1.75fr)] md:gap-8 lg:p-9">
-        <div className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--ultra-violet)]" data-contact-reveal>
-          05 / {copy.contact}
+    <section className="relative isolate overflow-hidden bg-[var(--lavender-field)] py-[clamp(80px,10vw,148px)]" id="contact" ref={sectionRef} aria-labelledby="contact-title">
+      <span className="pointer-events-none absolute -right-[0.08em] top-[0.12em] select-none text-[clamp(16rem,36vw,42rem)] font-semibold leading-[0.72] tracking-[-0.12em] text-[rgba(95,37,158,0.045)]" aria-hidden="true">05</span>
+      <div className="relative mx-auto grid max-w-[1480px] grid-cols-1 gap-8 px-[clamp(20px,5vw,84px)] md:grid-cols-[minmax(110px,0.32fr)_minmax(0,1.68fr)] md:gap-10">
+        <div className="flex items-start gap-3 font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--ultra-violet)] md:flex-col md:gap-2" data-contact-reveal>
+          <span>05</span><span className="text-[var(--orchid-wash)]" aria-hidden="true">/</span><span>{copy.contact}</span>
         </div>
 
         <div className="min-w-0">
-          <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--ultra-violet)]" data-contact-reveal>Open to senior roles</p>
-          <h2 className="mt-3 max-w-[800px] text-[clamp(2.6rem,6.8vw,5.5rem)] font-semibold leading-[0.94] tracking-[-0.08em] text-[var(--midnight-ink)]" id="contact-title" data-contact-reveal>
+          <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--graphite)]" data-contact-reveal>Open to senior roles</p>
+          <h2 className="mt-4 max-w-[1050px] text-[clamp(3rem,7.8vw,7.6rem)] font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-contact-reveal>
             Open to <span className="text-[var(--ultra-violet)]">senior frontend</span> roles.
           </h2>
-          <p className="mt-4 max-w-[610px] text-sm leading-relaxed text-[var(--graphite)]" data-contact-reveal>
+          <p className="mt-5 max-w-[610px] text-sm leading-relaxed text-[var(--graphite)] sm:text-base" data-contact-reveal>
             React / Next.js roles at product companies, in India and remote.
           </p>
+
           <a
-            className="mt-6 flex min-h-14 w-fit max-w-full items-center justify-between gap-3 rounded-2xl border border-[var(--mist)] bg-[var(--fog)] px-4 py-3 text-[clamp(1rem,2.6vw,1.7rem)] font-medium tracking-[-0.04em] text-[var(--midnight-ink)] transition-[border-color,color,transform] duration-200 hover:-translate-y-0.5 hover:border-[var(--lavender-mist)] hover:text-[var(--ultra-violet)] motion-reduce:transition-none sm:mt-8"
+            className="group mt-7 flex w-fit max-w-full items-center gap-3 border-b border-[rgba(17,24,39,0.28)] pb-2 text-[clamp(1rem,3vw,2rem)] font-medium tracking-[-0.045em] text-[var(--midnight-ink)] transition-[border-color,color] duration-200 hover:border-[var(--ultra-violet)] hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none sm:mt-9"
             href={`mailto:${profile.email}`}
             data-contact-reveal
           >
             <span className="break-all">{profile.email}</span>
-            <ArrowUpRight className="shrink-0 text-[var(--ultra-violet)]" size={22} aria-hidden="true" />
+            <ArrowUpRight className="shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={23} aria-hidden="true" />
           </a>
-          <div className="mt-3 flex flex-wrap gap-2" data-contact-reveal>
-            <a className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[var(--mist)] bg-[var(--pure-white)] px-3 font-mono text-[8px] uppercase tracking-[0.07em] text-[var(--graphite)] transition-colors hover:bg-[var(--lavender-field)] hover:text-[var(--ultra-violet)] motion-reduce:transition-none" href={profile.links.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn<ArrowUpRight size={13} aria-hidden="true" />
+
+          <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 font-mono text-[9px] uppercase tracking-[0.08em]" data-contact-reveal>
+            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
             </a>
-            <a className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[var(--mist)] bg-[var(--pure-white)] px-3 font-mono text-[8px] uppercase tracking-[0.07em] text-[var(--graphite)] transition-colors hover:bg-[var(--lavender-field)] hover:text-[var(--ultra-violet)] motion-reduce:transition-none" href={profile.links.github} target="_blank" rel="noreferrer">
-              GitHub<ArrowUpRight size={13} aria-hidden="true" />
+            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.github} target="_blank" rel="noreferrer">
+              GitHub<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
             </a>
-            <a className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[var(--mist)] bg-[var(--pure-white)] px-3 font-mono text-[8px] uppercase tracking-[0.07em] text-[var(--graphite)] transition-colors hover:bg-[var(--lavender-field)] hover:text-[var(--ultra-violet)] motion-reduce:transition-none" href={profile.links.resume} download>
-              {copy.downloadResume}<ArrowUpRight size={13} aria-hidden="true" />
+            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.resume} download>
+              {copy.downloadResume}<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
             </a>
           </div>
         </div>
-      </SectionCard>
+      </div>
     </section>
   );
 }

@@ -6,7 +6,6 @@ import "@fontsource/ibm-plex-mono/latin-600.css";
 import { profile } from "@/data/profile";
 import { getRequestSiteUrl } from "@/lib/site-url";
 import "./globals.css";
-import "./interaction.css";
 
 const siteName = `${profile.name} — Portfolio`;
 
