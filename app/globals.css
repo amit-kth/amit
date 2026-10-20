@@ -284,6 +284,11 @@ img, svg {
   box-shadow: var(--dock-glass-shadow);
 }
 
+/* Keep the refracted pass translucent enough to reveal the themed surface beneath it. */
+.section-dock__surface > canvas[data-liquid-glass-layer] {
+  opacity: 0.36;
+}
+
 .section-dock__link {
   color: var(--dock-icon-color);
   transition: color 280ms ease;
