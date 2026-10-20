@@ -128,7 +128,7 @@ export function JourneySection() {
           <div className="journey-extras">
             <section className="journey-education" aria-labelledby="education-title">
               <p className="eyebrow">{copy.journeyEducation}</p>
-              <h3 id="education-title">{education.qualification}</h3>
+              <h3 className="journey-education__degree" id="education-title">{education.qualification}</h3>
               <p>{education.institution} <span aria-hidden="true">·</span> {education.dates}</p>
             </section>
             <section className="journey-recognition" aria-labelledby="recognition-title">

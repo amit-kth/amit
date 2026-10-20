@@ -80,9 +80,9 @@ export function ServicesSection() {
             >
               <dt className="max-w-[250px] text-[9px] leading-snug text-[var(--slate)] sm:text-[10px]">{stat.label}</dt>
               <dd
-                className="mt-2 text-[clamp(2rem,4.5vw,3.8rem)] font-semibold leading-none tracking-[-0.08em] text-[var(--midnight-ink)]"
-                data-count-to={stat.countTo}
-                data-count-suffix={stat.suffix}
+                className={`mt-2 leading-none ${stat.id === "user-range" ? "text-[clamp(1.25rem,2.7vw,2.05rem)] font-medium tracking-[-0.04em] text-[var(--graphite)]" : "text-[clamp(2rem,4.5vw,3.8rem)] font-semibold tracking-[-0.08em] text-[var(--midnight-ink)]"}`}
+                data-count-to={stat.id === "user-range" ? undefined : stat.countTo}
+                data-count-suffix={stat.id === "user-range" ? undefined : stat.suffix}
               >
                 {stat.value}
               </dd>
@@ -93,10 +93,9 @@ export function ServicesSection() {
         <ol className="m-0 mt-8 list-none p-0 sm:mt-10" aria-label={copy.services}>
           {services.map((service) => (
             <li className="group relative border-t border-[rgba(17,24,39,0.16)] last:border-b" key={service.id} data-service-reveal>
-              <span className="absolute inset-y-4 left-0 w-0.5 origin-top scale-y-0 bg-[var(--voltage-violet)] transition-transform duration-300 group-hover:scale-y-100 motion-reduce:transition-none" aria-hidden="true" />
-              <article className="grid grid-cols-[minmax(0,1fr)_30px] items-start gap-x-4 py-5 sm:grid-cols-[minmax(0,1fr)_44px] sm:gap-x-8 sm:py-7">
+              <article className="grid grid-cols-[minmax(0,1fr)_30px] items-start gap-x-4 py-6 sm:grid-cols-[minmax(0,1fr)_44px] sm:gap-x-8 sm:py-7">
                 <div className="min-w-0">
-                  <h3 className="m-0 text-[clamp(1.15rem,2.4vw,1.9rem)] font-semibold leading-tight tracking-[-0.055em] text-[var(--midnight-ink)]">
+                  <h3 className="m-0 text-[clamp(1.15rem,2.4vw,1.9rem)] font-semibold leading-tight tracking-[-0.055em] text-[var(--midnight-ink)] transition-colors duration-200 group-hover:text-[var(--ultra-violet)] motion-reduce:transition-none">
                     {service.title}
                   </h3>
                   <p className="m-0 mt-2 max-w-[720px] text-xs leading-relaxed text-[var(--graphite)] sm:mt-2 sm:text-[13px]">

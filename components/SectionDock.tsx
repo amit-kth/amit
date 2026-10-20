@@ -23,22 +23,22 @@ const dockSpring = { type: "spring" as const, stiffness: 420, damping: 38, mass:
 const scrollEase = (time: number) => 1 - Math.pow(1 - time, 4);
 
 const dockGlassMaterial = {
-  refraction: 82,
-  edgeReach: 0.16,
-  edgeWidth: 0.22,
-  dispersion: 1.1,
+  refraction: 104,
+  edgeReach: 0.24,
+  edgeWidth: 0.16,
+  dispersion: 1.45,
   frost: 0,
   backdropBlur: 0,
-  body: 0.72,
-  absorption: 0.42,
-  tint: 0.08,
-  rim: 0.42,
-  reflection: 0.34,
-  highlight: 0.42,
+  body: 0.46,
+  absorption: 0.18,
+  tint: 0.04,
+  rim: 0.86,
+  reflection: 0.72,
+  highlight: 0.92,
   lightAngle: 132,
-  echo: 0.24,
-  hairline: 0.34,
-  hairWidth: 0.52,
+  echo: 0.4,
+  hairline: 0.88,
+  hairWidth: 0.38,
 } satisfies Partial<LiquidGlassMaterial>;
 
 export function SectionDock() {
@@ -63,20 +63,21 @@ export function SectionDock() {
 
         surface = new LiquidGlass(glassElement, {
           backdrop: "auto",
-          tint: 0.08,
+          tint: 0.055,
           tintTone: "light",
           frost: 0,
           material: dockGlassMaterial,
           live: false,
-          maxDpr: 1.5,
-          bleed: 32,
+          maxDpr: 2,
+          bleed: 44,
           zIndex: -1,
           respectReducedTransparency: true,
           // Never degrade to a blur-only effect; preserve contrast with a solid surface.
           fallback: (element) => {
             element.style.background = "var(--gradient-glass-sheen)";
-            element.style.backgroundColor = "rgba(248, 245, 252, 0.96)";
-            element.style.boxShadow = "var(--elevation-glass)";
+            element.style.backgroundColor = "rgba(246, 250, 255, 0.58)";
+            element.style.border = "1px solid rgba(255, 255, 255, 0.88)";
+            element.style.boxShadow = "0 18px 42px rgba(17, 24, 39, 0.19), inset 0 1px 0 rgba(255, 255, 255, 0.98), inset 0 -1px 0 rgba(95, 37, 158, 0.18)";
           },
         });
         glassRef.current = surface;
