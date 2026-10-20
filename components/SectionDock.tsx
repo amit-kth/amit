@@ -65,7 +65,7 @@ export function SectionDock() {
 
         surface = new LiquidGlass(glassElement, {
           backdrop: "auto",
-          tint: 0.055,
+          tint: 0.72,
           tintTone: darkBackdropRef.current ? "dark" : "light",
           frost: 0,
           material: dockGlassMaterial,
@@ -128,7 +128,8 @@ export function SectionDock() {
         const backdropElement = document.elementsFromPoint(x, y).find((element) => !dock.contains(element));
         const darkSurface = Boolean(backdropElement?.closest(".section-skills, .section-gallery__stage, .site-footer"));
         const selectedWorkIsActive = galleryHasDarkStage && nextActive === "gallery";
-        const dark = darkSurface || selectedWorkIsActive;
+        const atLightHeroTop = nextActive === "hero" && window.scrollY <= 1;
+        const dark = !atLightHeroTop && (darkSurface || selectedWorkIsActive);
         setDarkBackdrop((current) => current === dark ? current : dark);
       }
     };
