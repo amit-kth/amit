@@ -319,6 +319,76 @@ img, svg {
   }
 }
 
+/* Decorative orbit cluster integrated into the Tools & Tech section. */
+.tech-orbit__ambient {
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238, 0.11), transparent 38%),
+    radial-gradient(ellipse at 54% 48%, rgba(134, 47, 231, 0.16), transparent 60%),
+    radial-gradient(ellipse at 82% 18%, rgba(79, 91, 213, 0.12), transparent 38%);
+  filter: blur(18px);
+  opacity: 0.8;
+}
+
+.tech-orbit__badge {
+  position: relative;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(151, 173, 255, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.1), transparent 46%), rgba(5, 13, 30, 0.94);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.75),
+    0 0 14px color-mix(in srgb, var(--orbit-glow) 35%, transparent),
+    inset 0 0 13px rgba(79, 91, 213, 0.12);
+}
+
+.tech-orbit__badge svg {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--orbit-glow) 48%, transparent));
+}
+
+.tech-orbit__static-satellite {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  transform: translate(-50%, -50%);
+}
+
+.tech-orbit__core {
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(97, 218, 251, 0.72);
+  background:
+    radial-gradient(circle at 34% 27%, rgba(255, 255, 255, 0.2), transparent 37%),
+    radial-gradient(circle, rgba(41, 103, 185, 0.42), rgba(8, 17, 40, 0.96) 72%);
+  box-shadow:
+    0 0 0 1px rgba(134, 47, 231, 0.32),
+    0 0 22px rgba(97, 218, 251, 0.62),
+    0 0 58px rgba(134, 47, 231, 0.56),
+    inset 0 0 26px rgba(97, 218, 251, 0.22);
+}
+
+.tech-orbit__core-halo {
+  z-index: 0;
+  background: radial-gradient(circle, rgba(134, 47, 231, 0.42), rgba(97, 218, 251, 0.14) 42%, transparent 72%);
+  filter: blur(12px);
+}
+
+.tech-orbit__fallback {
+  display: none;
+}
+
+@supports not (offset-path: path("M 0 0 L 1 1")) {
+  .tech-orbit__moving {
+    display: none;
+  }
+
+  .tech-orbit__fallback {
+    display: block;
+  }
+}
+
 /* Shared layout language. */
 
 .eyebrow {
