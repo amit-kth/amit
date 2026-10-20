@@ -2,16 +2,18 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { profile } from "@/data/profile";
+import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
 const [experienceStat, reactStat, userRangeStat] = profile.about.stats;
 
 export function ProofSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || reducedMotion) return;
     registerGsapPlugins();
     const context = gsap.context(() => {
       const elements = section.querySelectorAll<HTMLElement>("[data-proof-reveal]");
@@ -58,11 +60,11 @@ export function ProofSection() {
       }
     }, section);
     return () => context.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section className="proof-section" id="proof" aria-label="Experience and product scale" ref={sectionRef}>
-      <div className="section-shell proof-section__layout">
+      <div className="section-shell proof-section__layout section-card section-card--lavender">
         <div className="section-marker" data-proof-reveal>
           <span className="section-marker__number">02</span>
           <span>In context</span>

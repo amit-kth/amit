@@ -20,6 +20,7 @@ export const profile = {
     resume: "/resume.txt",
   },
   hero: {
+    headline: ["Complex ideas.", "Effortless interfaces."],
     roleLabel: "FRONTEND DEVELOPER · UI/UX MINDSET",
     portfolioLabel: "PORTFOLIO 2026",
     tagline: "I build thoughtful, polished web experiences.",

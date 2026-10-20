@@ -33,7 +33,7 @@ export function HomeExperience() {
             <JourneySection />
             <ContactSection />
             <footer className="site-footer" id="site-footer">
-              <div className="section-shell site-footer__inner">
+              <div className="section-shell site-footer__inner section-card site-footer__card">
                 <a href="#hero" className="site-footer__brand">
                   <span className="site-header__mark">{profile.brandMark}</span>
                   <span>{profile.name}</span>

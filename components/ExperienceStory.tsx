@@ -1,9 +1,13 @@
 "use client";
 
-import { ArrowDownRight } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
-import { HeroVisual } from "@/components/HeroVisual";
-import { copy } from "@/data/profile";
+import { ShaderCanvas } from "@/components/ui/shader-canvas";
+
+const HERO_SHADER_COLORS = {
+  u_accent: "var(--voltage-violet)",
+  u_ink: "var(--midnight-ink)",
+  u_surface: "var(--fog)",
+};
 
 type ExperienceStoryProps = {
   introReady: boolean;
@@ -11,14 +15,16 @@ type ExperienceStoryProps = {
 
 export function ExperienceStory({ introReady }: ExperienceStoryProps) {
   return (
-    <section className="experience-story" id="experience-story" aria-label="Introduction to Amit Verma">
-      <div className="experience-story__stage">
-        <HeroVisual />
+    <section className="experience-story section-shell" id="experience-story" aria-label="Portfolio introduction">
+      <div className="hero-card">
+        <ShaderCanvas
+          className="hero-card__shader"
+          colors={HERO_SHADER_COLORS}
+          resolution={0.62}
+          stillTime={4}
+        />
+        <div className="hero-card__shader-wash" aria-hidden="true" />
         <HeroSection introReady={introReady} />
-        <a className="experience-story__scroll-hint" href="#what-i-do">
-          <span>{copy.scroll}</span>
-          <ArrowDownRight size={16} aria-hidden="true" />
-        </a>
       </div>
     </section>
   );

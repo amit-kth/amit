@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { copy, profile, services } from "@/data/profile";
+import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
 const serviceVariants: Record<(typeof services)[number]["id"], string> = {
@@ -14,11 +15,12 @@ const serviceVariants: Record<(typeof services)[number]["id"], string> = {
 
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
   const stackItems = profile.techSummary.split(" / ");
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || reducedMotion) return;
     registerGsapPlugins();
     const context = gsap.context(() => {
       const elements = section.querySelectorAll<HTMLElement>(".services-section__heading, .service-card");
@@ -35,11 +37,11 @@ export function ServicesSection() {
       );
     }, section);
     return () => context.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section className="services-section content-section" id="what-i-do" ref={sectionRef} aria-labelledby="services-title">
-      <div className="section-shell services-section__layout">
+      <div className="section-shell services-section__layout section-card">
         <div className="services-section__head">
           <div className="section-marker">
             <span className="section-marker__number">{copy.servicesEyebrow.split(" /")[0]}</span>

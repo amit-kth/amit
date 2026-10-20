@@ -3,14 +3,16 @@
 import { useLayoutEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { copy, profile } from "@/data/profile";
+import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
 export function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!section || reducedMotion) return;
     registerGsapPlugins();
     const context = gsap.context(() => {
       gsap.fromTo(section.querySelectorAll<HTMLElement>("[data-contact-reveal]"),
@@ -26,11 +28,11 @@ export function ContactSection() {
       );
     }, section);
     return () => context.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section className="contact-section content-section" id="contact" ref={sectionRef} aria-labelledby="contact-title">
-      <div className="section-shell contact-section__layout">
+      <div className="section-shell contact-section__layout section-card section-card--contact">
         <div className="section-marker" data-contact-reveal>
           <span className="section-marker__number">05</span>
           <span>{copy.contact}</span>
