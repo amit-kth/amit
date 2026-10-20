@@ -284,6 +284,21 @@ img, svg {
   box-shadow: var(--dock-glass-shadow);
 }
 
+/* The topmost hero snapshot skews darker than the visible backdrop; lift only that pass without fading the glass. */
+.section-dock__surface > canvas[data-liquid-glass-layer] {
+  transition: filter 180ms ease;
+}
+
+.section-dock[data-dock-tone="light"][data-dock-at-hero-top="true"] .section-dock__surface > canvas[data-liquid-glass-layer] {
+  filter: brightness(1.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-dock__surface > canvas[data-liquid-glass-layer] {
+    transition: none;
+  }
+}
+
 .section-dock__link {
   color: var(--dock-icon-color);
   transition: color 280ms ease;
