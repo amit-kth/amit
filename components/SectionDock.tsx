@@ -43,10 +43,12 @@ const dockGlassMaterial = {
 
 export function SectionDock() {
   const [activeId, setActiveId] = useState<(typeof navigation)[number]["id"]>("hero");
+  const [darkBackdrop, setDarkBackdrop] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
   const lenis = useLenis();
   const navRef = useRef<HTMLElement>(null);
   const glassRef = useRef<LiquidGlassSurface | null>(null);
+  const darkBackdropRef = useRef(darkBackdrop);
 
   useEffect(() => {
     let mounted = true;
@@ -64,7 +66,7 @@ export function SectionDock() {
         surface = new LiquidGlass(glassElement, {
           backdrop: "auto",
           tint: 0.055,
-          tintTone: "light",
+          tintTone: darkBackdropRef.current ? "dark" : "light",
           frost: 0,
           material: dockGlassMaterial,
           live: false,
@@ -72,13 +74,8 @@ export function SectionDock() {
           bleed: 44,
           zIndex: -1,
           respectReducedTransparency: true,
-          // Never degrade to a blur-only effect; preserve contrast with a solid surface.
-          fallback: (element) => {
-            element.style.background = "var(--gradient-glass-sheen)";
-            element.style.backgroundColor = "rgba(246, 250, 255, 0.58)";
-            element.style.border = "1px solid rgba(255, 255, 255, 0.88)";
-            element.style.boxShadow = "0 18px 42px rgba(17, 24, 39, 0.19), inset 0 1px 0 rgba(255, 255, 255, 0.98), inset 0 -1px 0 rgba(95, 37, 158, 0.18)";
-          },
+          // Keep the non-WebGL surface in sync with the same light/dark theme.
+          fallback: (element) => element.classList.add("section-dock__surface--fallback"),
         });
         glassRef.current = surface;
 
@@ -103,6 +100,11 @@ export function SectionDock() {
   }, []);
 
   useEffect(() => {
+    darkBackdropRef.current = darkBackdrop;
+    glassRef.current?.update({ tintTone: darkBackdrop ? "dark" : "light" });
+  }, [darkBackdrop]);
+
+  useEffect(() => {
     const sections = navigation
       .map((item) => ({ item, element: document.getElementById(targetId(item.id)) }))
       .filter((entry): entry is { item: (typeof navigation)[number]; element: HTMLElement } => Boolean(entry.element));
@@ -116,6 +118,16 @@ export function SectionDock() {
         else break;
       }
       setActiveId((current) => current === nextActive ? current : nextActive);
+
+      const dock = navRef.current;
+      if (dock) {
+        const box = dock.getBoundingClientRect();
+        const x = box.left + box.width / 2;
+        const y = box.top + box.height / 2;
+        const backdropElement = document.elementsFromPoint(x, y).find((element) => !dock.contains(element));
+        const dark = Boolean(backdropElement?.closest(".section-skills, .site-footer"));
+        setDarkBackdrop((current) => current === dark ? current : dark);
+      }
     };
 
     let frame = 0;
@@ -164,6 +176,7 @@ export function SectionDock() {
         ref={navRef}
         aria-label="Explore portfolio sections"
         className="section-dock pointer-events-auto relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2"
+        data-dock-tone={darkBackdrop ? "dark" : "light"}
         initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
         animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
         transition={reducedMotion ? { duration: 0.16 } : dockSpring}
@@ -174,7 +187,7 @@ export function SectionDock() {
           const active = activeId === item.id;
           return (
             <motion.a
-              className="group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--midnight-ink)] outline-none transition-colors hover:text-[var(--ultra-violet)] focus-visible:z-10 focus-visible:text-[var(--ultra-violet)] focus-visible:ring-2 focus-visible:ring-[var(--ultra-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--fog)] active:text-[var(--voltage-violet)] sm:size-12"
+              className="section-dock__link group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--dock-icon-color)] outline-none transition-colors duration-300 hover:text-[var(--dock-icon-hover)] focus-visible:z-10 focus-visible:text-[var(--dock-icon-hover)] focus-visible:ring-2 focus-visible:ring-[var(--dock-icon-hover)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--dock-focus-offset)] active:text-[var(--dock-icon-active)] sm:size-12"
               href={`#${item.id}`}
               key={item.id}
               aria-label={item.label}
@@ -186,10 +199,10 @@ export function SectionDock() {
               transition={dockSpring}
             >
               {active && (reducedMotion ? (
-                <span className="absolute inset-1 rounded-full bg-[rgba(134,47,231,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]" aria-hidden="true" />
+                <span className="section-dock__active absolute inset-1 rounded-full" aria-hidden="true" />
               ) : (
                 <motion.span
-                  className="absolute inset-1 rounded-full bg-[rgba(134,47,231,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]"
+                  className="section-dock__active absolute inset-1 rounded-full"
                   layoutId="section-dock-active"
                   transition={dockSpring}
                   aria-hidden="true"
@@ -199,7 +212,7 @@ export function SectionDock() {
               <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-md bg-[var(--midnight-ink)] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none">
                 {item.label}
               </span>
-              {active && <span className="absolute -bottom-0.5 z-[1] size-1 rounded-full bg-[var(--ultra-violet)]" aria-hidden="true" />}
+              {active && <span className="section-dock__indicator absolute -bottom-0.5 z-[1] size-1 rounded-full" aria-hidden="true" />}
             </motion.a>
           );
         })}

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import type { CSSProperties } from "react";
 import MarqueeAlongSvgPath from "@/components/ui/marquee-along-svg-path";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
@@ -151,18 +150,12 @@ const staticPositions: Array<{ id: Exclude<TechnologyId, "react">; left: string;
 ];
 
 function TechnologyIcon({ id, central = false }: { id: TechnologyId; central?: boolean }) {
-  const size = central ? 48 : 28;
+  const sizeClass = central ? "size-12" : "size-7";
   return (
-    <Image
-      src={icons[id]}
-      alt=""
-      width={size}
-      height={size}
-      unoptimized
-      loading="lazy"
-      draggable={false}
-      className={central ? "size-12 object-contain" : "size-7 object-contain"}
-    />
+    <svg className={sizeClass} viewBox="0 0 32 32" aria-hidden="true">
+      {/* Keep cross-origin PNGs in SVG: the WebGL dock's DOM painter deliberately skips SVG subtrees. */}
+      <image href={icons[id]} x="1" y="1" width="30" height="30" preserveAspectRatio="xMidYMid meet" />
+    </svg>
   );
 }
 

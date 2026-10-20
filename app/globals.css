@@ -239,27 +239,65 @@ img, svg {
   background: var(--gradient-lavender-atmosphere);
 }
 
+.section-dock {
+  --dock-icon-color: var(--midnight-ink);
+  --dock-icon-hover: var(--ultra-violet);
+  --dock-icon-active: var(--voltage-violet);
+  --dock-focus-offset: var(--fog);
+  --dock-active-wash: rgba(134, 47, 231, 0.12);
+  --dock-active-highlight: rgba(255, 255, 255, 0.82);
+  --dock-indicator: var(--ultra-violet);
+  --dock-glass-background: linear-gradient(132deg, rgba(255, 255, 255, 0.62), rgba(241, 245, 249, 0.32) 46%, rgba(189, 143, 240, 0.28));
+  --dock-glass-background-color: rgba(246, 250, 255, 0.5);
+  --dock-glass-border: rgba(255, 255, 255, 0.9);
+  --dock-glass-shadow: 0 18px 42px rgba(17, 24, 39, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.98), inset 0 -1px 0 rgba(95, 37, 158, 0.18);
+}
+
+.section-dock[data-dock-tone="dark"] {
+  --dock-icon-color: var(--pure-white);
+  --dock-icon-hover: var(--orchid-wash);
+  --dock-icon-active: var(--pure-white);
+  --dock-focus-offset: var(--midnight-ink);
+  --dock-active-wash: rgba(189, 143, 240, 0.2);
+  --dock-active-highlight: rgba(255, 255, 255, 0.34);
+  --dock-indicator: var(--lavender-mist);
+  --dock-glass-background: linear-gradient(132deg, rgba(17, 24, 39, 0.76), rgba(31, 41, 55, 0.64) 46%, rgba(95, 37, 158, 0.38));
+  --dock-glass-background-color: rgba(17, 24, 39, 0.68);
+  --dock-glass-border: rgba(255, 255, 255, 0.52);
+  --dock-glass-shadow: 0 20px 46px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.44), inset 0 -1px 0 rgba(173, 109, 244, 0.3);
+}
+
 .section-dock__surface {
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  background: var(--gradient-glass-sheen);
-  box-shadow:
-    0 20px 48px rgba(17, 24, 39, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 -1px 0 rgba(95, 37, 158, 0.12);
+  border: 1px solid var(--dock-glass-border);
+  background: var(--dock-glass-background);
+  background-color: var(--dock-glass-background-color);
+  box-shadow: var(--dock-glass-shadow);
+  transition: background-color 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
 }
 
-.section-dock__surface[data-liquid-glass="webgl"] {
-  background: linear-gradient(132deg, rgba(255, 255, 255, 0.18), rgba(214, 252, 244, 0.08) 48%, rgba(189, 143, 240, 0.12));
-}
-
+.section-dock__surface[data-liquid-glass="webgl"],
 .section-dock__surface[data-liquid-glass="fallback"],
 .section-dock__surface--fallback {
-  border-color: rgba(255, 255, 255, 0.88);
-  background: linear-gradient(132deg, rgba(255, 255, 255, 0.76), rgba(214, 252, 244, 0.56) 48%, rgba(189, 143, 240, 0.5));
-  box-shadow:
-    0 18px 42px rgba(17, 24, 39, 0.19),
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    inset 0 -1px 0 rgba(95, 37, 158, 0.18);
+  border-color: var(--dock-glass-border);
+  background: var(--dock-glass-background);
+  background-color: var(--dock-glass-background-color);
+  box-shadow: var(--dock-glass-shadow);
+}
+
+.section-dock__link {
+  color: var(--dock-icon-color);
+  transition: color 280ms ease;
+}
+
+.section-dock__active {
+  background: var(--dock-active-wash);
+  box-shadow: inset 0 1px 0 var(--dock-active-highlight);
+  transition: background-color 280ms ease, box-shadow 280ms ease;
+}
+
+.section-dock__indicator {
+  background-color: var(--dock-indicator);
+  transition: background-color 280ms ease;
 }
 
 .footer-social {
@@ -895,14 +933,30 @@ img, svg {
 @media (prefers-reduced-transparency: reduce) {
   .section-dock__surface {
     background: var(--pure-white);
+    background-color: var(--pure-white);
     box-shadow: var(--elevation-medium);
+  }
+
+  .section-dock[data-dock-tone="dark"] .section-dock__surface {
+    border-color: rgba(255, 255, 255, 0.72);
+    background: var(--midnight-ink);
+    background-color: var(--midnight-ink);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 }
 
 @media (prefers-contrast: more) {
   .section-dock__surface {
     background: var(--pure-white);
+    background-color: var(--pure-white);
     box-shadow: 0 0 0 2px var(--midnight-ink), var(--elevation-medium);
+  }
+
+  .section-dock[data-dock-tone="dark"] .section-dock__surface {
+    border-color: rgba(255, 255, 255, 0.9);
+    background: var(--midnight-ink);
+    background-color: var(--midnight-ink);
+    box-shadow: 0 0 0 2px var(--pure-white), 0 18px 42px rgba(0, 0, 0, 0.42);
   }
 }
 }
