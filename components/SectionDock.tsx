@@ -65,7 +65,8 @@ export function SectionDock() {
 
         surface = new LiquidGlass(glassElement, {
           backdrop: "auto",
-          tint: 0.72,
+          // Keep the body light over dark hero samples without reducing WebGL refraction.
+          tint: 1.2,
           tintTone: darkBackdropRef.current ? "dark" : "light",
           frost: 0,
           material: dockGlassMaterial,
