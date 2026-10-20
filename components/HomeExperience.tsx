@@ -13,7 +13,6 @@ import { SectionDock } from "@/components/SectionDock";
 import { ServicesSection } from "@/components/ServicesSection";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StackSection } from "@/components/StackSection";
-import { TechnologyMarqueeSection } from "@/components/TechnologyMarqueeSection";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile } from "@/data/profile";
 
@@ -125,7 +124,6 @@ export function HomeExperience() {
           <main id="main-content" className="portfolio-main">
             <ExperienceStory introReady={introReady} />
             <ServicesSection />
-            <TechnologyMarqueeSection />
             <StackSection />
             <JourneySection />
             <UnfurlingGallery />

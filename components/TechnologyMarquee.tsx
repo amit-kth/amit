@@ -2,7 +2,8 @@
 
 import MarqueeAlongSvgPath from "@/components/ui/marquee-along-svg-path";
 
-const technologyPath = "M1 209.434C58.5872 255.935 387.926 325.938 482.583 209.434C600.905 63.8051 525.516 -43.2211 427.332 19.9613C329.149 83.1436 352.902 242.723 515.041 267.302C644.752 286.966 943.56 181.94 995 156.5";
+// A single, non-crossing wave keeps each mark distinct as it travels through the stack section.
+const technologyPath = "M0 100 C155 22 310 22 465 100 C620 178 775 178 930 100 C1085 22 1245 22 1400 100";
 
 const technologies = [
   { id: "next", name: "Next.js" },
@@ -22,7 +23,7 @@ type TechnologyId = (typeof technologies)[number]["id"];
 function TechnologyMark({ id }: { id: TechnologyId }) {
   if (id === "next") {
     return (
-      <svg className="size-8 text-[var(--midnight-ink)]" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <svg className="size-8 text-[var(--pure-white)]" viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <path d="M6.5 25V7l19 18V7" stroke="currentColor" strokeWidth="3.4" strokeLinecap="square" />
       </svg>
     );
@@ -89,7 +90,7 @@ function TechnologyMark({ id }: { id: TechnologyId }) {
   }
 
   return (
-    <svg className="size-8 text-[var(--midnight-ink)]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg className="size-8 text-[var(--pure-white)]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.1c-3.1.67-3.76-1.31-3.76-1.31-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.79 1.81 3.25 1.29.1-.72.39-1.22.71-1.5-2.48-.28-5.08-1.24-5.08-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.06 1.14a10.64 10.64 0 0 1 5.57 0c2.13-1.44 3.06-1.14 3.06-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.29-2.61 5.23-5.1 5.51.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
     </svg>
   );
@@ -97,51 +98,40 @@ function TechnologyMark({ id }: { id: TechnologyId }) {
 
 function TechnologyItem({ id, name }: (typeof technologies)[number]) {
   return (
-    <div className="flex w-[86px] flex-col items-center gap-2 text-center">
-      <div className="grid size-10 place-items-center">
+    <div className="flex w-[60px] flex-col items-center gap-1.5 text-center">
+      <div className="grid size-9 place-items-center">
         <TechnologyMark id={id} />
       </div>
-      <span className="whitespace-nowrap font-mono text-[9px] font-medium leading-none tracking-[-0.02em] text-[var(--midnight-ink)] sm:text-[10px]">
+      <span className="whitespace-nowrap font-mono text-[8px] font-medium leading-none tracking-[-0.02em] text-[var(--fog)] sm:text-[9px]">
         {name}
       </span>
     </div>
   );
 }
 
-export function TechnologyMarqueeSection() {
+export function TechnologyMarquee() {
   return (
-    <section className="relative overflow-hidden border-y border-[rgba(17,24,39,0.1)] bg-[var(--fog)] py-7 sm:py-8" aria-labelledby="technology-motion-title">
-      <div className="mx-auto flex max-w-[1480px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-[clamp(20px,5vw,84px)]">
-        <h2 className="font-mono text-[9px] font-medium uppercase tracking-[0.12em] text-[var(--ultra-violet)]" id="technology-motion-title">
-          Frontend, in motion
-        </h2>
-        <p className="m-0 font-mono text-[8px] uppercase tracking-[0.09em] text-[var(--slate)] sm:text-[9px]">
-          React · Next.js · TypeScript · and the tools around them
-        </p>
-      </div>
-
-      <ul className="sr-only" aria-label="Technologies featured in the animation">
+    <div className="relative mx-auto h-[210px] max-w-[1480px] sm:h-[220px]" role="group" aria-label="Frontend technologies">
+      <ul className="sr-only">
         {technologies.map((technology) => <li key={technology.id}>{technology.name}</li>)}
       </ul>
-
-      <div className="relative mx-auto mt-3 h-[280px] max-w-[1480px] sm:mt-4 sm:h-[300px] lg:h-[330px]" aria-hidden="true">
+      <div className="absolute inset-0" aria-hidden="true">
         <MarqueeAlongSvgPath
           path={technologyPath}
           pathId="frontend-technology-marquee-path"
-          viewBox="0 0 996 330"
-          baseVelocity={3.8}
+          viewBox="0 0 1400 200"
+          baseVelocity={2.8}
           slowdownOnHover
-          slowDownFactor={0.24}
+          slowDownFactor={0.22}
           useScrollVelocity
           scrollAwareDirection
-          repeat={2}
-          showPath
+          repeat={1}
           responsive
-          className="text-[rgba(134,47,231,0.28)]"
+          className="text-[var(--lavender-mist)]"
         >
           {technologies.map((technology) => <TechnologyItem key={technology.id} {...technology} />)}
         </MarqueeAlongSvgPath>
       </div>
-    </section>
+    </div>
   );
 }

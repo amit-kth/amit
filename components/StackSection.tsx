@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import { TechnologyMarquee } from "@/components/TechnologyMarquee";
 import { copy, profile, stackGroups } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins, ScrollTrigger } from "@/lib/gsap-client";
@@ -132,7 +133,7 @@ export function StackSection() {
 
   return (
     <section className="section-skills relative overflow-hidden py-[clamp(74px,8vw,120px)] text-[var(--pure-white)]" id="skills" ref={sectionRef} aria-labelledby="stack-title">
-      <header className="mx-auto mb-8 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-11" data-stack-heading>
+      <header className="mx-auto mb-2 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-3" data-stack-heading>
         <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--lavender-mist)]">{copy.stackEyebrow}</p>
         <h2 className="mt-2 text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.86] tracking-[-0.09em] text-[var(--pure-white)]" id="stack-title">
           {copy.stackTitle}<span className="text-[var(--lavender-mist)]">.</span>
@@ -141,6 +142,10 @@ export function StackSection() {
           {profile.techSummary}<br />{profile.experienceYears} years in frontend
         </p>
       </header>
+
+      <div className="mx-auto mb-5 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-7">
+        <TechnologyMarquee />
+      </div>
 
       <div className="overflow-hidden border-y border-[rgba(255,255,255,0.16)] bg-[rgba(17,24,39,0.52)] px-[clamp(20px,5vw,84px)]" role="group" aria-label="Skills and tools">
         <div className="mx-auto max-w-[1480px]">

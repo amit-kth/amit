@@ -298,7 +298,7 @@ export default function MarqueeAlongSvgPath({
         className={`relative h-full w-full overflow-hidden ${className}`}
         {...interactionProps}
       >
-        <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-6 gap-y-5 px-4 py-5">
+        <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-2 gap-y-3 px-2 py-3">
           {childrenArray.map((child, index) => (
             <div className="shrink-0" key={`static-${index}`}>{child}</div>
           ))}
@@ -313,7 +313,7 @@ export default function MarqueeAlongSvgPath({
       className={`relative h-full w-full overflow-hidden ${draggable && grabCursor ? "cursor-grab touch-pan-y" : ""} ${className}`}
       {...interactionProps}
     >
-      <div className="path-marquee__fallback flex h-full w-full flex-wrap items-center justify-center gap-x-6 gap-y-5 px-4 py-5">
+      <div className="path-marquee__fallback flex h-full w-full flex-wrap items-center justify-center gap-x-2 gap-y-3 px-2 py-3">
         {childrenArray.map((child, index) => <div className="shrink-0" key={`fallback-${index}`}>{child}</div>)}
       </div>
       <div className="path-marquee__animated absolute inset-0">
