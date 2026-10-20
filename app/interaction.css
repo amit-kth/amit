@@ -1,71 +1,11 @@
-.site-header__mark,
-.site-footer__brand .site-header__mark {
-  background: var(--voltage-violet);
-  color: var(--pure-white);
-}
-
-.top-progress > span {
-  background: var(--voltage-violet);
-  box-shadow: none;
-}
-
-.button--primary {
-  background: var(--voltage-violet);
-  color: var(--pure-white);
-  box-shadow: 0 8px 22px rgba(95, 37, 158, 0.18);
-}
-
-.button--primary:hover,
-.button--primary:focus-visible {
-  background: var(--ultra-violet);
-}
-
-.button--quiet {
-  border-color: var(--mist);
-  background: rgba(255, 255, 255, 0.8);
-  color: var(--midnight-ink);
-}
-
-.service-card__topline,
-.service-card__topline svg,
-.service-card__topline > span i,
-.service-card__stack,
-.service-card__stack i,
-.contact-section__main h2 span,
-.contact-email svg,
-.contact-links a svg,
-.journey-row__company,
-.journey-row__arrow,
-.journey-extra-card li svg,
-.site-menu__link svg,
-.site-footer__links a svg,
-.site-footer__top svg {
-  color: var(--ultra-violet);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .button:hover {
-    transform: translateY(-2px);
+@layer base {
+  .site-header__mark {
+    background: var(--voltage-violet);
+    color: var(--pure-white);
   }
 
-  .button:hover svg,
-  .contact-email:hover svg,
-  .contact-links a:hover svg,
-  .site-footer__links a:hover svg,
-  .site-footer__top:hover svg {
-    transform: translate(2px, -2px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .button,
-  .button svg,
-  .site-header__menu-button,
-  .site-menu__link svg,
-  .contact-email svg,
-  .contact-links a svg,
-  .site-footer__links a svg,
-  .site-footer__top svg {
-    transition: none !important;
+  .top-progress > span {
+    background: var(--voltage-violet);
+    box-shadow: none;
   }
 }

@@ -12,6 +12,7 @@ import { ProofSection } from "@/components/ProofSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StackSection } from "@/components/StackSection";
+import { SectionCard } from "@/components/ui/section-card";
 import { copy, profile } from "@/data/profile";
 
 export function HomeExperience() {
@@ -32,21 +33,29 @@ export function HomeExperience() {
             <StackSection />
             <JourneySection />
             <ContactSection />
-            <footer className="site-footer" id="site-footer">
-              <div className="section-shell site-footer__inner section-card site-footer__card">
-                <a href="#hero" className="site-footer__brand">
-                  <span className="site-header__mark">{profile.brandMark}</span>
+            <footer className="px-[clamp(14px,3vw,32px)] py-2 md:py-3" id="site-footer">
+              <SectionCard className="grid grid-cols-2 items-center gap-x-4 gap-y-3 p-4 sm:p-5 md:grid-cols-[minmax(180px,1fr)_minmax(180px,1fr)_auto] md:gap-y-2 md:px-7">
+                <a href="#hero" className="flex w-fit items-center gap-2.5 text-xs font-semibold tracking-tight text-[var(--midnight-ink)]">
+                  <span className="grid size-8 place-items-center rounded-[10px] bg-[var(--voltage-violet)] text-[9px] font-extrabold text-[var(--pure-white)]">{profile.brandMark}</span>
                   <span>{profile.name}</span>
                 </a>
-                <p className="site-footer__built">{profile.builtWith}</p>
-                <nav className="site-footer__links" aria-label={copy.siteFooter}>
-                  <a href={profile.links.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={14} aria-hidden="true" /></a>
-                  <a href={profile.links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} aria-hidden="true" /></a>
+                <p className="col-span-2 row-start-2 m-0 font-mono text-[8px] uppercase tracking-[0.05em] text-[var(--slate)] md:col-span-1 md:row-start-1">
+                  {profile.builtWith}
+                </p>
+                <nav className="col-span-2 row-start-3 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[8px] uppercase tracking-[0.06em] md:col-span-1 md:col-start-3 md:row-start-1 md:justify-end" aria-label={copy.siteFooter}>
+                  <a className="inline-flex items-center gap-1 text-[var(--midnight-ink)] transition-colors hover:text-[var(--ultra-violet)] motion-reduce:transition-none" href={profile.links.linkedin} target="_blank" rel="noreferrer">
+                    LinkedIn<ArrowUpRight size={13} aria-hidden="true" />
+                  </a>
+                  <a className="inline-flex items-center gap-1 text-[var(--midnight-ink)] transition-colors hover:text-[var(--ultra-violet)] motion-reduce:transition-none" href={profile.links.github} target="_blank" rel="noreferrer">
+                    GitHub<ArrowUpRight size={13} aria-hidden="true" />
+                  </a>
                 </nav>
-                <small>{profile.copyright}</small>
-                <span className="site-footer__location">{profile.location}</span>
-                <a href="#hero" className="site-footer__top">Back to top <ArrowUpRight size={15} aria-hidden="true" /></a>
-              </div>
+                <small className="col-start-1 row-start-4 font-mono text-[8px] uppercase tracking-[0.04em] text-[var(--slate)] md:row-start-2">{profile.copyright}</small>
+                <span className="col-start-2 row-start-4 justify-self-end font-mono text-[8px] uppercase tracking-[0.06em] text-[var(--slate)] md:row-start-2">{profile.location}</span>
+                <a className="col-span-2 row-start-5 inline-flex w-fit items-center gap-1.5 justify-self-start text-[10px] text-[var(--ultra-violet)] transition-transform hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 md:col-span-1 md:col-start-3 md:row-start-2 md:justify-self-end motion-reduce:transition-none" href="#hero">
+                  {copy.backToTop}<ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              </SectionCard>
             </footer>
           </main>
         </div>

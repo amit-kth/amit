@@ -24,7 +24,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
     const context = gsap.context(() => {
       const mobile = window.matchMedia("(max-width: 767px)").matches;
       const split = SplitText.create(title, { type: "words", wordsClass: "hero-title__word", aria: "auto" });
-      gsap.set(split.words, { yPercent: 110, autoAlpha: 0 });
+      gsap.set(split.words, { display: "inline-block", yPercent: 110, autoAlpha: 0 });
 
       const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
       intro.to(split.words, {
@@ -46,52 +46,78 @@ export function HeroSection({ introReady }: HeroSectionProps) {
   }, [introReady, reducedMotion]);
 
   return (
-    <section className="hero-section" id="hero" ref={sectionRef} aria-labelledby="hero-title">
-      <div className="hero-card__topline" data-hero-enter>
-        <a className="hero-card__identity" href="#hero" aria-label={`${profile.name}, portfolio home`}>
-          <span className="site-header__mark">{profile.brandMark}</span>
-          <span className="hero-card__identity-copy">
-            <strong>{profile.name}</strong>
-            <small>{profile.title}</small>
+    <section
+      className="relative z-10 flex h-full min-h-0 flex-col items-stretch justify-between px-5 py-4 sm:px-8 sm:py-7 lg:px-12 lg:py-9"
+      id="hero"
+      ref={sectionRef}
+      aria-labelledby="hero-title"
+    >
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+        <a className="flex w-fit items-center gap-2.5 text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, portfolio home`}>
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--voltage-violet)] text-[10px] font-extrabold tracking-tight text-[var(--pure-white)]">
+            {profile.brandMark}
+          </span>
+          <span className="grid gap-0.5">
+            <strong className="text-[13px] font-bold leading-none">{profile.name}</strong>
+            <small className="font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--slate)]">{profile.title}</small>
           </span>
         </a>
-        <span className="hero-card__topline-role">{profile.hero.roleLabel}</span>
-        <span className="hero-card__topline-year">{profile.hero.portfolioLabel}</span>
+
+        <span className="hidden text-center font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--graphite)] lg:block">
+          {profile.hero.roleLabel}
+        </span>
+        <span className="justify-self-end text-right font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--graphite)]">
+          {profile.hero.portfolioLabel}
+        </span>
       </div>
 
-      <div className="hero-section__inner">
-        <div className="hero-main__copy">
-          <div className="hero-kicker" data-hero-enter>
-            <span className="status-dot" aria-hidden="true" />
+      <div className="grid min-h-0 flex-1 place-items-center py-3 sm:py-7 lg:py-8">
+        <div className="w-full max-w-[1020px] text-center">
+          <div
+            className="mx-auto inline-flex min-h-8 items-center justify-center gap-2 rounded-full border border-[rgba(95,37,158,0.18)] bg-[rgba(255,255,255,0.78)] px-3 py-1.5 font-mono text-[8px] uppercase tracking-[0.09em] text-[var(--ultra-violet)]"
+            data-hero-enter
+          >
+            <span className="size-1.5 rounded-full bg-[var(--voltage-violet)]" aria-hidden="true" />
             <span>{profile.location}</span>
           </div>
           <h1
-            className="hero-title"
+            className="mx-auto mt-4 block max-w-[1020px] text-center text-[clamp(2.5rem,6vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.085em] text-[var(--midnight-ink)] normal-case sm:mt-6"
             id="hero-title"
             ref={titleRef}
             aria-label={profile.hero.headline.join(" ")}
           >
-            <span className="hero-title__line">{profile.hero.headline[0]}</span>
-            <span className="hero-title__line hero-title__line--accent">{profile.hero.headline[1]}</span>
+            <span className="block">{profile.hero.headline[0]}</span>
+            <span className="block text-[var(--ultra-violet)]">{profile.hero.headline[1]}</span>
           </h1>
-          <p className="hero-tagline" data-hero-enter>{profile.hero.tagline}</p>
-          <p className="hero-intro" data-hero-enter>{profile.hero.locationLine}</p>
-          <div className="hero-actions" data-hero-enter>
-            <a className="button button--primary" href="#journey">
-              View journey<ArrowDownRight size={17} aria-hidden="true" />
+          <p className="mx-auto mt-3 max-w-[640px] text-sm font-medium leading-snug text-[var(--graphite)] sm:mt-5 sm:text-lg" data-hero-enter>
+            {profile.hero.tagline}
+          </p>
+          <p className="mx-auto mt-1.5 max-w-[600px] text-[11px] leading-relaxed text-[var(--slate)] sm:mt-2 sm:text-xs" data-hero-enter>
+            {profile.hero.locationLine}
+          </p>
+          <div className="mx-auto mt-4 flex w-full max-w-[360px] flex-col justify-center gap-2 sm:mt-6 sm:w-auto sm:max-w-none sm:flex-row" data-hero-enter>
+            <a
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[var(--voltage-violet)] px-5 text-xs sm:min-h-11 font-semibold text-[var(--pure-white)] shadow-[0_8px_22px_rgba(95,37,158,0.18)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--ultra-violet)] hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              href="#journey"
+            >
+              View journey<ArrowDownRight size={16} aria-hidden="true" />
             </a>
-            <a className="button button--quiet" href={profile.links.resume} download>
+            <a
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-[var(--mist)] bg-[rgba(255,255,255,0.82)] px-5 text-xs font-semibold text-[var(--midnight-ink)] transition sm:min-h-11 duration-200 hover:-translate-y-0.5 hover:border-[var(--lavender-mist)] hover:bg-[var(--pure-white)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              href={profile.links.resume}
+              download
+            >
               Download résumé<ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
         </div>
       </div>
 
-      <div className="hero-card__footer" data-hero-enter>
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-[rgba(17,24,39,0.12)] pt-3 font-mono text-[8px] uppercase tracking-[0.07em] text-[var(--graphite)]">
         <span>{profile.experienceYears} years in frontend</span>
-        <span className="hero-card__footer-stack">{profile.techSummary}</span>
-        <a className="hero-card__scroll" href="#what-i-do">
-          {copy.scroll}<ArrowDownRight size={15} aria-hidden="true" />
+        <span className="hidden text-center text-[var(--ultra-violet)] sm:inline">{profile.techSummary}</span>
+        <a className="inline-flex items-center gap-1.5 whitespace-nowrap text-[var(--ultra-violet)] transition hover:gap-2.5 motion-reduce:transition-none" href="#what-i-do">
+          {copy.scroll}<ArrowDownRight size={14} aria-hidden="true" />
         </a>
       </div>
     </section>

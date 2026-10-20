@@ -412,19 +412,34 @@ export function ShaderCanvas({
   const drawing = status === "running";
 
   return (
-    <div className={cn("shader-canvas", className)} data-shader-status={status}>
-      <div className="shader-canvas__fallback" aria-hidden="true" />
+    <div
+      className={cn(className ? undefined : "relative", "isolate overflow-hidden", className)}
+      data-shader-status={status}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(ellipse_at_55%_100%,var(--lavender-field)_0%,transparent_55%),linear-gradient(135deg,var(--fog),var(--pure-white))]"
+        aria-hidden="true"
+      />
       <canvas
         ref={canvasRef}
         role={label ? "img" : undefined}
         aria-label={label}
         aria-hidden={label ? undefined : true}
-        className={cn("shader-canvas__canvas", !drawing && "is-hidden")}
+        className={cn(
+          "pointer-events-none absolute inset-0 block h-full w-full rounded-[inherit]",
+          !drawing && "invisible",
+        )}
       />
       {showErrors && error && (
-        <pre className="shader-canvas__error" role="alert" tabIndex={0}>{error}</pre>
+        <pre
+          className="absolute inset-x-3 top-3 z-10 max-h-1/2 overflow-auto rounded-2xl border border-[var(--mist)] bg-[var(--pure-white)] p-3 font-mono text-[11px] leading-relaxed text-[var(--graphite)]"
+          role="alert"
+          tabIndex={0}
+        >
+          {error}
+        </pre>
       )}
-      {children && <div className="shader-canvas__content">{children}</div>}
+      {children && <div className="relative z-[1]">{children}</div>}
     </div>
   );
 }
