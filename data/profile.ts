@@ -60,7 +60,7 @@ export const copy = {
   journeyTitle: "JOURNEY",
   journeyEducation: "Education",
   recognition: "Recognition",
-  stackEyebrow: "02 / Skills",
+  stackEyebrow: "02 / Tools & Tech",
   stackTitle: "TOOLS & TECH",
   downloadResume: "Download résumé",
 } as const;
@@ -68,9 +68,10 @@ export const copy = {
 export const navigation = [
   { id: "hero", label: "Home", index: "00" },
   { id: "what-i-do", label: "What I Do", index: "01" },
-  { id: "skills", label: "Skills", index: "02" },
+  { id: "skills", label: "Tools & Tech", index: "02" },
   { id: "journey", label: "Journey", index: "03" },
-  { id: "contact", label: "Contact", index: "04" },
+  { id: "gallery", label: "Gallery", index: "04" },
+  { id: "contact", label: "Contact", index: "05" },
 ] as const;
 
 export const services = [

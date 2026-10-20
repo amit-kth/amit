@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { Home, Mail, PanelsTopLeft, Route, Sparkles } from "lucide-react";
+import { Home, Images, Mail, PanelsTopLeft, Route, Sparkles } from "lucide-react";
 import type { LiquidGlass as LiquidGlassSurface, LiquidGlassMaterial } from "apple-liquid-glass-webgl";
 import { navigation } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
@@ -14,6 +14,7 @@ const icons = {
   "what-i-do": PanelsTopLeft,
   skills: Sparkles,
   journey: Route,
+  gallery: Images,
   contact: Mail,
 } as const;
 
@@ -161,7 +162,7 @@ export function SectionDock() {
       <motion.nav
         ref={navRef}
         aria-label="Explore portfolio sections"
-        className="section-dock relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2"
+        className="section-dock pointer-events-auto relative isolate flex max-w-full items-center gap-0.5 rounded-full p-1.5 sm:gap-1.5 sm:p-2"
         initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
         animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
         transition={reducedMotion ? { duration: 0.16 } : dockSpring}
@@ -172,7 +173,7 @@ export function SectionDock() {
           const active = activeId === item.id;
           return (
             <motion.a
-              className="group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--midnight-ink)] outline-none transition-colors hover:text-[var(--ultra-violet)] focus-visible:z-10 focus-visible:text-[var(--ultra-violet)] focus-visible:ring-2 focus-visible:ring-[var(--ultra-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--fog)] active:text-[var(--voltage-violet)] sm:size-12"
+              className="group relative grid size-10 shrink-0 place-items-center rounded-full text-[var(--midnight-ink)] outline-none transition-colors hover:text-[var(--ultra-violet)] focus-visible:z-10 focus-visible:text-[var(--ultra-violet)] focus-visible:ring-2 focus-visible:ring-[var(--ultra-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--fog)] active:text-[var(--voltage-violet)] sm:size-12"
               href={`#${item.id}`}
               key={item.id}
               aria-label={item.label}

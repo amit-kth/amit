@@ -6,6 +6,7 @@ import { MotionConfig } from "framer-motion";
 import { ContactSection } from "@/components/ContactSection";
 import { ExperienceStory } from "@/components/ExperienceStory";
 import { JourneySection } from "@/components/JourneySection";
+import UnfurlingGallery from "@/components/ui/3d-parallax-unfurling-gallery";
 import { Preloader } from "@/components/Preloader";
 import { SectionDock } from "@/components/SectionDock";
 import { ServicesSection } from "@/components/ServicesSection";
@@ -107,6 +108,7 @@ export function HomeExperience() {
             <ServicesSection />
             <StackSection />
             <JourneySection />
+            <UnfurlingGallery />
             <ContactSection />
             <footer className="site-footer relative isolate overflow-hidden text-[var(--pure-white)]" id="site-footer">
               <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.34)] to-transparent" aria-hidden="true" />

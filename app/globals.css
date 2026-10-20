@@ -226,9 +226,17 @@ img, svg {
   background: var(--gradient-hero-atmosphere);
 }
 
-.section-services,
+.section-services {
+  background: var(--gradient-hero-atmosphere);
+}
+
+.section-skills,
 .site-footer {
   background: var(--gradient-night-atmosphere);
+}
+
+.section-gallery {
+  background: var(--fog);
 }
 
 .section-contact {
