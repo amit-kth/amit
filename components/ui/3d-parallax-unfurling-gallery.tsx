@@ -98,7 +98,7 @@ export default function UnfurlingGallery() {
             borderWidth: bannerBorderWidth,
             borderColor: "rgba(95, 37, 158, 0.58)",
           }}
-          className="relative mx-auto flex max-w-[1920px] items-center justify-center overflow-hidden border-solid bg-[var(--midnight-ink)] will-change-transform"
+          className="section-gallery__stage relative mx-auto flex max-w-[1920px] items-center justify-center overflow-hidden border-solid bg-[var(--midnight-ink)] will-change-transform"
         >
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ perspective: "1100px" }}>
             <div className="absolute inset-0 z-20 shadow-[inset_0_100px_150px_-50px_rgba(17,24,39,0.94),inset_0_-100px_150px_-50px_rgba(17,24,39,0.94),inset_120px_0_150px_-50px_rgba(17,24,39,0.72),inset_-120px_0_150px_-50px_rgba(17,24,39,0.72)]" aria-hidden="true" />

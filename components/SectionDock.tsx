@@ -109,6 +109,7 @@ export function SectionDock() {
       .map((item) => ({ item, element: document.getElementById(targetId(item.id)) }))
       .filter((entry): entry is { item: (typeof navigation)[number]; element: HTMLElement } => Boolean(entry.element));
     if (!sections.length) return;
+    const galleryHasDarkStage = !reducedMotion;
 
     const updateActiveSection = () => {
       const readingLine = window.innerHeight * 0.48;
@@ -125,7 +126,9 @@ export function SectionDock() {
         const x = box.left + box.width / 2;
         const y = box.top + box.height / 2;
         const backdropElement = document.elementsFromPoint(x, y).find((element) => !dock.contains(element));
-        const dark = Boolean(backdropElement?.closest(".section-skills, .site-footer"));
+        const darkSurface = Boolean(backdropElement?.closest(".section-skills, .section-gallery__stage, .site-footer"));
+        const selectedWorkIsActive = galleryHasDarkStage && nextActive === "gallery";
+        const dark = darkSurface || selectedWorkIsActive;
         setDarkBackdrop((current) => current === dark ? current : dark);
       }
     };
@@ -147,7 +150,7 @@ export function SectionDock() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, []);
+  }, [reducedMotion]);
 
   const handleNavigation = (event: MouseEvent<HTMLAnchorElement>, id: (typeof navigation)[number]["id"]) => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
