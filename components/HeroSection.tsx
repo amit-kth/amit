@@ -54,8 +54,8 @@ export function HeroSection({ introReady }: HeroSectionProps) {
     >
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
         <a className="flex w-fit items-center gap-2.5 text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, portfolio home`}>
-          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--voltage-violet)] text-[10px] font-extrabold tracking-tight text-[var(--pure-white)]">
-            {profile.brandMark}
+          <span className="relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-[var(--midnight-ink)] shadow-[0_6px_16px_rgba(17,24,39,0.16)]" aria-hidden="true">
+            <span className="size-2.5 rounded-full bg-[var(--lavender-mist)] shadow-[0_0_14px_rgba(173,109,244,0.7)]" />
           </span>
           <span className="grid gap-0.5">
             <strong className="text-[13px] font-bold leading-none">{profile.name}</strong>

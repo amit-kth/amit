@@ -6,23 +6,38 @@
   --color-canvas: var(--fog);
   --color-violet: var(--voltage-violet);
   --color-accent: var(--voltage-violet);
+  --color-violet-deep: var(--ultra-violet);
   --color-lavender: var(--lavender-field);
+  --color-lavender-light: var(--lavender-mist);
+  --color-magenta: var(--magenta-spark);
+  --color-pink: var(--hot-pink-ray);
+  --color-amber: var(--amber-pulse);
+  --color-graphite: var(--graphite);
+  --color-slate: var(--slate);
+  --color-mist: var(--mist);
+  --color-mint: var(--mint-wash);
   --color-surface: var(--pure-white);
   --color-danger: var(--hot-pink-ray);
-  --radius-field: 1.5rem;
+  --radius-field: var(--shape-radius-lg);
+  --radius-sm: var(--shape-radius-sm);
+  --radius-md: var(--shape-radius-md);
+  --radius-lg: var(--shape-radius-lg);
+  --radius-pill: var(--shape-radius-pill);
   --font-sans: var(--font-bricolage);
   --font-display: var(--font-bricolage);
   --font-mono: var(--font-plex-mono);
   --text-display: clamp(4.5rem, 12vw, 10.5rem);
   --text-title: clamp(2.5rem, 6.5vw, 6rem);
   --text-body: clamp(0.95rem, 1.1vw, 1.08rem);
-  --spacing-section: clamp(76px, 9vw, 136px);
-  --spacing-gutter: clamp(20px, 5vw, 84px);
+  --spacing-section: var(--layout-section-space);
+  --spacing-gutter: var(--layout-page-gutter);
 }
 
 @layer base {
 :root {
   color-scheme: light;
+
+  /* Supplied brand palette */
   --voltage-violet: #862FE7;
   --ultra-violet: #5F259E;
   --lavender-mist: #AD6DF4;
@@ -39,6 +54,7 @@
   --mint-wash: #D6FCF4;
   --lavender-field: #EBDAFD;
 
+  /* Semantic color roles */
   --bg: var(--fog);
   --bg-raised: var(--pure-white);
   --bg-soft: var(--lavender-field);
@@ -50,8 +66,46 @@
   --accent-bright: var(--lavender-field);
   --accent-deep: var(--ultra-violet);
   --accent-ink: var(--midnight-ink);
+  --surface-page: var(--fog);
+  --surface-raised: var(--pure-white);
+  --surface-soft: var(--lavender-field);
+  --surface-mint: var(--mint-wash);
+  --surface-inverse: var(--midnight-ink);
+  --text-primary: var(--midnight-ink);
+  --text-secondary: var(--graphite);
+  --text-muted: var(--slate);
+  --text-inverse: var(--pure-white);
+  --text-accent: var(--ultra-violet);
   --line: rgba(17, 24, 39, 0.15);
   --line-strong: rgba(17, 24, 39, 0.26);
+  --border-subtle: var(--mist);
+  --border-strong: rgba(17, 24, 39, 0.26);
+  --status-positive: var(--mint-wash);
+  --status-alert: var(--amber-pulse);
+
+  /* Shape, layout, and elevation */
+  --shape-radius-xs: 0.5rem;
+  --shape-radius-sm: 0.875rem;
+  --shape-radius-md: 1.25rem;
+  --shape-radius-lg: 1.75rem;
+  --shape-radius-xl: 2.25rem;
+  --shape-radius-pill: 999px;
+  --layout-container-wide: 1480px;
+  --layout-container-copy: 720px;
+  --layout-page-gutter: clamp(20px, 5vw, 84px);
+  --layout-section-space: clamp(76px, 9vw, 136px);
+  --layout-dock-clearance: calc(5.5rem + env(safe-area-inset-bottom));
+  --elevation-low: 0 3px 12px rgba(17, 24, 39, 0.07);
+  --elevation-medium: 0 12px 32px rgba(17, 24, 39, 0.12);
+  --elevation-high: 0 24px 64px rgba(17, 24, 39, 0.18);
+  --elevation-glass: 0 18px 48px rgba(17, 24, 39, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+  /* Atmospheric surfaces and glass highlights */
+  --gradient-hero-atmosphere: radial-gradient(ellipse at 78% 20%, rgba(173, 109, 244, 0.24), transparent 42%), radial-gradient(ellipse at 12% 86%, rgba(214, 252, 244, 0.45), transparent 34%), linear-gradient(135deg, var(--fog), var(--lavender-field));
+  --gradient-lavender-atmosphere: radial-gradient(ellipse at 92% 12%, rgba(134, 47, 231, 0.2), transparent 38%), radial-gradient(ellipse at 0% 100%, rgba(214, 252, 244, 0.56), transparent 36%), linear-gradient(135deg, var(--lavender-field), var(--fog));
+  --gradient-night-atmosphere: radial-gradient(ellipse at 86% 6%, rgba(134, 47, 231, 0.34), transparent 42%), radial-gradient(ellipse at 12% 100%, rgba(255, 95, 228, 0.12), transparent 34%), linear-gradient(135deg, var(--midnight-ink), var(--midnight-ink));
+  --gradient-glass-sheen: linear-gradient(132deg, rgba(255, 255, 255, 0.36), rgba(214, 252, 244, 0.12) 46%, rgba(189, 143, 240, 0.2));
+
   --font-bricolage: "Bricolage Grotesque Variable";
   --font-plex-mono: "IBM Plex Mono";
   --font-body: var(--font-bricolage), "Arial", sans-serif;
@@ -166,6 +220,30 @@ img, svg {
 .portfolio-main {
   position: relative;
   z-index: 1;
+}
+
+.experience-story {
+  background: var(--gradient-hero-atmosphere);
+}
+
+.section-services,
+.site-footer {
+  background: var(--gradient-night-atmosphere);
+}
+
+.section-contact {
+  background: var(--gradient-lavender-atmosphere);
+}
+
+.section-dock__surface {
+  background: var(--gradient-glass-sheen);
+  box-shadow: var(--elevation-glass);
+}
+
+.section-dock__surface[data-liquid-glass="fallback"],
+.section-dock__surface--fallback {
+  background: var(--pure-white);
+  box-shadow: var(--elevation-glass);
 }
 
 /* Shared layout language. */
@@ -640,18 +718,16 @@ img, svg {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .section-dock {
-    border-color: var(--mist) !important;
-    background: var(--pure-white) !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .section-dock__surface {
+    background: var(--pure-white);
+    box-shadow: var(--elevation-medium);
   }
 }
 
 @media (prefers-contrast: more) {
-  .section-dock {
-    border-color: var(--midnight-ink) !important;
-    background: var(--pure-white) !important;
+  .section-dock__surface {
+    background: var(--pure-white);
+    box-shadow: 0 0 0 2px var(--midnight-ink), var(--elevation-medium);
   }
 }
 }

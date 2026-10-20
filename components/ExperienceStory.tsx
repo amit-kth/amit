@@ -16,7 +16,7 @@ type ExperienceStoryProps = {
 export function ExperienceStory({ introReady }: ExperienceStoryProps) {
   return (
     <section
-      className="relative isolate box-border h-screen supports-[height:100svh]:h-svh w-full overflow-hidden bg-[var(--fog)]"
+      className="experience-story relative isolate box-border h-screen supports-[height:100svh]:h-svh w-full overflow-hidden"
       id="experience-story"
       aria-label="Portfolio introduction"
     >

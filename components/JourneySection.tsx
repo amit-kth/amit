@@ -94,7 +94,7 @@ export function JourneySection() {
       <div className="journey-section__layout">
         <aside className="journey-side">
           <div className="section-marker" aria-hidden="true">
-            <span className="section-marker__number">04</span>
+            <span className="section-marker__number">03</span>
             <span>{copy.journey}</span>
           </div>
           <div className="journey-side__sticky">

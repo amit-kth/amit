@@ -1,7 +1,6 @@
 export const profile = {
   name: "Amit Verma",
   displayName: "AMIT VERMA",
-  brandMark: "AV(R)",
   title: "Frontend Developer",
   location: "Kota, India",
   email: "amverma1204t@gmail.com",
@@ -15,13 +14,14 @@ export const profile = {
     imageAlt: "Amit Verma — Frontend Developer (React, Next.js, TypeScript)",
   },
   links: {
+    instagram: null,
     linkedin: "https://www.linkedin.com/in/amit-verma-2a46971b4/",
     github: "https://github.com/it-is-amit",
     resume: "/resume.txt",
   },
   hero: {
     headline: ["Complex ideas.", "Effortless interfaces."],
-    roleLabel: "FRONTEND DEVELOPER · UI/UX MINDSET",
+    roleLabel: "Frontend Developer · UI/UX Designer",
     portfolioLabel: "PORTFOLIO 2026",
     tagline: "I build thoughtful, polished web experiences.",
     intro: "Frontend Developer. React, Next.js, TypeScript.",
@@ -43,7 +43,6 @@ export const profile = {
   roleInterest:
     "Open to senior frontend and React / Next.js roles at product companies, in India and remote.",
   copyright: "© 2026 Amit Verma",
-  builtWith: "Built with Next.js, TypeScript, GSAP and Lenis.",
 } as const;
 
 export const copy = {
@@ -54,25 +53,24 @@ export const copy = {
   journey: "Journey",
   scroll: "Scroll to explore",
   backToTop: "Back to top",
-  preloaderLabel: "AMIT VERMA, FRONTEND DEVELOPER",
+  preloaderLabel: "Frontend Developer · UI/UX Designer",
   servicesTitle: "WHAT I DO",
   contact: "Contact",
   journeyCaption: "From designer to frontend developer",
   journeyTitle: "JOURNEY",
   journeyEducation: "Education",
   recognition: "Recognition",
-  stackEyebrow: "03 / Skills",
+  stackEyebrow: "02 / Skills",
   stackTitle: "TOOLS & TECH",
-  downloadResume: "Download resume",
+  downloadResume: "Download résumé",
 } as const;
 
 export const navigation = [
   { id: "hero", label: "Home", index: "00" },
   { id: "what-i-do", label: "What I Do", index: "01" },
-  { id: "proof", label: "Scale", index: "02" },
-  { id: "skills", label: "Skills", index: "03" },
-  { id: "journey", label: "Journey", index: "04" },
-  { id: "contact", label: "Contact", index: "05" },
+  { id: "skills", label: "Skills", index: "02" },
+  { id: "journey", label: "Journey", index: "03" },
+  { id: "contact", label: "Contact", index: "04" },
 ] as const;
 
 export const services = [

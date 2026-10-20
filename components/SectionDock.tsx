@@ -1,26 +1,104 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { BarChart3, Home, Mail, PanelsTopLeft, Route, Sparkles } from "lucide-react";
+import { Home, Mail, PanelsTopLeft, Route, Sparkles } from "lucide-react";
+import type { LiquidGlass as LiquidGlassSurface, LiquidGlassMaterial } from "apple-liquid-glass-webgl";
 import { navigation } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
+import { useLenis } from "@/components/SmoothScrollProvider";
 
 const icons = {
   hero: Home,
   "what-i-do": PanelsTopLeft,
-  proof: BarChart3,
   skills: Sparkles,
   journey: Route,
   contact: Mail,
 } as const;
 
-const targetId = (id: string) => id === "hero" ? "experience-story" : id;
-const dockSpring = { type: "spring" as const, stiffness: 520, damping: 46, mass: 1 };
+const targetId = (id: (typeof navigation)[number]["id"]) => id === "hero" ? "experience-story" : id;
+const dockSpring = { type: "spring" as const, stiffness: 420, damping: 38, mass: 0.9 };
+const scrollEase = (time: number) => 1 - Math.pow(1 - time, 4);
+
+const dockGlassMaterial = {
+  refraction: 82,
+  edgeReach: 0.16,
+  edgeWidth: 0.22,
+  dispersion: 1.1,
+  frost: 0,
+  backdropBlur: 0,
+  body: 0.72,
+  absorption: 0.42,
+  tint: 0.08,
+  rim: 0.42,
+  reflection: 0.34,
+  highlight: 0.42,
+  lightAngle: 132,
+  echo: 0.24,
+  hairline: 0.34,
+  hairWidth: 0.52,
+} satisfies Partial<LiquidGlassMaterial>;
 
 export function SectionDock() {
-  const [activeId, setActiveId] = useState("hero");
+  const [activeId, setActiveId] = useState<(typeof navigation)[number]["id"]>("hero");
   const reducedMotion = usePrefersReducedMotion();
+  const lenis = useLenis();
+  const navRef = useRef<HTMLElement>(null);
+  const glassRef = useRef<LiquidGlassSurface | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    let surface: LiquidGlassSurface | null = null;
+    let glassElement: HTMLElement | null = null;
+
+    const mountGlass = async () => {
+      glassElement = navRef.current?.querySelector<HTMLElement>("[data-dock-glass]") ?? null;
+      if (!glassElement) return;
+
+      try {
+        const { LiquidGlass } = await import("apple-liquid-glass-webgl");
+        if (!mounted || !glassElement) return;
+
+        surface = new LiquidGlass(glassElement, {
+          backdrop: "auto",
+          tint: 0.08,
+          tintTone: "light",
+          frost: 0,
+          material: dockGlassMaterial,
+          live: false,
+          maxDpr: 1.5,
+          bleed: 32,
+          zIndex: -1,
+          respectReducedTransparency: true,
+          // Never degrade to a blur-only effect; preserve contrast with a solid surface.
+          fallback: (element) => {
+            element.style.background = "var(--gradient-glass-sheen)";
+            element.style.backgroundColor = "rgba(248, 245, 252, 0.96)";
+            element.style.boxShadow = "var(--elevation-glass)";
+          },
+        });
+        glassRef.current = surface;
+
+        const readySurface = await surface.ready;
+        if (mounted) navRef.current?.setAttribute("data-glass-state", readySurface.mode);
+      } catch (error) {
+        if (mounted) {
+          glassElement?.setAttribute("data-liquid-glass", "fallback");
+          glassElement?.classList.add("section-dock__surface--fallback");
+          console.warn("Liquid glass dock could not be initialized; using its accessible solid fallback.", error);
+        }
+      }
+    };
+
+    const frame = window.requestAnimationFrame(() => void mountGlass());
+    return () => {
+      mounted = false;
+      window.cancelAnimationFrame(frame);
+      surface?.destroy();
+      glassRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const sections = navigation
@@ -57,42 +135,66 @@ export function SectionDock() {
     };
   }, []);
 
+  const handleNavigation = (event: MouseEvent<HTMLAnchorElement>, id: (typeof navigation)[number]["id"]) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const target = document.getElementById(targetId(id));
+    if (!target) return;
+
+    event.preventDefault();
+    const hash = `#${id}`;
+    if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+
+    if (lenis) {
+      lenis.scrollTo(target, {
+        duration: reducedMotion ? 0 : 1.15,
+        immediate: reducedMotion,
+        easing: scrollEase,
+        offset: 0,
+      });
+    } else {
+      target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    }
+  };
+
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[150] flex justify-center px-4 pb-[max(14px,env(safe-area-inset-bottom))]">
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[150] flex justify-center px-3 pb-[max(14px,env(safe-area-inset-bottom))] sm:px-4">
       <motion.nav
+        ref={navRef}
         aria-label="Explore portfolio sections"
-        className="section-dock pointer-events-auto flex items-center gap-0.5 rounded-[28px] border border-white/80 bg-[rgba(255,255,255,0.76)] p-1 shadow-[0_12px_40px_rgba(17,24,39,0.16),inset_0_1px_0_rgba(255,255,255,0.94)] backdrop-blur-2xl supports-[backdrop-filter]:bg-[rgba(255,255,255,0.62)] sm:gap-2 sm:p-2.5"
-        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.94 }}
+        className="section-dock relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2"
+        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
         animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
         transition={reducedMotion ? { duration: 0.16 } : dockSpring}
       >
+        <span className="section-dock__surface pointer-events-none absolute inset-0 rounded-full" data-dock-glass aria-hidden="true" />
         {navigation.map((item) => {
-          const Icon = icons[item.id as keyof typeof icons];
+          const Icon = icons[item.id];
           const active = activeId === item.id;
           return (
             <motion.a
-              className="group relative grid size-11 shrink-0 place-items-center rounded-[20px] text-[var(--graphite)] outline-none transition-colors hover:text-[var(--ultra-violet)] focus-visible:text-[var(--ultra-violet)] focus-visible:ring-2 focus-visible:ring-[var(--ultra-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--pure-white)] active:bg-[var(--lavender-field)] sm:size-12"
+              className="group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--midnight-ink)] outline-none transition-colors hover:text-[var(--ultra-violet)] focus-visible:z-10 focus-visible:text-[var(--ultra-violet)] focus-visible:ring-2 focus-visible:ring-[var(--ultra-violet)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--fog)] active:text-[var(--voltage-violet)] sm:size-12"
               href={`#${item.id}`}
               key={item.id}
               aria-label={item.label}
               aria-current={active ? "location" : undefined}
               title={item.label}
-              whileHover={reducedMotion ? undefined : { y: -6, scale: 1.12 }}
-              whileTap={reducedMotion ? undefined : { scale: 0.92 }}
+              onClick={(event) => handleNavigation(event, item.id)}
+              whileHover={reducedMotion ? undefined : { y: -3, scale: 1.06 }}
+              whileTap={reducedMotion ? undefined : { scale: 0.94 }}
               transition={dockSpring}
             >
               {active && (reducedMotion ? (
-                <span className="absolute inset-0 rounded-[20px] bg-[var(--lavender-field)]" aria-hidden="true" />
+                <span className="absolute inset-1 rounded-full bg-[rgba(134,47,231,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]" aria-hidden="true" />
               ) : (
                 <motion.span
-                  className="absolute inset-0 rounded-[20px] bg-[var(--lavender-field)]"
+                  className="absolute inset-1 rounded-full bg-[rgba(134,47,231,0.12)] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]"
                   layoutId="section-dock-active"
                   transition={dockSpring}
                   aria-hidden="true"
                 />
               ))}
-              <Icon className="relative z-[1]" size={19} strokeWidth={active ? 2.1 : 1.8} aria-hidden="true" />
-              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 translate-y-1 rounded-md bg-[var(--midnight-ink)] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+              <Icon className="relative z-[1]" size={19} strokeWidth={active ? 2.15 : 1.8} aria-hidden="true" />
+              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-md bg-[var(--midnight-ink)] px-2 py-1 font-mono text-[8px] uppercase tracking-[0.08em] text-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none">
                 {item.label}
               </span>
               {active && <span className="absolute -bottom-0.5 z-[1] size-1 rounded-full bg-[var(--ultra-violet)]" aria-hidden="true" />}

@@ -34,11 +34,11 @@ export function ContactSection() {
   }, [reducedMotion]);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[var(--lavender-field)] py-[clamp(80px,10vw,148px)]" id="contact" ref={sectionRef} aria-labelledby="contact-title">
-      <span className="pointer-events-none absolute -right-[0.08em] top-[0.12em] select-none text-[clamp(16rem,36vw,42rem)] font-semibold leading-[0.72] tracking-[-0.12em] text-[rgba(95,37,158,0.045)]" aria-hidden="true">05</span>
+    <section className="section-contact relative isolate overflow-hidden py-[clamp(80px,10vw,148px)]" id="contact" ref={sectionRef} aria-labelledby="contact-title">
+      <span className="pointer-events-none absolute -right-[0.08em] top-[0.12em] select-none text-[clamp(16rem,36vw,42rem)] font-semibold leading-[0.72] tracking-[-0.12em] text-[rgba(95,37,158,0.045)]" aria-hidden="true">04</span>
       <div className="relative mx-auto grid max-w-[1480px] grid-cols-1 gap-8 px-[clamp(20px,5vw,84px)] md:grid-cols-[minmax(110px,0.32fr)_minmax(0,1.68fr)] md:gap-10">
         <div className="flex items-start gap-3 font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--ultra-violet)] md:flex-col md:gap-2" data-contact-reveal>
-          <span>05</span><span className="text-[var(--orchid-wash)]" aria-hidden="true">/</span><span>{copy.contact}</span>
+          <span>04</span><span className="text-[var(--orchid-wash)]" aria-hidden="true">/</span><span>{copy.contact}</span>
         </div>
 
         <div className="min-w-0">

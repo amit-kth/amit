@@ -20,10 +20,7 @@ export default function OpenGraphImage() {
         fontFamily: "Arial, sans-serif",
       }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 18, letterSpacing: "0.12em", fontWeight: 700 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ display: "flex", width: 44, height: 44, alignItems: "center", justifyContent: "center", borderRadius: 14, background: "#862FE7", color: "#FFFFFF", fontSize: 15 }}>{profile.brandMark}</span>
-            <span>{profile.hero.portfolioLabel}</span>
-          </span>
+          <span>{profile.hero.portfolioLabel}</span>
           <span style={{ color: "#6B7589", fontSize: 15, fontWeight: 500, letterSpacing: "0.04em" }}>{profile.location}</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
