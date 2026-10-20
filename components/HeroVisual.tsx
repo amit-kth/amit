@@ -12,11 +12,6 @@ export function HeroVisual() {
 
       <svg className="hero-art__route" viewBox="0 0 650 520" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="hero-route-gradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#4D7A06" />
-            <stop offset="48%" stopColor="#D8664D" />
-            <stop offset="100%" stopColor="#765DB5" />
-          </linearGradient>
           <filter id="hero-route-glow" x="-100%" y="-100%" width="300%" height="300%">
             <feGaussianBlur stdDeviation="3" result="softGlow" />
             <feMerge>
@@ -29,11 +24,6 @@ export function HeroVisual() {
         <ellipse className="hero-art__orbit-track hero-art__orbit-track--two" cx="330" cy="255" rx="204" ry="188" />
         <path
           className="hero-art__route-path"
-          pathLength="1"
-          d="M122 147 C 237 99, 261 195, 310 257 S 390 361, 514 320"
-        />
-        <path
-          className="hero-art__route-trail"
           pathLength="1"
           d="M122 147 C 237 99, 261 195, 310 257 S 390 361, 514 320"
         />
