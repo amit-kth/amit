@@ -139,12 +139,12 @@ export function StackSection() {
         <h2 className="mt-2 text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.86] tracking-[-0.09em] text-[var(--pure-white)]" id="stack-title">
           {copy.stackTitle}<span className="text-[var(--lavender-mist)]">.</span>
         </h2>
-        <p className="mt-5 max-w-[520px] font-mono text-[8px] uppercase leading-[1.8] tracking-[0.09em] text-[var(--mist)] sm:text-[9px]">
+        <p className="mt-3 max-w-[520px] font-mono text-[8px] uppercase leading-[1.8] tracking-[0.09em] text-[var(--mist)] sm:text-[9px]">
           {profile.techSummary}<br />{profile.experienceYears} years in frontend
         </p>
       </header>
 
-      <div className="h-0 md:h-[clamp(180px,18vw,320px)]" aria-hidden="true" />
+      <div className="h-0 md:h-[clamp(28px,4vw,64px)]" aria-hidden="true" />
 
       <div className="relative z-10 overflow-hidden border-y border-[rgba(255,255,255,0.16)] bg-[rgba(17,24,39,0.52)] px-[clamp(20px,5vw,84px)]" role="group" aria-label="Skills and tools">
         <div className="mx-auto max-w-[1480px]">

@@ -104,6 +104,32 @@ function MarqueePathItem({
   );
 }
 
+function ScrollVelocityBridge({
+  velocityTarget,
+  factorTarget,
+  springConfig,
+}: {
+  velocityTarget: MotionValue<number>;
+  factorTarget: MotionValue<number>;
+  springConfig: SpringOptions;
+}) {
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothScrollVelocity = useSpring(scrollVelocity, springConfig);
+  const scrollVelocityFactor = useTransform(smoothScrollVelocity, [-1800, 1800], [-0.45, 0.45], { clamp: true });
+
+  useEffect(() => {
+    const stopVelocity = smoothScrollVelocity.on("change", (value) => velocityTarget.set(value));
+    const stopFactor = scrollVelocityFactor.on("change", (value) => factorTarget.set(value));
+    return () => {
+      stopVelocity();
+      stopFactor();
+    };
+  }, [factorTarget, scrollVelocityFactor, smoothScrollVelocity, velocityTarget]);
+
+  return null;
+}
+
 export default function MarqueeAlongSvgPath({
   children,
   className = "",
@@ -170,10 +196,9 @@ export default function MarqueeAlongSvgPath({
     };
   }, [viewBox]);
 
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothScrollVelocity = useSpring(scrollVelocity, scrollSpringConfig);
-  const scrollVelocityFactor = useTransform(smoothScrollVelocity, [-1800, 1800], [-0.45, 0.45], { clamp: true });
+  // Keep scroll observers off animated paths that do not use scroll-reactive motion.
+  const smoothScrollVelocity = useMotionValue(0);
+  const scrollVelocityFactor = useMotionValue(0);
 
   useEffect(() => {
     directionFactor.current = direction === "normal" ? 1 : -1;
@@ -313,6 +338,13 @@ export default function MarqueeAlongSvgPath({
       className={`relative h-full w-full overflow-hidden ${draggable && grabCursor ? "cursor-grab touch-pan-y" : ""} ${className}`}
       {...interactionProps}
     >
+      {(useScrollVelocity || scrollAwareDirection) && (
+        <ScrollVelocityBridge
+          velocityTarget={smoothScrollVelocity}
+          factorTarget={scrollVelocityFactor}
+          springConfig={scrollSpringConfig}
+        />
+      )}
       <div className="path-marquee__fallback flex h-full w-full flex-wrap items-center justify-center gap-x-2 gap-y-3 px-2 py-3">
         {childrenArray.map((child, index) => <div className="shrink-0" key={`fallback-${index}`}>{child}</div>)}
       </div>
