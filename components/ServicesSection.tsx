@@ -133,7 +133,7 @@ export function ServicesSection() {
 
   return (
     <section
-      className="section-services relative overflow-hidden py-[clamp(76px,9vw,136px)] text-[var(--midnight-ink)]"
+      className="section-services relative overflow-hidden bg-[var(--surface-warm)] py-[clamp(76px,9vw,136px)] text-[var(--midnight-ink)]"
       id="what-i-do"
       ref={sectionRef}
       aria-labelledby="services-title"

@@ -21,7 +21,7 @@ export const profile = {
   },
   hero: {
     headline: ["Complex ideas.", "Effortless interfaces."],
-    roleLabel: "Frontend Developer · UI/UX Designer",
+    roleLabel: "Frontend Developer",
     portfolioLabel: "PORTFOLIO 2026",
     tagline: "I build thoughtful, polished web experiences.",
     intro: "Frontend Developer. React, Next.js, TypeScript.",
