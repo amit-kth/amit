@@ -1,230 +1,72 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import type { CSSProperties } from "react";
-import { ArrowUpRight } from "lucide-react";
-import type { LiquidGlass as LiquidGlassSurface, LiquidGlassMaterial } from "apple-liquid-glass-webgl";
+import { Award, GraduationCap } from "lucide-react";
 import { awards, copy, education, journey } from "@/data/profile";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
-const cardThemes = ["violet", "mint", "rose", "amber"] as const;
-
-const journeyGlassMaterial = {
-  refraction: 92,
-  edgeReach: 0.24,
-  edgeWidth: 0.16,
-  dispersion: 1.1,
-  frost: 0,
-  backdropBlur: 0,
-  body: 0.4,
-  absorption: 0.14,
-  tint: 0.05,
-  rim: 0.88,
-  reflection: 0.8,
-  highlight: 0.94,
-  lightAngle: 132,
-  echo: 0.36,
-  hairline: 0.88,
-  hairWidth: 0.34,
-  roundness: 0.78,
-} satisfies Partial<LiquidGlassMaterial>;
+const CARD_STACK_STEP = 16;
 
 export function JourneySection() {
   const sectionRef = useRef<HTMLElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
-  const cardStageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const stage = cardStageRef.current;
-    if (!stage) return;
-
-    const desktopViewport = window.matchMedia("(min-width: 768px)");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let mounted = true;
-    let glass: LiquidGlassSurface | null = null;
-    let frame: number | null = null;
-    let generation = 0;
-
-    const dispose = () => {
-      generation += 1;
-      if (frame !== null) window.cancelAnimationFrame(frame);
-      frame = null;
-      glass?.destroy();
-      glass = null;
-    };
-
-    const initialize = async (request: number) => {
-      try {
-        const { LiquidGlass } = await import("apple-liquid-glass-webgl");
-        if (!mounted || request !== generation || !desktopViewport.matches || reducedMotion.matches) return;
-
-        stage.classList.remove("journey-card-stack__stage--fallback");
-        glass = new LiquidGlass(stage, {
-          backdrop: "auto",
-          tint: 0.44,
-          tintTone: "light",
-          frost: 0,
-          material: journeyGlassMaterial,
-          live: false,
-          maxDpr: 1.35,
-          bleed: 22,
-          zIndex: -1,
-          respectReducedTransparency: true,
-          onContextLost: () => stage.classList.add("journey-card-stack__stage--fallback"),
-          onContextRestored: () => stage.classList.remove("journey-card-stack__stage--fallback"),
-          fallback: (element) => element.classList.add("journey-card-stack__stage--fallback"),
-        });
-
-        const readySurface = await glass.ready;
-        if (mounted && request === generation && readySurface.mode !== "webgl") {
-          stage.classList.add("journey-card-stack__stage--fallback");
-        }
-      } catch {
-        glass?.destroy();
-        glass = null;
-        if (mounted && request === generation) {
-          stage.classList.add("journey-card-stack__stage--fallback");
-        }
-      }
-    };
-
-    const syncGlass = () => {
-      dispose();
-      if (!desktopViewport.matches || reducedMotion.matches) {
-        stage.classList.add("journey-card-stack__stage--fallback");
-        return;
-      }
-
-      stage.classList.remove("journey-card-stack__stage--fallback");
-      const request = generation;
-      frame = window.requestAnimationFrame(() => {
-        frame = null;
-        void initialize(request);
-      });
-    };
-
-    const subscribe = (query: MediaQueryList) => {
-      if (typeof query.addEventListener === "function") {
-        query.addEventListener("change", syncGlass);
-        return () => query.removeEventListener("change", syncGlass);
-      }
-      query.addListener(syncGlass);
-      return () => query.removeListener(syncGlass);
-    };
-
-    const unsubscribeDesktop = subscribe(desktopViewport);
-    const unsubscribeMotion = subscribe(reducedMotion);
-    syncGlass();
-
-    return () => {
-      mounted = false;
-      dispose();
-      unsubscribeDesktop();
-      unsubscribeMotion();
-      stage.classList.remove("journey-card-stack__stage--fallback");
-    };
-  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const stack = stackRef.current;
-    const stage = cardStageRef.current;
-    if (!section || !stack || !stage) return;
+    if (!section || !stack) return;
 
     registerGsapPlugins();
     const context = gsap.context(() => {
       const media = gsap.matchMedia();
       media.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-journey-card]"));
+        const cards = Array.from(stack.querySelectorAll<HTMLElement>("[data-journey-card]"));
         if (cards.length < 2) return;
 
-        section.dataset.scrollStack = "active";
-        gsap.set(cards, {
-          y: 72,
-          scale: 1.035,
-          autoAlpha: 0,
-          transformOrigin: "center top",
-          force3D: true,
-        });
-        gsap.set(cards[0], { y: 0, scale: 1, autoAlpha: 1 });
-
-        const cardContents = cards
-          .map((card) => card.querySelector<HTMLElement>(".journey-card__content"))
-          .filter((content): content is HTMLElement => content !== null);
-        gsap.set(cardContents, { y: 18, autoAlpha: 0 });
-        const firstContent = cards[0].querySelector<HTMLElement>(".journey-card__content");
-        if (firstContent) gsap.set(firstContent, { y: 0, autoAlpha: 1 });
-
-        const deck = gsap.timeline({
-          scrollTrigger: {
-            trigger: stack,
-            start: "top top",
-            end: () => `+=${Math.round(window.innerHeight * cards.length * 0.64)}`,
-            pin: stage,
-            pinSpacing: false,
-            scrub: 0.6,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+        const stickyTop = (index: number) =>
+          Math.round(Math.min(108, Math.max(78, window.innerHeight * 0.1)) + index * CARD_STACK_STEP);
 
         cards.forEach((card, index) => {
-          if (index === 0) return;
+          const deckTransition = gsap.timeline({
+            scrollTrigger: {
+              trigger: card,
+              start: "top 82%",
+              end: () => `top ${stickyTop(index)}px`,
+              scrub: 0.45,
+              invalidateOnRefresh: true,
+            },
+          });
 
-          const position = index;
-          const duration = 0.82;
+          deckTransition.fromTo(
+            card,
+            { y: 24, scale: 0.985, immediateRender: false, transformOrigin: "center top", force3D: true },
+            { y: 0, scale: 1, duration: 1, ease: "none" },
+            0,
+          );
+
           for (let previous = 0; previous < index; previous += 1) {
             const distanceBefore = index - 1 - previous;
             const distanceAfter = index - previous;
-            deck.fromTo(
+            deckTransition.fromTo(
               cards[previous],
               {
-                y: -distanceBefore * 16,
-                scale: 1 - distanceBefore * 0.035,
-                opacity: Math.max(0.82, 1 - distanceBefore * 0.055),
+                y: -distanceBefore * 4,
+                scale: 1 - distanceBefore * 0.012,
                 immediateRender: false,
+                transformOrigin: "center top",
+                force3D: true,
               },
               {
-                y: -distanceAfter * 16,
-                scale: 1 - distanceAfter * 0.035,
-                opacity: Math.max(0.82, 1 - distanceAfter * 0.055),
-                duration,
+                y: -distanceAfter * 4,
+                scale: 1 - distanceAfter * 0.012,
+                duration: 1,
                 ease: "none",
               },
-              position,
-            );
-          }
-
-          deck.fromTo(
-            card,
-            { y: 72, scale: 1.035, autoAlpha: 0, immediateRender: false },
-            { y: 0, scale: 1, autoAlpha: 1, duration, ease: "none" },
-            position,
-          );
-
-          const content = card.querySelector<HTMLElement>(".journey-card__content");
-          if (content) {
-            deck.fromTo(
-              content,
-              { y: 18, autoAlpha: 0, immediateRender: false },
-              { y: 0, autoAlpha: 1, duration: 0.68, ease: "none" },
-              position + 0.1,
+              0,
             );
           }
         });
-
-        const lastCard = cards[cards.length - 1];
-        deck.to(
-          lastCard,
-          { y: 0, scale: 1, autoAlpha: 1, duration: 0.55, ease: "none" },
-          cards.length - 1 + 0.82,
-        );
-
-        return () => {
-          delete section.dataset.scrollStack;
-          deck.scrollTrigger?.kill();
-          deck.kill();
-        };
       });
 
       return () => media.revert();
@@ -232,10 +74,6 @@ export function JourneySection() {
 
     return () => context.revert();
   }, []);
-
-  const stackStyle = {
-    "--journey-stack-length": `${journey.length * 64}svh`,
-  } as CSSProperties;
 
   return (
     <section className="journey-section" id="journey" ref={sectionRef} aria-labelledby="journey-title">
@@ -259,62 +97,71 @@ export function JourneySection() {
             ref={stackRef}
             role="list"
             aria-label={copy.journey}
-            style={stackStyle}
           >
-            <div className="journey-card-stack__stage" ref={cardStageRef} role="presentation">
-              {journey.map((item, index) => (
+            {journey.map((item, index) => {
+              const cardStyle = {
+                "--journey-card-offset": `${index * CARD_STACK_STEP}px`,
+                zIndex: index + 1,
+              } as CSSProperties;
+
+              return (
                 <article
                   className="journey-card"
                   data-journey-card
-                  data-card-theme={cardThemes[index % cardThemes.length]}
+                  data-card-theme={index % 4}
                   key={item.id}
                   role="listitem"
                   aria-labelledby={`journey-${item.id}`}
+                  style={cardStyle}
                 >
-                  <span className="journey-card__wash" aria-hidden="true" />
-                  <span className="journey-card__reflection" aria-hidden="true" />
-                  <span className="journey-card__year" aria-hidden="true">{item.year}</span>
-                  <div className="journey-card__content">
-                    <div className="journey-card__topline">
-                      <span className="journey-card__index">EXPERIENCE 0{index + 1} / 0{journey.length}</span>
-                      <span className="journey-card__period">{item.period}</span>
-                    </div>
-                    <div className="journey-card__details">
-                      <p className="journey-card__eyebrow">Career / {item.year}</p>
-                      <h3 id={`journey-${item.id}`}>{item.role}</h3>
-                      <p className="journey-card__company">{item.company}</p>
-                      <p className="journey-card__description">{item.description}</p>
-                    </div>
-                    <div className="journey-card__footer" aria-hidden="true">
-                      <span>AMIT VERMA / JOURNEY</span>
-                      <span>0{index + 1}<i> / 0{journey.length}</i></span>
-                    </div>
+                  <div className="journey-card__topline">
+                    <span className="journey-card__index">0{index + 1}</span>
+                    <span className="journey-card__period">{item.period}</span>
+                  </div>
+                  <div className="journey-card__details">
+                    <h3 id={`journey-${item.id}`}>{item.role}</h3>
+                    <p className="journey-card__company">{item.company}</p>
+                    <p className="journey-card__description">{item.description}</p>
                   </div>
                 </article>
-              ))}
-            </div>
+              );
+            })}
           </div>
 
-          <div className="journey-extras">
-            <section className="journey-education" aria-labelledby="education-title">
-              <p className="eyebrow">{copy.journeyEducation}</p>
-              <h3 className="journey-education__degree" id="education-title">{education.qualification}</h3>
-              <p>{education.institution} <span aria-hidden="true">·</span> {education.dates}</p>
+          <aside className="journey-academics" aria-label="Education and recognition">
+            <section className="journey-education-card" aria-labelledby="education-title">
+              <div className="journey-education-card__topline">
+                <span>{copy.journeyEducation}</span>
+                <GraduationCap size={19} strokeWidth={1.8} aria-hidden="true" />
+              </div>
+              <p className="journey-education-card__degree-label">B.Tech</p>
+              <h3 id="education-title">
+                <span className="sr-only">B.Tech in </span>
+                {education.qualification.replace(/^B\.Tech in /, "")}
+              </h3>
+              <p className="journey-education-card__institution">{education.institution}</p>
+              <span className="journey-education-card__dates">
+                {education.dates.replace(" to ", "–")}
+              </span>
             </section>
+
             <section className="journey-recognition" aria-labelledby="recognition-title">
-              <p className="eyebrow">{copy.recognition}</p>
+              <div className="journey-recognition__topline">
+                <p className="eyebrow">{copy.recognition}</p>
+                <Award size={16} strokeWidth={1.8} aria-hidden="true" />
+              </div>
               <h3 className="sr-only" id="recognition-title">{copy.recognition}</h3>
               <ul>
                 {awards.map((award) => (
                   <li key={award.title}>
+                    <Award size={14} aria-hidden="true" />
                     <span>{award.title}</span>
                     {"organization" in award && <small>{award.organization}</small>}
-                    <ArrowUpRight size={15} aria-hidden="true" />
                   </li>
                 ))}
               </ul>
             </section>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

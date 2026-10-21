@@ -98,7 +98,7 @@ export const journey = [
     role: "Frontend Developer",
     company: "Kriscent Techno Hub, Kota",
     description:
-      "Fleet management dashboards, social media, e-commerce and AI astrology platforms, and the company website redesign. Worked in a 6 to 8 member team and led the full frontend on several projects.",
+      "Fleet, social, commerce, AI-astrology and company-site work; led frontend on key projects in a 6–8-person team.",
   },
   {
     id: "vysion-frontend",
@@ -107,7 +107,7 @@ export const journey = [
     role: "Frontend Developer",
     company: "Vysion Technology",
     description:
-      "Built OCEMS, the Vidhya Bharti School website and admin, AttachClub admin dashboard, plus company and client websites.",
+      "OCEMS, Vidhya Bharti School’s site and admin, AttachClub admin, plus company and client websites.",
   },
   {
     id: "vysion-designer",
@@ -116,7 +116,7 @@ export const journey = [
     role: "UI/UX Designer",
     company: "Vysion Technology",
     description:
-      "Designed UI/UX for Gurucamp (EdTech), Dhruvaan (IoT device app) and the Decon IoT platform.",
+      "UI/UX for Gurucamp (EdTech), Dhruvaan’s IoT app, and the Decon IoT platform.",
   },
   {
     id: "safal-intern",
@@ -125,7 +125,7 @@ export const journey = [
     role: "UI/UX Design Intern",
     company: "Safal Infotech Pvt. Ltd.",
     description:
-      "Wireframes, user flows and prototypes for the Market Time stock market mobile app.",
+      "Wireframes, user flows, and prototypes for Market Time’s stock-market app.",
   },
 ] as const;
 
