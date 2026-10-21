@@ -5,7 +5,7 @@ import { ArrowDownRight, Download } from "lucide-react";
 import { GlassButton } from "@/components/ui/glass-button";
 import { copy, profile } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
-import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
+import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
 type HeroSectionProps = {
   introReady: boolean;
@@ -25,20 +25,30 @@ export function HeroSection({ introReady }: HeroSectionProps) {
     registerGsapPlugins();
     const context = gsap.context(() => {
       const mobile = window.matchMedia("(max-width: 767px)").matches;
-      const split = SplitText.create(title, { type: "words", wordsClass: "hero-title__word", aria: "auto" });
-      gsap.set(split.words, { display: "inline-block", yPercent: 110, autoAlpha: 0 });
+      const enterElements = section.querySelectorAll<HTMLElement>("[data-hero-enter]");
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-      intro.to(split.words, {
-        yPercent: 0,
-        autoAlpha: 1,
-        duration: mobile ? 0.62 : 0.76,
-        stagger: mobile ? 0.04 : 0.07,
-      });
-      intro.from(
-        section.querySelectorAll<HTMLElement>("[data-hero-enter]"),
-        { y: 12, autoAlpha: 0, duration: 0.48, stagger: 0.06, ease: "power3.out" },
-        "-=0.3",
+      intro.fromTo(
+        title,
+        { y: mobile ? 18 : 24, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: mobile ? 0.68 : 0.82,
+          clearProps: "transform,opacity,visibility",
+        },
+      );
+      intro.fromTo(
+        enterElements,
+        { y: 12, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: mobile ? 0.48 : 0.56,
+          stagger: mobile ? 0.055 : 0.07,
+          clearProps: "transform,opacity,visibility",
+        },
+        "-=0.4",
       );
 
       const scrollContent = section.querySelector<HTMLElement>("[data-hero-scroll-content]");
@@ -74,7 +84,6 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           });
       }
 
-      return () => split.revert();
     }, section);
 
     return () => context.revert();

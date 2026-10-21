@@ -125,7 +125,7 @@ export function HomeExperience() {
 
     registerGsapPlugins();
     const context = gsap.context(() => {
-      revealSectionHeading(heading, footer, "top 88%");
+      revealSectionHeading(heading);
     }, footer);
 
     return () => context.revert();

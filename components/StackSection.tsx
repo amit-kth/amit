@@ -116,8 +116,8 @@ export function StackSection() {
 
     registerGsapPlugins();
     const context = gsap.context(() => {
-      const heading = section.querySelector<HTMLElement>("[data-stack-heading]");
-      if (heading) revealSectionHeading(heading, section);
+      const heading = section.querySelector<HTMLElement>("#stack-title");
+      if (heading) revealSectionHeading(heading);
     }, section);
 
     return () => context.revert();
@@ -126,7 +126,7 @@ export function StackSection() {
   return (
     <section className="section-skills relative overflow-hidden py-[clamp(74px,8vw,120px)] text-[var(--pure-white)]" id="skills" ref={sectionRef} aria-labelledby="stack-title">
       <TechnologyOrbit />
-      <header className="relative z-10 mx-auto mb-2 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-3" data-stack-heading>
+      <header className="relative z-10 mx-auto mb-2 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-3">
         <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--lavender-mist)]">{copy.stackEyebrow}</p>
         <h2 className="mt-2 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--pure-white)]" id="stack-title" data-section-heading>
           {copy.stackTitle}<span className="text-[var(--lavender-mist)]">.</span>

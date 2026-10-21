@@ -40,7 +40,7 @@ export default function UnfurlingGallery() {
 
     registerGsapPlugins();
     const context = gsap.context(() => {
-      revealSectionHeading(heading, section, "top 82%");
+      revealSectionHeading(heading);
     }, section);
 
     return () => context.revert();

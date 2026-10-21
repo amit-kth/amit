@@ -15,8 +15,8 @@ export function ServicesSection() {
 
     registerGsapPlugins();
     const context = gsap.context(() => {
-      const intro = section.querySelector<HTMLElement>("[data-service-intro]");
-      if (intro) revealSectionHeading(intro, section, "top 78%");
+      const heading = section.querySelector<HTMLElement>("#services-title");
+      if (heading) revealSectionHeading(heading);
 
       const list = section.querySelector<HTMLElement>("[data-services-list]");
       const progressFill = list?.querySelector<HTMLElement>(".services-list__track-fill");
@@ -139,7 +139,7 @@ export function ServicesSection() {
       aria-labelledby="services-title"
     >
       <div className="mx-auto max-w-[1480px] px-[clamp(20px,5vw,84px)]">
-        <header className="max-w-[920px]" data-service-intro>
+        <header className="max-w-[920px]">
           <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--ultra-violet)]">
             01 <span className="mx-2 text-[var(--orchid-wash)]">/</span>{copy.services}
           </p>

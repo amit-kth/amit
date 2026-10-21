@@ -52,11 +52,11 @@ export const copy = {
   servicesTitle: "What I Do?",
   contact: "Contact",
   journeyCaption: "From designer to frontend developer",
-  journeyTitle: "JOURNEY",
+  journeyTitle: "Journey",
   journeyEducation: "Education",
   recognition: "Recognition",
   stackEyebrow: "02 / Tools & Tech",
-  stackTitle: "TOOLS & TECH",
+  stackTitle: "Tools & Tech",
   downloadResume: "Download résumé",
 } as const;
 

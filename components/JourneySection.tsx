@@ -21,7 +21,7 @@ export function JourneySection() {
     registerGsapPlugins();
     const context = gsap.context(() => {
       const heading = section.querySelector<HTMLElement>("[data-journey-heading]");
-      if (heading && !reducedMotion) revealSectionHeading(heading, section);
+      if (heading && !reducedMotion) revealSectionHeading(heading);
 
       const media = gsap.matchMedia();
       media.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
