@@ -144,6 +144,7 @@ export function JourneySection() {
                 aria-labelledby={`journey-${item.id}`}
               >
                 <div className="journey-card__topline">
+                  <span className="journey-card__index">0{index + 1}</span>
                   <span className="journey-card__period">{item.period}</span>
                 </div>
                 <div className="journey-card__details">
