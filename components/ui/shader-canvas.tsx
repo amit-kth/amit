@@ -145,6 +145,7 @@ export function ShaderCanvas({
         depth: false,
         stencil: false,
         premultipliedAlpha: false,
+        preserveDrawingBuffer: true,
         powerPreference: "low-power",
       });
     } catch {

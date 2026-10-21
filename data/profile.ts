@@ -2,6 +2,7 @@ export const profile = {
   name: "Amit Verma",
   displayName: "AMIT VERMA",
   title: "Frontend Developer",
+  avatar: "https://media.licdn.com/dms/image/v2/D5603AQHkQ_1csElxbg/profile-displayphoto-crop_800_800/B56aFFzbtlHQAI-/0/1792172476100?e=1794441600&v=beta&t=XL4yICAd8t95Vr_PTmDKX3JOT_2mbDBhgHJ8o5peD9Y",
   location: "Kota, India",
   email: "amverma1204t@gmail.com",
   experienceYears: 5,

@@ -202,8 +202,6 @@ export function SectionDock() {
               aria-current={active ? "location" : undefined}
               title={item.label}
               onClick={(event) => handleNavigation(event, item.id)}
-              whileHover={reducedMotion ? undefined : { y: -5, scale: 1.28, zIndex: 20 }}
-              whileFocus={reducedMotion ? undefined : { y: -5, scale: 1.28, zIndex: 20 }}
               whileTap={reducedMotion ? undefined : { scale: 0.93 }}
               transition={dockIconSpring}
             >

@@ -88,32 +88,21 @@ export function GlassButton({
 
     let mounted = true;
     let glass: LiquidGlassSurface | null = null;
-    let resizeTimer: number | undefined;
-    let initToken = 0;
-
-    const destroyGlass = () => {
-      glass?.destroy();
-      glass = null;
-    };
 
     const initialize = async () => {
-      const token = ++initToken;
       try {
         await waitForPageReady();
         const { LiquidGlass } = await import("apple-liquid-glass-webgl");
-        // bail if unmounted, detached, or a newer init started while we waited
-        if (!mounted || token !== initToken || !element.isConnected) return;
+        if (!mounted || !element.isConnected) return;
 
-        destroyGlass();
         element.classList.remove("glass-button__surface--fallback");
-
         glass = new LiquidGlass(element, {
           backdrop: "auto",
           tint: 0.52,
           tintTone: tone === "dark" ? "dark" : "light",
           frost: 0,
           material: glassButtonMaterial,
-          live: false,
+          // Keep LiquidGlass' auto mode so it continuously samples canvases behind the lens.
           maxDpr: 1.5,
           bleed: 14,
           zIndex: -1,
@@ -123,7 +112,7 @@ export function GlassButton({
         });
 
         const readySurface = await glass.ready;
-        if (mounted && token === initToken && readySurface.mode !== "webgl") {
+        if (mounted && readySurface.mode !== "webgl") {
           element.classList.add("glass-button__surface--fallback");
         }
       } catch {
@@ -134,26 +123,12 @@ export function GlassButton({
       }
     };
 
-    void initialize();
-
-    // live: false means the captured backdrop goes stale on layout changes,
-    // so re-create the glass (debounced) when the page resizes.
-    const scheduleReinit = () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => void initialize(), 250);
-    };
-    const observer =
-      typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(scheduleReinit)
-        : null;
-    observer?.observe(document.body);
+    const frame = window.requestAnimationFrame(() => void initialize());
 
     return () => {
       mounted = false;
-      initToken++;
-      window.clearTimeout(resizeTimer);
-      observer?.disconnect();
-      destroyGlass();
+      window.cancelAnimationFrame(frame);
+      glass?.destroy();
     };
   }, [tone]);
 

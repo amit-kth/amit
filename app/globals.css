@@ -394,10 +394,8 @@
       0 5px 16px rgba(17, 24, 39, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.82);
     opacity: 0;
-    transform: scale(0.72);
     transition:
       opacity 220ms ease,
-      transform 420ms var(--ease-out),
       background-color 260ms ease,
       box-shadow 280ms ease;
     pointer-events: none;
@@ -416,14 +414,12 @@
   .section-dock__link:hover .section-dock__hover,
   .section-dock__link:focus-visible .section-dock__hover {
     opacity: 1;
-    transform: scale(1);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .section-dock__hover,
     .section-dock__link:hover .section-dock__hover,
     .section-dock__link:focus-visible .section-dock__hover {
-      transform: none;
       transition: none;
     }
   }
@@ -702,11 +698,6 @@
 
   .services-list__row {
     position: relative;
-    border-top: 1px solid var(--line);
-  }
-
-  .services-list__row:last-child {
-    border-bottom: 1px solid var(--line);
   }
 
   .services-list__article {

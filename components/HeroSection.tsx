@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import Image from "next/image";
 import { ArrowDownRight, Download } from "lucide-react";
 import { GlassButton } from "@/components/ui/glass-button";
 import { copy, profile } from "@/data/profile";
@@ -96,10 +97,29 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       ref={sectionRef}
       aria-labelledby="hero-title"
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[52px] w-[min(216px,calc(100%_-_24px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[26px] bg-[var(--surface-warm)] px-4 py-1 sm:w-[216px]">
-        <a className="pointer-events-auto flex flex-col items-center gap-0.5 text-center" href="#hero" aria-label={`${profile.name}, ${profile.hero.roleLabel}`}>
-          <strong className="text-[16px] font-bold leading-none tracking-[-0.025em] text-[var(--ultra-violet)] sm:text-[17px]">{profile.name}</strong>
-          <span className="text-[9px] font-medium leading-none text-[var(--graphite)] sm:text-[10px]">{profile.hero.roleLabel}</span>
+      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[52px] w-[min(216px,calc(100%_-_24px))] -translate-x-1/2 items-center justify-center rounded-b-[26px] bg-[var(--surface-warm)] px-3 py-1 sm:w-[216px]">
+        <a
+          className="pointer-events-auto flex items-center gap-2.5 text-left"
+          href="#hero"
+          aria-label={`${profile.name}, ${profile.hero.roleLabel}`}
+        >
+          <Image
+            className="size-8 shrink-0 rounded-full border border-white/80 object-cover"
+            src={profile.avatar}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            referrerPolicy="no-referrer"
+          />
+          <span className="flex min-w-0 flex-col items-start gap-0.5">
+            <strong className="text-[14px] font-bold leading-none tracking-[-0.025em] text-[var(--ultra-violet)] sm:text-[15px]">
+              {profile.name}
+            </strong>
+            <span className="text-[9px] font-medium leading-none text-[var(--graphite)] sm:text-[10px]">
+              {profile.hero.roleLabel}
+            </span>
+          </span>
         </a>
       </div>
 
