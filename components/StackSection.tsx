@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import { TechnologyOrbit } from "@/components/TechnologyOrbit";
 import { copy, profile, stackGroups } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
-import { gsap, registerGsapPlugins, ScrollTrigger } from "@/lib/gsap-client";
+import { gsap, registerGsapPlugins, revealSectionHeading, ScrollTrigger } from "@/lib/gsap-client";
 
 type SkillMarqueeProps = {
   items: readonly string[];
@@ -117,15 +117,7 @@ export function StackSection() {
     registerGsapPlugins();
     const context = gsap.context(() => {
       const heading = section.querySelector<HTMLElement>("[data-stack-heading]");
-      if (heading) {
-        gsap.fromTo(heading, { y: 18, autoAlpha: 0 }, {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: { trigger: section, start: "top 80%", once: true },
-        });
-      }
+      if (heading) revealSectionHeading(heading, section);
     }, section);
 
     return () => context.revert();
@@ -136,7 +128,7 @@ export function StackSection() {
       <TechnologyOrbit />
       <header className="relative z-10 mx-auto mb-2 max-w-[1480px] px-[clamp(20px,5vw,84px)] sm:mb-3" data-stack-heading>
         <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--lavender-mist)]">{copy.stackEyebrow}</p>
-        <h2 className="mt-2 text-[clamp(3rem,7.5vw,7rem)] font-semibold leading-[0.86] tracking-[-0.09em] text-[var(--pure-white)]" id="stack-title">
+        <h2 className="mt-2 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--pure-white)]" id="stack-title" data-section-heading>
           {copy.stackTitle}<span className="text-[var(--lavender-mist)]">.</span>
         </h2>
         <p className="mt-3 max-w-[520px] font-mono text-[8px] uppercase leading-[1.8] tracking-[0.09em] text-[var(--mist)] sm:text-[9px]">

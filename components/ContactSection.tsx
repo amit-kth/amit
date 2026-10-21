@@ -19,11 +19,12 @@ export function ContactSection() {
     const context = gsap.context(() => {
       gsap.fromTo(
         section.querySelectorAll<HTMLElement>("[data-contact-reveal]"),
-        { y: 22, autoAlpha: 0 },
+        { y: 22, autoAlpha: 0, filter: "blur(12px)" },
         {
           y: 0,
           autoAlpha: 1,
-          duration: 0.62,
+          filter: "blur(0px)",
+          duration: 0.78,
           stagger: 0.07,
           ease: "power3.out",
           scrollTrigger: { trigger: section, start: "top 76%", once: true },
@@ -44,7 +45,7 @@ export function ContactSection() {
 
         <div className="min-w-0">
           <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--graphite)]" data-contact-reveal>Open to senior roles</p>
-          <h2 className="mt-4 max-w-[1050px] text-[clamp(3rem,7.8vw,7.6rem)] font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-contact-reveal>
+          <h2 className="mt-4 max-w-[1050px] text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-contact-reveal data-section-heading>
             Open to <span className="text-[var(--ultra-violet)]">senior frontend</span> roles.
           </h2>
           <p className="mt-5 max-w-[610px] text-sm leading-relaxed text-[var(--graphite)] sm:text-base" data-contact-reveal>

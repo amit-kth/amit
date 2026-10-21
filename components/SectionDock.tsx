@@ -20,6 +20,7 @@ const icons = {
 
 const targetId = (id: (typeof navigation)[number]["id"]) => id === "hero" ? "experience-story" : id;
 const dockSpring = { type: "spring" as const, stiffness: 420, damping: 38, mass: 0.9 };
+const dockIconSpring = { type: "spring" as const, stiffness: 460, damping: 24, mass: 0.62 };
 const scrollEase = (time: number) => 1 - Math.pow(1 - time, 4);
 
 const dockGlassMaterial = {
@@ -201,9 +202,9 @@ export function SectionDock() {
               aria-current={active ? "location" : undefined}
               title={item.label}
               onClick={(event) => handleNavigation(event, item.id)}
-              whileHover={reducedMotion ? undefined : { y: -3, scale: 1.06 }}
+              whileHover={reducedMotion ? undefined : { y: -4, scale: 1.18, zIndex: 12 }}
               whileTap={reducedMotion ? undefined : { scale: 0.94 }}
-              transition={dockSpring}
+              transition={dockIconSpring}
             >
               {active && (reducedMotion ? (
                 <span className="section-dock__active absolute inset-1 rounded-full" aria-hidden="true" />

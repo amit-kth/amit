@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { ArrowUpRight, Download } from "lucide-react";
 import { MotionConfig, motion } from "framer-motion";
@@ -16,6 +16,7 @@ import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StackSection } from "@/components/StackSection";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile } from "@/data/profile";
+import { gsap, registerGsapPlugins, revealSectionHeading } from "@/lib/gsap-client";
 
 type SocialPlatform = "instagram" | "linkedin" | "github";
 
@@ -73,7 +74,7 @@ type FooterSocialLinkProps = (typeof footerSocials)[number] & { reducedMotion: b
 function FooterSocialLink({ id, label, href, reducedMotion }: FooterSocialLinkProps) {
   const icon = <span className="relative z-[1] grid place-items-center"><SocialIcon platform={id} /></span>;
   const style = { "--social-accent": socialAccents[id] } as CSSProperties;
-  const className = "footer-social group relative grid size-12 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lavender-mist)]";
+  const className = "footer-social group relative grid size-12 place-items-center rounded-full border border-white/30 bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_12px_28px_rgba(0,0,0,0.18)] backdrop-blur-xl backdrop-saturate-150 transition-[transform,border-color,background-color,box-shadow] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lavender-mist)]";
   const hover = reducedMotion ? undefined : { y: -5, scale: 1.09, rotate: id === "linkedin" ? -5 : 5 };
   const tap = reducedMotion ? undefined : { scale: 0.94 };
 
@@ -114,7 +115,21 @@ function FooterSocialLink({ id, label, href, reducedMotion }: FooterSocialLinkPr
 export function HomeExperience() {
   const [introReady, setIntroReady] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
+  const footerRef = useRef<HTMLElement>(null);
   const handleIntroComplete = useCallback(() => setIntroReady(true), []);
+
+  useLayoutEffect(() => {
+    const footer = footerRef.current;
+    const heading = footer?.querySelector<HTMLElement>("[data-footer-heading]");
+    if (!footer || !heading || reducedMotion) return;
+
+    registerGsapPlugins();
+    const context = gsap.context(() => {
+      revealSectionHeading(heading, footer, "top 88%");
+    }, footer);
+
+    return () => context.revert();
+  }, [reducedMotion]);
 
   return (
     <SmoothScrollProvider>
@@ -135,7 +150,7 @@ export function HomeExperience() {
                 <div className="grid gap-9 border-b border-[rgba(255,255,255,0.16)] pb-9 sm:pb-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12">
                   <div className="max-w-[850px]">
                     <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--lavender-mist)]">{profile.hero.roleLabel}</p>
-                    <h2 className="mt-4 text-[clamp(3rem,7.6vw,7rem)] font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--pure-white)]">
+                    <h2 className="mt-4 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--pure-white)]" data-footer-heading>
                       <span className="block">Thanks for</span>
                       <span className="block text-[var(--lavender-mist)]">stopping by.</span>
                     </h2>

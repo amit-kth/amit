@@ -53,26 +53,24 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           scrollTrigger: {
             trigger: heroStage,
             start: "top top",
-            end: () => `+=${Math.round(window.innerHeight * (mobile ? 0.62 : 0.74))}`,
-            pin: heroStage,
-            pinSpacing: true,
+            end: "bottom top",
             scrub: 0.55,
-            anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         })
           .to(scrollContent, {
-            scale: mobile ? 1.16 : 1.22,
-            autoAlpha: 0.9,
+            scale: mobile ? 1.08 : 1.12,
+            filter: "blur(1px)",
+            autoAlpha: 1,
             ease: "none",
-            duration: 0.48,
+            duration: 0.35,
           })
           .to(scrollContent, {
-            scale: mobile ? 1.38 : 1.58,
-            filter: mobile ? "blur(11px)" : "blur(16px)",
+            scale: mobile ? 1.28 : 1.42,
+            filter: mobile ? "blur(10px)" : "blur(14px)",
             autoAlpha: 0,
             ease: "none",
-            duration: 0.52,
+            duration: 0.65,
           });
       }
 
@@ -111,11 +109,11 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       <div className="grid min-h-0 flex-1 place-items-center py-3 sm:py-7 lg:py-8">
         <div className="w-full max-w-[1020px] text-center" data-hero-scroll-content>
           <div
-            className="mx-auto inline-flex min-h-8 items-center justify-center gap-2 rounded-full border border-[rgba(95,37,158,0.18)] bg-[rgba(255,255,255,0.78)] px-3 py-1.5 text-[10px] uppercase tracking-[0.09em] text-[var(--ultra-violet)]"
+            className="hero-experience-chip mx-auto inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/75 bg-[rgba(255,255,255,0.42)] px-4 py-2 text-[12px] font-semibold normal-case tracking-[0.02em] text-[var(--ultra-violet)] shadow-[0_10px_28px_rgba(17,24,39,0.1),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-xl backdrop-saturate-150"
             data-hero-enter
           >
             <span className="size-1.5 rounded-full bg-[var(--voltage-violet)]" aria-hidden="true" />
-            <span>{profile.experienceYears}+ Yrs Experience</span>
+            <span>{profile.experienceYears}+ years of experience</span>
           </div>
           <h1
             className="mx-auto mt-4 block max-w-[1020px] text-center text-[clamp(2.5rem,6vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.085em] text-[var(--midnight-ink)] normal-case sm:mt-6"

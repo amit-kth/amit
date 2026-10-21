@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile, services } from "@/data/profile";
-import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
+import { gsap, registerGsapPlugins, revealSectionHeading } from "@/lib/gsap-client";
 
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -16,19 +16,7 @@ export function ServicesSection() {
     registerGsapPlugins();
     const context = gsap.context(() => {
       const intro = section.querySelector<HTMLElement>("[data-service-intro]");
-      if (intro) {
-        gsap.fromTo(
-          intro,
-          { y: 22, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.68,
-            ease: "power3.out",
-            scrollTrigger: { trigger: section, start: "top 78%", once: true },
-          },
-        );
-      }
+      if (intro) revealSectionHeading(intro, section, "top 78%");
 
       const list = section.querySelector<HTMLElement>("[data-services-list]");
       const progressFill = list?.querySelector<HTMLElement>(".services-list__track-fill");
@@ -155,7 +143,7 @@ export function ServicesSection() {
           <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--ultra-violet)]">
             01 <span className="mx-2 text-[var(--orchid-wash)]">/</span>{copy.services}
           </p>
-          <h2 className="mt-3 text-[clamp(3rem,8vw,7.5rem)] font-semibold leading-[0.86] tracking-[-0.09em] text-[var(--midnight-ink)]" id="services-title">
+          <h2 className="mt-3 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="services-title" data-section-heading>
             {copy.servicesTitle}<span className="text-[var(--voltage-violet)]">.</span>
           </h2>
           <p className="mt-5 max-w-[720px] text-sm leading-relaxed text-[var(--graphite)] sm:text-base">
