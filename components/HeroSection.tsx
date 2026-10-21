@@ -166,10 +166,6 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           </div>
         </div>
       </div>
-      <div
-        className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[52px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 rounded-t-[32px] bg-[var(--surface-warm)] sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-t-[38px]"
-        aria-hidden="true"
-      />
     </section>
   );
 }

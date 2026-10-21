@@ -46,6 +46,7 @@ export function SectionDock() {
   const [activeId, setActiveId] = useState<(typeof navigation)[number]["id"]>("hero");
   const [darkBackdrop, setDarkBackdrop] = useState(false);
   const [heroTopGlassCorrection, setHeroTopGlassCorrection] = useState(false);
+  const [heroDockBackdrop, setHeroDockBackdrop] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
   const lenis = useLenis();
   const navRef = useRef<HTMLElement>(null);
@@ -131,7 +132,9 @@ export function SectionDock() {
         const darkSurface = Boolean(backdropElement?.closest(".section-skills, .section-gallery__stage, .site-footer"));
         const selectedWorkIsActive = galleryHasDarkStage && nextActive === "gallery";
         const atLightHeroTop = nextActive === "hero" && window.scrollY <= 1;
+        const showHeroDockBackdrop = nextActive === "hero" && window.scrollY <= 100;
         setHeroTopGlassCorrection((current) => current === atLightHeroTop ? current : atLightHeroTop);
+        setHeroDockBackdrop((current) => current === showHeroDockBackdrop ? current : showHeroDockBackdrop);
         const dark = !atLightHeroTop && (darkSurface || selectedWorkIsActive);
         setDarkBackdrop((current) => current === dark ? current : dark);
       }
@@ -185,6 +188,7 @@ export function SectionDock() {
         className="section-dock pointer-events-auto relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2 max-[400px]:gap-0.5 max-[400px]:p-1"
         data-dock-tone={darkBackdrop ? "dark" : "light"}
         data-dock-at-hero-top={heroTopGlassCorrection ? "true" : undefined}
+        data-dock-hero-backdrop={heroDockBackdrop ? "true" : undefined}
         initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
         animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
         transition={reducedMotion ? { duration: 0.16 } : dockSpring}
