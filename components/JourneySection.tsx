@@ -143,6 +143,7 @@ export function JourneySection() {
                 role="listitem"
                 aria-labelledby={`journey-${item.id}`}
               >
+                <span className="journey-card__connector" aria-hidden="true" />
                 <div className="journey-card__topline">
                   <span className="journey-card__index">0{index + 1}</span>
                   <span className="journey-card__period">{item.period}</span>

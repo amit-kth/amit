@@ -67,6 +67,7 @@
     --accent-deep: var(--ultra-violet);
     --accent-ink: var(--midnight-ink);
     --surface-page: var(--fog);
+    --surface-warm: #fbfaf8;
     --surface-raised: var(--pure-white);
     --surface-soft: var(--lavender-field);
     --surface-mint: var(--mint-wash);
@@ -130,15 +131,15 @@
     --gradient-journey-glow:
       radial-gradient(
         ellipse at 88% 14%,
-        rgba(134, 47, 231, 0.065),
-        transparent 28%
+        rgba(134, 47, 231, 0.04),
+        transparent 23%
       ),
       radial-gradient(
         ellipse at 8% 84%,
-        rgba(189, 143, 240, 0.04),
-        transparent 24%
+        rgba(189, 143, 240, 0.025),
+        transparent 19%
       ),
-      var(--pure-white);
+      var(--surface-warm);
     --gradient-night-atmosphere:
       radial-gradient(
         ellipse at 86% 6%,
@@ -1131,8 +1132,9 @@
 
   .journey-card-stack {
     position: relative;
+    --journey-rail-gap: 13px;
     min-width: 0;
-    padding-left: 30px;
+    padding-left: 24px;
   }
 
   .journey-card-stack::before {
@@ -1142,10 +1144,10 @@
     border-radius: var(--shape-radius-pill);
     background: linear-gradient(
       180deg,
-      rgba(134, 47, 231, 0.42),
-      var(--voltage-violet) 22%,
-      var(--orchid-wash) 78%,
-      rgba(189, 143, 240, 0.42)
+      rgba(134, 47, 231, 0.26),
+      rgba(134, 47, 231, 0.62) 22%,
+      rgba(173, 109, 244, 0.5) 78%,
+      rgba(189, 143, 240, 0.2)
     );
     content: "";
     pointer-events: none;
@@ -1157,15 +1159,15 @@
     height: 256px;
     min-height: 256px;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: 0 0 var(--journey-timeline-gap);
     padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
-    overflow: hidden;
-    border: 1px solid rgba(17, 24, 39, 0.09);
+    overflow: visible;
+    border: 1px solid rgba(17, 24, 39, 0.08);
     border-radius: var(--shape-radius-xl);
     color: var(--journey-text);
     background: var(--surface-raised);
-    box-shadow: var(--elevation-medium), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    box-shadow: var(--elevation-low), inset 0 1px 0 rgba(255, 255, 255, 0.92);
     transform-origin: center top;
   }
 
@@ -1212,6 +1214,30 @@
     content: "";
   }
 
+  .journey-card__connector {
+    position: absolute;
+    z-index: 1;
+    top: calc(clamp(18px, 2.2vw, 28px) + 13px);
+    left: calc(-1 * var(--journey-rail-gap));
+    width: var(--journey-rail-gap);
+    height: 1px;
+    background: rgba(134, 47, 231, 0.34);
+    pointer-events: none;
+  }
+
+  .journey-card__connector::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--voltage-violet);
+    box-shadow: 0 0 0 3px rgba(134, 47, 231, 0.08);
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
   .journey-card__topline,
   .journey-card__details {
     position: relative;
@@ -1256,15 +1282,14 @@
 
   .journey-card__details {
     max-width: 600px;
-    margin-top: auto;
-    padding-top: 18px;
+    margin-top: clamp(18px, 2.5vh, 26px);
   }
 
   .journey-card__details h3 {
     max-width: 580px;
     margin: 0;
     color: var(--journey-text);
-    font-size: clamp(30px, 3.4vw, 46px);
+    font-size: clamp(30px, 3.2vw, 44px);
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.068em;
@@ -1302,10 +1327,10 @@
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: var(--shape-radius-xl);
     background:
-      radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.62), transparent 48%),
-      linear-gradient(145deg, rgba(255, 248, 223, 0.87), rgba(255, 226, 140, 0.79) 55%, rgba(242, 184, 61, 0.86));
+      radial-gradient(ellipse at 100% 0%, rgba(255, 255, 255, 0.68), transparent 48%),
+      linear-gradient(145deg, rgba(255, 250, 240, 0.95), rgba(248, 237, 207, 0.9) 56%, rgba(234, 214, 160, 0.92));
     box-shadow:
-      0 0 30px rgba(220, 95, 5, 0.18),
+      0 0 22px rgba(196, 151, 63, 0.13),
       var(--elevation-low),
       inset 0 1px 0 rgba(255, 255, 255, 0.84);
     color: var(--journey-text);
@@ -1327,7 +1352,7 @@
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.92), rgba(255, 211, 96, 0.67) 44%, transparent 74%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(236, 218, 176, 0.58) 44%, transparent 74%);
     filter: blur(15px);
     opacity: 0.92;
   }
@@ -1405,7 +1430,7 @@
 
   .journey-recognition {
     padding: 14px 16px 10px;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid rgba(17, 24, 39, 0.1);
     border-radius: var(--shape-radius-lg);
     background: var(--surface-raised);
     box-shadow: var(--elevation-low);
@@ -1517,6 +1542,7 @@
     }
 
     .journey-card-stack {
+      --journey-rail-gap: 15px;
       padding-left: 22px;
     }
 
@@ -1539,7 +1565,7 @@
     }
 
     .journey-card__details {
-      padding-top: 14px;
+      margin-top: 16px;
     }
 
     .journey-card__details h3 {
@@ -1574,6 +1600,10 @@
       padding: 16px;
     }
 
+    .journey-card__connector {
+      top: 28px;
+    }
+
     .journey-card__topline {
       gap: 8px;
     }
@@ -1603,33 +1633,7 @@
 
   @media (prefers-reduced-transparency: reduce) {
     .journey-education-card {
-      background: linear-gradient(145deg, #fff8df, #ffe28c 55%, #f2b83d);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-
-    .journey-education-card::before,
-    .journey-education-card::after {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-transparency: reduce) {
-    .journey-education-card {
-      background: linear-gradient(145deg, #fff8df, #ffe28c 55%, #f2b83d);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-
-    .journey-education-card::before,
-    .journey-education-card::after {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-transparency: reduce) {
-    .journey-education-card {
-      background: linear-gradient(145deg, #fff8df, #ffe28c 55%, #f2b83d);
+      background: linear-gradient(145deg, #fffaf0, #f8edcf 56%, #ead6a0);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
