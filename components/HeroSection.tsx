@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import Image from "next/image";
 import { ArrowDownRight, Download } from "lucide-react";
 import { GlassButton } from "@/components/ui/glass-button";
@@ -16,6 +17,15 @@ export function HeroSection({ introReady }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+
+  const handleExperienceChipPointerMove = (
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => {
+    if (reducedMotion || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--mx", `${event.clientX - bounds.left}px`);
+    event.currentTarget.style.setProperty("--my", `${event.clientY - bounds.top}px`);
+  };
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -128,6 +138,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           <div
             className="hero-experience-chip mx-auto inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/75 bg-[rgba(255,255,255,0.42)] px-4 py-2 text-[12px] font-semibold normal-case tracking-[0.02em] text-[var(--ultra-violet)] shadow-[0_10px_28px_rgba(17,24,39,0.1),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-xl backdrop-saturate-150"
             data-hero-enter
+            onPointerMove={handleExperienceChipPointerMove}
           >
             <span className="size-1.5 rounded-full bg-[var(--voltage-violet)]" aria-hidden="true" />
             <span>{profile.experienceYears}+ years of experience</span>

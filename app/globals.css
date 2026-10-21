@@ -458,6 +458,37 @@
     transition: background-color 280ms ease;
   }
 
+  .hero-experience-chip {
+    --mx: 50%;
+    --my: 50%;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-experience-chip::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse 120px 54px at var(--mx) var(--my),
+      color-mix(in srgb, var(--voltage-violet) 26%, transparent),
+      color-mix(in srgb, var(--lavender-mist) 18%, transparent) 46%,
+      transparent 76%
+    );
+    filter: blur(16px);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    content: "";
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .hero-experience-chip:hover::before {
+      opacity: 1;
+    }
+  }
+
   .glass-button {
     --glass-button-color: var(--midnight-ink);
     --glass-button-background: var(--gradient-glass-sheen);
