@@ -51,9 +51,9 @@ export function HeroSection({ introReady }: HeroSectionProps) {
         "-=0.4",
       );
 
-      const scrollContent = section.querySelector<HTMLElement>("[data-hero-scroll-content]");
-      if (scrollContent) {
-        gsap.set(scrollContent, {
+      const heroCard = heroStage.querySelector<HTMLElement>("[data-hero-card]");
+      if (heroCard) {
+        gsap.set(heroCard, {
           filter: "blur(0px)",
           transformOrigin: "50% 50%",
           willChange: "transform, filter, opacity",
@@ -68,15 +68,15 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             invalidateOnRefresh: true,
           },
         })
-          .to(scrollContent, {
-            scale: mobile ? 1.08 : 1.12,
+          .to(heroCard, {
+            scale: mobile ? 1.04 : 1.08,
             filter: "blur(1px)",
             autoAlpha: 1,
             ease: "none",
             duration: 0.35,
           })
-          .to(scrollContent, {
-            scale: mobile ? 1.28 : 1.42,
+          .to(heroCard, {
+            scale: mobile ? 1.2 : 1.3,
             filter: mobile ? "blur(10px)" : "blur(14px)",
             autoAlpha: 0,
             ease: "none",
@@ -96,15 +96,15 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       ref={sectionRef}
       aria-labelledby="hero-title"
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[52px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[32px] bg-[var(--surface-warm)] px-5 py-1 sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-b-[38px]">
-        <a className="pointer-events-auto flex flex-col items-center gap-1 text-center text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, ${profile.hero.roleLabel}`}>
-          <strong className="text-[15px] font-bold leading-none tracking-[-0.02em] text-[var(--midnight-ink)] sm:text-base">{profile.name}</strong>
+      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[52px] w-[min(280px,calc(100%_-_24px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[26px] bg-[var(--surface-warm)] px-4 py-1 sm:w-[280px]">
+        <a className="pointer-events-auto flex flex-col items-center gap-0.5 text-center" href="#hero" aria-label={`${profile.name}, ${profile.hero.roleLabel}`}>
+          <strong className="text-[16px] font-bold leading-none tracking-[-0.025em] text-[var(--ultra-violet)] sm:text-[17px]">{profile.name}</strong>
           <span className="text-[9px] font-medium leading-none text-[var(--graphite)] sm:text-[10px]">{profile.hero.roleLabel}</span>
         </a>
       </div>
 
       <div className="grid h-full min-h-0 place-items-center pt-[76px] pb-[76px] sm:pt-[88px] sm:pb-[88px]">
-        <div className="w-full max-w-[1020px] text-center" data-hero-scroll-content>
+        <div className="w-full max-w-[1020px] text-center">
           <div
             className="hero-experience-chip mx-auto inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/75 bg-[rgba(255,255,255,0.42)] px-4 py-2 text-[12px] font-semibold normal-case tracking-[0.02em] text-[var(--ultra-violet)] shadow-[0_10px_28px_rgba(17,24,39,0.1),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-xl backdrop-saturate-150"
             data-hero-enter
