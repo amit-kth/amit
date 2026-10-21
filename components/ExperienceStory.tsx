@@ -21,7 +21,7 @@ export function ExperienceStory({ introReady }: ExperienceStoryProps) {
       data-hero-stage
       aria-label="Portfolio introduction"
     >
-      <div className="relative isolate h-full min-h-0 w-full max-w-[1600px] overflow-hidden rounded-[clamp(28px,4vw,54px)] border border-white/75 bg-[var(--fog)] shadow-[0_22px_70px_rgba(17,24,39,0.12),inset_0_1px_0_rgba(255,255,255,0.95)]">
+      <div className="relative isolate h-full min-h-0 w-full max-w-[1600px] overflow-hidden rounded-[clamp(28px,4vw,54px)] border border-white/75 bg-[var(--fog)]">
         <ShaderCanvas
           className="pointer-events-none absolute inset-0 h-full w-full"
           colors={HERO_SHADER_COLORS}

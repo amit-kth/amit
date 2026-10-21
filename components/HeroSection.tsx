@@ -96,9 +96,9 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       ref={sectionRef}
       aria-labelledby="hero-title"
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[72px] w-[min(320px,calc(100%_-_16px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[32px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-5 pb-1 pt-1 shadow-[0_10px_26px_rgba(17,24,39,0.055)] sm:h-[80px] sm:w-[min(340px,calc(100%_-_24px))] sm:rounded-b-[38px]">
+      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[52px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[32px] bg-[var(--surface-warm)] px-5 py-1 sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-b-[38px]">
         <a className="pointer-events-auto flex flex-col items-center gap-1 text-center text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, ${profile.hero.roleLabel}`}>
-          <strong className="text-[13px] font-semibold leading-none tracking-[-0.03em] sm:text-sm">{profile.name}</strong>
+          <strong className="text-[15px] font-bold leading-none tracking-[-0.02em] text-[var(--midnight-ink)] sm:text-base">{profile.name}</strong>
           <span className="text-[9px] font-medium leading-none text-[var(--graphite)] sm:text-[10px]">{profile.hero.roleLabel}</span>
         </a>
       </div>
@@ -147,7 +147,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
         </div>
       </div>
       <div
-        className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[46px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 rounded-t-[32px] border-x border-t border-white/80 bg-[var(--surface-warm)] shadow-[0_-8px_22px_rgba(17,24,39,0.045)] sm:h-[52px] sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-t-[38px]"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[52px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 rounded-t-[32px] bg-[var(--surface-warm)] sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-t-[38px]"
         aria-hidden="true"
       />
     </section>
