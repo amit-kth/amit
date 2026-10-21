@@ -1,8 +1,8 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { ArrowDownRight } from "lucide-react";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { ArrowDownRight, Download } from "lucide-react";
+import { GlassButton } from "@/components/ui/glass-button";
 import { copy, profile } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
@@ -20,6 +20,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
     const section = sectionRef.current;
     const title = titleRef.current;
     if (!introReady || !section || !title || reducedMotion) return;
+    const heroStage = section.closest<HTMLElement>("[data-hero-stage]") ?? section;
 
     registerGsapPlugins();
     const context = gsap.context(() => {
@@ -39,6 +40,41 @@ export function HeroSection({ introReady }: HeroSectionProps) {
         { y: 12, autoAlpha: 0, duration: 0.48, stagger: 0.06, ease: "power3.out" },
         "-=0.3",
       );
+
+      const scrollContent = section.querySelector<HTMLElement>("[data-hero-scroll-content]");
+      if (scrollContent) {
+        gsap.set(scrollContent, {
+          filter: "blur(0px)",
+          transformOrigin: "50% 50%",
+          willChange: "transform, filter, opacity",
+        });
+
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: heroStage,
+            start: "top top",
+            end: () => `+=${Math.round(window.innerHeight * (mobile ? 0.62 : 0.74))}`,
+            pin: heroStage,
+            pinSpacing: true,
+            scrub: 0.55,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+          .to(scrollContent, {
+            scale: mobile ? 1.16 : 1.22,
+            autoAlpha: 0.9,
+            ease: "none",
+            duration: 0.48,
+          })
+          .to(scrollContent, {
+            scale: mobile ? 1.38 : 1.58,
+            filter: mobile ? "blur(11px)" : "blur(16px)",
+            autoAlpha: 0,
+            ease: "none",
+            duration: 0.52,
+          });
+      }
 
       return () => split.revert();
     }, section);
@@ -73,7 +109,7 @@ export function HeroSection({ introReady }: HeroSectionProps) {
       </div>
 
       <div className="grid min-h-0 flex-1 place-items-center py-3 sm:py-7 lg:py-8">
-        <div className="w-full max-w-[1020px] text-center">
+        <div className="w-full max-w-[1020px] text-center" data-hero-scroll-content>
           <div
             className="mx-auto inline-flex min-h-8 items-center justify-center gap-2 rounded-full border border-[rgba(95,37,158,0.18)] bg-[rgba(255,255,255,0.78)] px-3 py-1.5 text-[10px] uppercase tracking-[0.09em] text-[var(--ultra-violet)]"
             data-hero-enter
@@ -97,24 +133,21 @@ export function HeroSection({ introReady }: HeroSectionProps) {
             {profile.hero.locationLine}
           </p>
           <div className="mx-auto mt-4 flex w-full max-w-[360px] flex-col justify-center gap-2 sm:mt-6 sm:w-auto sm:max-w-none sm:flex-row" data-hero-enter>
-            <ShinyButton
-              label={copy.downloadResume}
+            <GlassButton
               href={profile.links.resume}
               download
-              compact
-              cornerRadius={32}
-              fillColor="var(--voltage-violet)"
-              labelColor="var(--pure-white)"
-              accentColor="var(--lavender-mist)"
-              accentSoftColor="var(--magenta-spark)"
-              className="inline-flex min-h-10 w-full items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--midnight-ink)] sm:min-h-11 sm:w-auto"
-            />
-            <a
-              className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-[var(--mist)] bg-[rgba(255,255,255,0.82)] px-5 text-xs font-semibold text-[var(--midnight-ink)] transition sm:min-h-11 sm:w-auto duration-200 hover:-translate-y-0.5 hover:border-[var(--lavender-mist)] hover:bg-[var(--pure-white)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              variant="primary"
+              className="w-full min-h-10 sm:min-h-11 sm:w-auto"
+            >
+              {copy.downloadResume}<Download size={15} aria-hidden="true" />
+            </GlassButton>
+            <GlassButton
               href="#journey"
+              variant="secondary"
+              className="w-full min-h-10 sm:min-h-11 sm:w-auto"
             >
               View journey<ArrowDownRight size={16} aria-hidden="true" />
-            </a>
+            </GlassButton>
           </div>
         </div>
       </div>

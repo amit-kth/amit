@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { GlassButton } from "@/components/ui/glass-button";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile } from "@/data/profile";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
@@ -66,9 +67,15 @@ export function ContactSection() {
             <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.github} target="_blank" rel="noreferrer">
               GitHub<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
             </a>
-            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.resume} download>
+            <GlassButton
+              className="group"
+              href={profile.links.resume}
+              download
+              size="compact"
+              variant="secondary"
+            >
               {copy.downloadResume}<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
-            </a>
+            </GlassButton>
           </div>
         </div>
       </div>

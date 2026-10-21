@@ -18,6 +18,7 @@ export function ExperienceStory({ introReady }: ExperienceStoryProps) {
     <section
       className="experience-story relative isolate box-border h-screen supports-[height:100svh]:h-svh w-full overflow-hidden"
       id="experience-story"
+      data-hero-stage
       aria-label="Portfolio introduction"
     >
       <ShaderCanvas

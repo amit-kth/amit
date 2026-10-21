@@ -11,6 +11,7 @@ import UnfurlingGallery from "@/components/ui/3d-parallax-unfurling-gallery";
 import { Preloader } from "@/components/Preloader";
 import { SectionDock } from "@/components/SectionDock";
 import { ServicesSection } from "@/components/ServicesSection";
+import { GlassButton } from "@/components/ui/glass-button";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { StackSection } from "@/components/StackSection";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
@@ -144,14 +145,16 @@ export function HomeExperience() {
                   </div>
 
                   <div className="flex flex-col items-start gap-6 lg:items-end">
-                    <a
-                      className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-[var(--voltage-violet)] px-5 text-xs font-semibold text-[var(--pure-white)] shadow-[0_10px_32px_rgba(134,47,231,0.28)] transition-[background,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-[var(--lavender-mist)] hover:text-[var(--midnight-ink)] hover:shadow-[0_14px_36px_rgba(134,47,231,0.34)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lavender-mist)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                    <GlassButton
+                      className="group min-h-12 px-5"
                       href={profile.links.resume}
                       download="Amit-Verma-Resume.txt"
+                      tone="dark"
+                      variant="primary"
                     >
                       {copy.downloadResume}
                       <Download className="transition-transform duration-200 group-hover:translate-y-0.5 motion-reduce:transition-none" size={16} aria-hidden="true" />
-                    </a>
+                    </GlassButton>
                     <nav className="flex items-center gap-3" aria-label="Social profiles">
                       {footerSocials.map((social) => <FooterSocialLink {...social} reducedMotion={reducedMotion} key={social.id} />)}
                     </nav>
