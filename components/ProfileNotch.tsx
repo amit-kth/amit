@@ -57,7 +57,7 @@ export function ProfileNotch() {
       ref={notchRef}
     >
       <div
-        className="pointer-events-auto flex h-[52px] w-[min(280px,calc(100vw_-_16px))] items-center justify-between rounded-b-[26px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-3 shadow-[0_8px_20px_rgba(17,24,39,0.08)] backdrop-blur-xl"
+        className={`pointer-events-auto flex h-[52px] w-[min(280px,calc(100vw_-_16px))] items-center justify-between rounded-b-[26px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-3 backdrop-blur-xl ${stuck ? "shadow-[0_8px_20px_rgba(17,24,39,0.08)]" : "shadow-none"}`}
         role="group"
         aria-label="Profile and social links"
       >
