@@ -1,0 +1,66 @@
+import Image from "next/image";
+import { profile } from "@/data/profile";
+import { SocialIcon, type SocialPlatform } from "@/components/ui/social-icon";
+
+const socialLinks: Array<{
+  platform: Exclude<SocialPlatform, "instagram">;
+  label: string;
+  href: string;
+}> = [
+  { platform: "github", label: "GitHub", href: profile.links.github },
+  { platform: "linkedin", label: "LinkedIn", href: profile.links.linkedin },
+];
+
+export function ProfileNotch() {
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-[160] flex justify-center">
+      <div
+        className="pointer-events-auto flex h-[52px] w-[min(280px,calc(100vw_-_16px))] items-center justify-between rounded-b-[26px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-3 shadow-[0_8px_20px_rgba(17,24,39,0.08)] backdrop-blur-xl"
+        role="group"
+        aria-label="Profile and social links"
+      >
+        <a
+          className="flex min-w-0 items-center gap-2"
+          href="#hero"
+          aria-label={`${profile.name}, ${profile.hero.roleLabel}`}
+        >
+          <Image
+            className="size-8 shrink-0 rounded-full border border-white/80 object-cover"
+            src={profile.avatar}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            referrerPolicy="no-referrer"
+          />
+          <span className="flex min-w-0 flex-col items-start gap-0.5">
+            <strong className="text-[13px] font-bold leading-none tracking-[-0.025em] text-[var(--ultra-violet)] sm:text-[14px]">
+              {profile.name}
+            </strong>
+            <span className="text-[9px] font-medium leading-none text-[var(--graphite)]">
+              {profile.hero.roleLabel}
+            </span>
+          </span>
+        </a>
+
+        <span className="mx-1 h-6 w-px shrink-0 bg-[rgba(95,37,158,0.16)]" aria-hidden="true" />
+
+        <nav className="flex shrink-0 items-center gap-0.5" aria-label="Social links">
+          {socialLinks.map(({ platform, label, href }) => (
+            <a
+              className="grid size-8 shrink-0 place-items-center rounded-full text-[var(--graphite)] transition-colors duration-200 hover:bg-[var(--lavender-field)] hover:text-[var(--ultra-violet)] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--voltage-violet)] motion-reduce:transition-none"
+              href={href}
+              key={platform}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${label} profile (opens in a new tab)`}
+              title={label}
+            >
+              <SocialIcon platform={platform} className="size-4 text-[var(--ultra-violet)]" />
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  );
+}
