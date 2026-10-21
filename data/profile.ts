@@ -31,14 +31,9 @@ export const profile = {
   },
   about: {
     statement:
-      "I design and build fast, scalable web products. 5 years of turning ideas into polished interfaces with React, Next.js and TypeScript.",
+      "I turn complex ideas into accessible, high-performance web experiences with React, Next.js, and TypeScript.",
     supporting:
       "I started as a UI/UX designer, then moved into frontend development. That design background is why my interfaces feel polished, and why I can work closely with designers and backend teams.",
-    stats: [
-      { id: "experience", value: "5", countTo: 5, suffix: "", label: "Years of experience" },
-      { id: "react-years", value: "4+", countTo: 4, suffix: "+", label: "Years in React / Next.js / TypeScript" },
-      { id: "user-range", value: "5K–50K+", countTo: 5, suffix: "K–50K+", label: "Users on products I've built" },
-    ],
   },
   roleInterest:
     "Open to senior frontend and React / Next.js roles at product companies, in India and remote.",
@@ -79,7 +74,7 @@ export const services = [
     id: "frontend-development",
     number: "01",
     title: "Frontend Development",
-    description: "Accessible React, Next.js, and TypeScript experiences built to last.",
+    description: "High-performance, accessible React, Next.js, and TypeScript experiences built to scale."
   },
   {
     id: "uiux-design",
@@ -92,12 +87,6 @@ export const services = [
     number: "03",
     title: "Animation & Interaction",
     description: "Subtle motion that makes interfaces responsive and engaging.",
-  },
-  {
-    id: "performance-accessibility",
-    number: "04",
-    title: "Performance & Accessibility",
-    description: "Fast, inclusive experiences that work across devices.",
   },
 ] as const;
 
