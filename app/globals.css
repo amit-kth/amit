@@ -127,6 +127,18 @@
         transparent 36%
       ),
       linear-gradient(135deg, var(--lavender-field), var(--fog));
+    --gradient-journey-glow:
+      radial-gradient(
+        ellipse at 88% 14%,
+        rgba(134, 47, 231, 0.065),
+        transparent 28%
+      ),
+      radial-gradient(
+        ellipse at 8% 84%,
+        rgba(189, 143, 240, 0.04),
+        transparent 24%
+      ),
+      var(--pure-white);
     --gradient-night-atmosphere:
       radial-gradient(
         ellipse at 86% 6%,
@@ -1051,7 +1063,7 @@
     --journey-sticky-top: clamp(78px, 10vh, 108px);
     --journey-card-step: 16px;
     --journey-timeline-gap: clamp(28px, 3.4vh, 36px);
-    background: var(--gradient-lavender-atmosphere);
+    background: var(--gradient-journey-glow);
     color: var(--journey-text);
   }
 
