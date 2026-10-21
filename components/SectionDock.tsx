@@ -182,7 +182,7 @@ export function SectionDock() {
       <motion.nav
         ref={navRef}
         aria-label="Explore portfolio sections"
-        className="section-dock pointer-events-auto relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2"
+        className="section-dock pointer-events-auto relative isolate flex max-w-full items-center gap-1 rounded-full p-1.5 sm:gap-1.5 sm:p-2 max-[400px]:gap-0.5 max-[400px]:p-1"
         data-dock-tone={darkBackdrop ? "dark" : "light"}
         data-dock-at-hero-top={heroTopGlassCorrection ? "true" : undefined}
         initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
@@ -195,7 +195,7 @@ export function SectionDock() {
           const active = activeId === item.id;
           return (
             <motion.a
-              className="section-dock__link group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--dock-icon-color)] outline-none transition-colors duration-300 hover:text-[var(--dock-icon-hover)] focus-visible:z-10 focus-visible:text-[var(--dock-icon-hover)] focus-visible:ring-2 focus-visible:ring-[var(--dock-icon-hover)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--dock-focus-offset)] active:text-[var(--dock-icon-active)] sm:size-12"
+              className="section-dock__link group relative grid size-11 shrink-0 place-items-center rounded-full text-[var(--dock-icon-color)] outline-none transition-colors duration-300 hover:text-[var(--dock-icon-hover)] focus-visible:z-10 focus-visible:text-[var(--dock-icon-hover)] focus-visible:ring-2 focus-visible:ring-[var(--dock-icon-hover)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--dock-focus-offset)] active:text-[var(--dock-icon-active)] sm:size-12 max-[400px]:size-10 max-[360px]:size-[38px]"
               href={`#${item.id}`}
               key={item.id}
               aria-label={item.label}

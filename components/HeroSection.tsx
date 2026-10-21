@@ -91,31 +91,19 @@ export function HeroSection({ introReady }: HeroSectionProps) {
 
   return (
     <section
-      className="relative z-10 flex h-full min-h-0 flex-col items-stretch justify-between px-5 pt-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] sm:px-8 sm:pt-7 lg:px-12 lg:pt-9"
+      className="relative z-10 h-full min-h-0 px-5 sm:px-8 lg:px-12"
       id="hero"
       ref={sectionRef}
       aria-labelledby="hero-title"
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <a className="flex w-fit items-center gap-2.5 text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, portfolio home`}>
-          <span className="relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-[var(--midnight-ink)] shadow-[0_6px_16px_rgba(17,24,39,0.16)]" aria-hidden="true">
-            <span className="size-2.5 rounded-full bg-[var(--lavender-mist)] shadow-[0_0_14px_rgba(173,109,244,0.7)]" />
-          </span>
-          <span className="grid gap-0.5">
-            <strong className="text-[13px] font-bold leading-none">{profile.name}</strong>
-            <small className="font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--slate)]">{profile.title}</small>
-          </span>
+      <div className="pointer-events-none absolute left-1/2 top-0 z-20 flex h-[72px] w-[min(320px,calc(100%_-_16px))] -translate-x-1/2 flex-col items-center justify-center rounded-b-[32px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-5 pb-1 pt-1 shadow-[0_10px_26px_rgba(17,24,39,0.055)] sm:h-[80px] sm:w-[min(340px,calc(100%_-_24px))] sm:rounded-b-[38px]">
+        <a className="pointer-events-auto flex flex-col items-center gap-1 text-center text-[var(--midnight-ink)]" href="#hero" aria-label={`${profile.name}, ${profile.hero.roleLabel}`}>
+          <strong className="text-[13px] font-semibold leading-none tracking-[-0.03em] sm:text-sm">{profile.name}</strong>
+          <span className="text-[9px] font-medium leading-none text-[var(--graphite)] sm:text-[10px]">{profile.hero.roleLabel}</span>
         </a>
-
-        <span className="hidden text-center font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--graphite)] lg:block">
-          {profile.hero.roleLabel}
-        </span>
-        <span className="justify-self-end text-right font-mono text-[8px] uppercase tracking-[0.08em] text-[var(--graphite)]">
-          {profile.hero.portfolioLabel}
-        </span>
       </div>
 
-      <div className="grid min-h-0 flex-1 place-items-center py-3 sm:py-7 lg:py-8">
+      <div className="grid h-full min-h-0 place-items-center pt-[76px] pb-[76px] sm:pt-[88px] sm:pb-[88px]">
         <div className="w-full max-w-[1020px] text-center" data-hero-scroll-content>
           <div
             className="hero-experience-chip mx-auto inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/75 bg-[rgba(255,255,255,0.42)] px-4 py-2 text-[12px] font-semibold normal-case tracking-[0.02em] text-[var(--ultra-violet)] shadow-[0_10px_28px_rgba(17,24,39,0.1),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-xl backdrop-saturate-150"
@@ -158,6 +146,10 @@ export function HeroSection({ introReady }: HeroSectionProps) {
           </div>
         </div>
       </div>
+      <div
+        className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[46px] w-[min(340px,calc(100%_-_8px))] -translate-x-1/2 rounded-t-[32px] border-x border-t border-white/80 bg-[var(--surface-warm)] shadow-[0_-8px_22px_rgba(17,24,39,0.045)] sm:h-[52px] sm:w-[min(360px,calc(100%_-_16px))] sm:rounded-t-[38px]"
+        aria-hidden="true"
+      />
     </section>
   );
 }
