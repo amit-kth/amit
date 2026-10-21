@@ -94,7 +94,7 @@ export const journey = [
   {
     id: "kriscent-frontend",
     year: "2024",
-    period: "JUL 2024 — PRESENT",
+    period: "Jul 2024 — Present",
     role: "Frontend Developer",
     company: "Kriscent Techno Hub, Kota",
     description:
@@ -103,7 +103,7 @@ export const journey = [
   {
     id: "vysion-frontend",
     year: "2022",
-    period: "MAY 2022 — MAY 2024",
+    period: "May 2022 — May 2024",
     role: "Frontend Developer",
     company: "Vysion Technology",
     description:
@@ -112,7 +112,7 @@ export const journey = [
   {
     id: "vysion-designer",
     year: "2021",
-    period: "JUN 2021 — APR 2022",
+    period: "Jun 2021 — Apr 2022",
     role: "UI/UX Designer",
     company: "Vysion Technology",
     description:
@@ -121,7 +121,7 @@ export const journey = [
   {
     id: "safal-intern",
     year: "2021",
-    period: "JAN 2021 — MAY 2021",
+    period: "Jan 2021 — May 2021",
     role: "UI/UX Design Intern",
     company: "Safal Infotech Pvt. Ltd.",
     description:
@@ -132,11 +132,11 @@ export const journey = [
 export const education = {
   qualification: "B.Tech in Computer Science and Engineering",
   institution: "IIIT Surat",
-  dates: "2017 to 2021",
+  dates: "2017 — 2021",
 } as const;
 
 export const awards = [
-  { title: "Employee of the Month" },
+  { title: "Employee of the Month", organization: "Kriscent Techno Hub" },
   { title: "Most Evergreen Person of the Year", organization: "Kriscent Techno Hub" },
 ] as const;
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import type { CSSProperties } from "react";
 import { Award, GraduationCap } from "lucide-react";
 import { awards, copy, education, journey } from "@/data/profile";
 import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
@@ -84,9 +83,46 @@ export function JourneySection() {
             <span>{copy.journey}</span>
           </div>
           <div className="journey-side__sticky">
-            <p className="eyebrow">{copy.journeyCaption}</p>
-            <h2 id="journey-title">{copy.journeyTitle}</h2>
-            <p>{copy.journeyIntro}</p>
+            <div className="journey-side__heading">
+              <p className="eyebrow">{copy.journeyCaption}</p>
+              <h2 id="journey-title">{copy.journeyTitle}</h2>
+              <p>{copy.journeyIntro}</p>
+            </div>
+
+            <aside className="journey-academics" aria-label="Education and recognition">
+              <section className="journey-education-card" aria-labelledby="education-title">
+                <div className="journey-education-card__topline">
+                  <span>{copy.journeyEducation}</span>
+                  <GraduationCap size={19} strokeWidth={1.8} aria-hidden="true" />
+                </div>
+                <p className="journey-education-card__degree-label" aria-hidden="true">B.Tech</p>
+                <h3 id="education-title">
+                  <span className="sr-only">B.Tech in </span>
+                  {education.qualification.replace(/^B\.Tech in /, "")}
+                </h3>
+                <p className="journey-education-card__institution">{education.institution}</p>
+                <span className="journey-education-card__dates">
+                  {education.dates.replace(" to ", "–")}
+                </span>
+              </section>
+
+              <section className="journey-recognition" aria-labelledby="recognition-title">
+                <div className="journey-recognition__topline">
+                  <p className="eyebrow">{copy.recognition}</p>
+                  <Award size={18} strokeWidth={1.8} aria-hidden="true" />
+                </div>
+                <h3 className="sr-only" id="recognition-title">{copy.recognition}</h3>
+                <ul>
+                  {awards.map((award) => (
+                    <li key={award.title}>
+                      <Award size={16} aria-hidden="true" />
+                      <span>{award.title}</span>
+                      {"organization" in award && <small>{award.organization}</small>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </aside>
           </div>
         </aside>
 
@@ -98,70 +134,27 @@ export function JourneySection() {
             role="list"
             aria-label={copy.journey}
           >
-            {journey.map((item, index) => {
-              const cardStyle = {
-                "--journey-card-offset": `${index * CARD_STACK_STEP}px`,
-                zIndex: index + 1,
-              } as CSSProperties;
-
-              return (
-                <article
-                  className="journey-card"
-                  data-journey-card
-                  data-card-theme={index % 4}
-                  key={item.id}
-                  role="listitem"
-                  aria-labelledby={`journey-${item.id}`}
-                  style={cardStyle}
-                >
-                  <div className="journey-card__topline">
-                    <span className="journey-card__index">0{index + 1}</span>
-                    <span className="journey-card__period">{item.period}</span>
-                  </div>
-                  <div className="journey-card__details">
-                    <h3 id={`journey-${item.id}`}>{item.role}</h3>
-                    <p className="journey-card__company">{item.company}</p>
-                    <p className="journey-card__description">{item.description}</p>
-                  </div>
-                </article>
-              );
-            })}
+            {journey.map((item, index) => (
+              <article
+                className="journey-card"
+                data-journey-card
+                data-stack-index={index}
+                key={item.id}
+                role="listitem"
+                aria-labelledby={`journey-${item.id}`}
+              >
+                <div className="journey-card__topline">
+                  <span className="journey-card__index">0{index + 1}</span>
+                  <span className="journey-card__period">{item.period}</span>
+                </div>
+                <div className="journey-card__details">
+                  <h3 id={`journey-${item.id}`}>{item.role}</h3>
+                  <p className="journey-card__company">{item.company}</p>
+                  <p className="journey-card__description">{item.description}</p>
+                </div>
+              </article>
+            ))}
           </div>
-
-          <aside className="journey-academics" aria-label="Education and recognition">
-            <section className="journey-education-card" aria-labelledby="education-title">
-              <div className="journey-education-card__topline">
-                <span>{copy.journeyEducation}</span>
-                <GraduationCap size={19} strokeWidth={1.8} aria-hidden="true" />
-              </div>
-              <p className="journey-education-card__degree-label">B.Tech</p>
-              <h3 id="education-title">
-                <span className="sr-only">B.Tech in </span>
-                {education.qualification.replace(/^B\.Tech in /, "")}
-              </h3>
-              <p className="journey-education-card__institution">{education.institution}</p>
-              <span className="journey-education-card__dates">
-                {education.dates.replace(" to ", "–")}
-              </span>
-            </section>
-
-            <section className="journey-recognition" aria-labelledby="recognition-title">
-              <div className="journey-recognition__topline">
-                <p className="eyebrow">{copy.recognition}</p>
-                <Award size={16} strokeWidth={1.8} aria-hidden="true" />
-              </div>
-              <h3 className="sr-only" id="recognition-title">{copy.recognition}</h3>
-              <ul>
-                {awards.map((award) => (
-                  <li key={award.title}>
-                    <Award size={14} aria-hidden="true" />
-                    <span>{award.title}</span>
-                    {"organization" in award && <small>{award.organization}</small>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </aside>
         </div>
       </div>
     </section>
