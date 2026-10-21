@@ -16,7 +16,7 @@ type ExperienceStoryProps = {
 export function ExperienceStory({ introReady }: ExperienceStoryProps) {
   return (
     <section
-      className="experience-story relative isolate box-border flex h-screen supports-[height:100svh]:h-svh w-full items-center justify-center overflow-hidden bg-[var(--surface-warm)] p-[clamp(24px,3.8vw,52px)]"
+      className="experience-story relative isolate box-border flex h-screen supports-[height:100svh]:h-svh w-full items-center justify-center overflow-hidden bg-[var(--surface-warm)] p-[var(--layout-hero-inset)]"
       id="experience-story"
       data-hero-stage
       aria-label="Portfolio introduction"

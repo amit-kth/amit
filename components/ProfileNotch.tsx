@@ -1,3 +1,6 @@
+"use client";
+
+import { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { profile } from "@/data/profile";
 import { SocialIcon, type SocialPlatform } from "@/components/ui/social-icon";
@@ -12,8 +15,47 @@ const socialLinks: Array<{
 ];
 
 export function ProfileNotch() {
+  const notchRef = useRef<HTMLDivElement>(null);
+  const [stuck, setStuck] = useState(false);
+
+  useLayoutEffect(() => {
+    const notch = notchRef.current;
+    const heroStage = document.querySelector<HTMLElement>("[data-hero-stage]");
+    const heroCard = heroStage?.querySelector<HTMLElement>("[data-hero-card]");
+    if (!notch || !heroStage || !heroCard) return;
+
+    let naturalTop = 0;
+    const measureNaturalTop = () => {
+      const stage = heroStage.getBoundingClientRect();
+      const stagePadding = Number.parseFloat(getComputedStyle(heroStage).paddingTop) || 0;
+      const cardBorder = Number.parseFloat(getComputedStyle(heroCard).borderTopWidth) || 0;
+      naturalTop = stage.top + window.scrollY + stagePadding + cardBorder;
+    };
+    const updateStickyState = () => {
+      const nextStuck = window.scrollY >= naturalTop;
+      setStuck((current) => current === nextStuck ? current : nextStuck);
+    };
+    const onResize = () => {
+      measureNaturalTop();
+      updateStickyState();
+    };
+
+    measureNaturalTop();
+    updateStickyState();
+    window.addEventListener("scroll", updateStickyState, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updateStickyState);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 z-[160] flex justify-center">
+    <div
+      className="profile-notch pointer-events-none inset-x-0 z-[160] flex justify-center"
+      data-stuck={stuck ? "true" : undefined}
+      ref={notchRef}
+    >
       <div
         className="pointer-events-auto flex h-[52px] w-[min(280px,calc(100vw_-_16px))] items-center justify-between rounded-b-[26px] border-x border-b border-white/80 bg-[var(--surface-warm)] px-3 shadow-[0_8px_20px_rgba(17,24,39,0.08)] backdrop-blur-xl"
         role="group"

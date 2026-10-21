@@ -95,6 +95,7 @@
     --shape-radius-pill: 999px;
     --layout-container-wide: 1480px;
     --layout-container-copy: 720px;
+    --layout-hero-inset: clamp(24px, 3.8vw, 52px);
     --layout-page-gutter: clamp(20px, 5vw, 84px);
     --layout-section-space: clamp(76px, 9vw, 136px);
     --layout-dock-clearance: calc(5.5rem + env(safe-area-inset-bottom));
@@ -289,6 +290,16 @@
 
   .experience-story {
     background: var(--surface-warm);
+  }
+
+  .profile-notch {
+    position: absolute;
+    top: calc(var(--layout-hero-inset) + 1px);
+  }
+
+  .profile-notch[data-stuck="true"] {
+    position: fixed;
+    top: 0;
   }
 
   .section-skills,
