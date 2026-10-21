@@ -46,6 +46,7 @@
     --magenta-spark: #ff5fe4;
     --hot-pink-ray: #e22ba4;
     --amber-pulse: #dc5f05;
+    --champagne-gold: #c4973f;
     --midnight-ink: #111827;
     --graphite: #3f4654;
     --slate: #6b7589;
@@ -472,8 +473,8 @@
     border-radius: inherit;
     background: radial-gradient(
       ellipse 120px 54px at var(--mx) var(--my),
-      color-mix(in srgb, var(--voltage-violet) 26%, transparent),
-      color-mix(in srgb, var(--lavender-mist) 18%, transparent) 46%,
+      color-mix(in srgb, var(--champagne-gold) 52%, transparent),
+      color-mix(in srgb, var(--champagne-gold) 34%, transparent) 46%,
       transparent 76%
     );
     filter: blur(16px);
