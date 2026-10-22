@@ -1637,17 +1637,17 @@
     min-height: 232px;
     padding: clamp(20px, 2.1vw, 30px);
     overflow: hidden;
-    border: 1px solid rgba(173, 109, 244, 0.34);
+    border: 1px solid rgba(255, 75, 31, 0.38);
     border-radius: var(--shape-radius-xl);
     background:
-      radial-gradient(ellipse at 88% 0%, rgba(255, 95, 228, 0.24), transparent 52%),
-      radial-gradient(ellipse at 2% 100%, rgba(134, 47, 231, 0.38), transparent 48%),
-      linear-gradient(145deg, #5f259e 0%, #3b2058 58%, #21172e 100%);
+      radial-gradient(ellipse at 88% 0%, rgba(255, 75, 31, 0.42), transparent 52%),
+      radial-gradient(ellipse at 2% 100%, rgba(239, 235, 227, 0.1), transparent 48%),
+      linear-gradient(135deg, #0b0b0c 0%, #0b0b0c 46%, #ff4b1f 100%);
     box-shadow:
-      0 26px 54px rgba(37, 17, 57, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16),
-      inset 0 -1px 0 rgba(173, 109, 244, 0.18);
-    color: var(--pure-white);
+      0 26px 54px rgba(11, 11, 12, 0.28),
+      inset 0 1px 0 rgba(239, 235, 227, 0.16),
+      inset 0 -1px 0 rgba(255, 75, 31, 0.28);
+    color: #efebe3;
   }
 
   .journey-education-card::before {
@@ -1658,7 +1658,7 @@
     width: 210px;
     height: 210px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(173, 109, 244, 0.4), rgba(255, 95, 228, 0.18) 42%, transparent 72%);
+    background: radial-gradient(circle, rgba(255, 75, 31, 0.54), rgba(239, 235, 227, 0.14) 42%, transparent 72%);
     filter: blur(16px);
     content: "";
     pointer-events: none;
@@ -1671,7 +1671,7 @@
     border-radius: inherit;
     background: repeating-linear-gradient(
       128deg,
-      rgba(255, 255, 255, 0.035) 0 1px,
+      rgba(239, 235, 227, 0.035) 0 1px,
       transparent 1px 6px
     );
     mix-blend-mode: soft-light;
@@ -1693,7 +1693,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: var(--lavender-mist);
+    color: rgba(239, 235, 227, 0.78);
     font-family: var(--font-body);
     font-size: 10px;
     font-weight: 700;
@@ -1706,15 +1706,15 @@
     width: 38px;
     height: 38px;
     place-items: center;
-    border: 1px solid rgba(243, 214, 138, 0.32);
+    border: 1px solid rgba(255, 75, 31, 0.42);
     border-radius: 13px;
-    background: rgba(243, 214, 138, 0.08);
-    color: #f3d68a;
+    background: rgba(255, 75, 31, 0.12);
+    color: #ff4b1f;
   }
 
   .journey-education-card__degree-label {
     margin: 17px 0 5px;
-    color: #f3d68a;
+    color: #ff4b1f;
     font-size: clamp(42px, 4vw, 58px);
     font-weight: 750;
     line-height: 0.9;
@@ -1724,7 +1724,7 @@
   .journey-education-card h3 {
     max-width: 440px;
     margin: 0;
-    color: var(--pure-white);
+    color: #efebe3;
     font-size: clamp(15px, 1.45vw, 19px);
     font-weight: 650;
     line-height: 1.24;
@@ -1735,10 +1735,10 @@
     display: inline-flex;
     margin: 13px 0 0;
     padding: 6px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(239, 235, 227, 0.22);
     border-radius: var(--shape-radius-pill);
-    background: rgba(255, 255, 255, 0.07);
-    color: rgba(255, 255, 255, 0.9);
+    background: rgba(239, 235, 227, 0.08);
+    color: rgba(239, 235, 227, 0.92);
     font-size: 11px;
     font-weight: 650;
   }
@@ -1746,7 +1746,7 @@
   .journey-education-card__dates {
     display: block;
     margin-top: 9px;
-    color: rgba(241, 245, 249, 0.62);
+    color: rgba(239, 235, 227, 0.68);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -2038,7 +2038,7 @@
 
   @media (prefers-reduced-transparency: reduce) {
     .journey-education-card {
-      background: linear-gradient(145deg, #5f259e, #3b2058 68%, #21172e);
+      background: linear-gradient(135deg, #0b0b0c 0%, #0b0b0c 46%, #ff4b1f 100%);
     }
 
     .journey-education-card::before,
