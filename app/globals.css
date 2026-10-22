@@ -1637,12 +1637,12 @@
     min-height: 232px;
     padding: clamp(20px, 2.1vw, 30px);
     overflow: hidden;
-    border: 1px solid rgba(243, 214, 138, 0.24);
+    border: 1px solid rgba(177, 199, 232, 0.24);
     border-radius: var(--shape-radius-xl);
     background:
-      radial-gradient(ellipse at 88% 0%, rgba(166, 112, 244, 0.34), transparent 52%),
-      radial-gradient(ellipse at 2% 100%, rgba(228, 178, 78, 0.17), transparent 48%),
-      linear-gradient(145deg, #33213f 0%, #1b1725 58%, #11131d 100%);
+      radial-gradient(ellipse at 88% 0%, rgba(116, 151, 212, 0.3), transparent 52%),
+      radial-gradient(ellipse at 2% 100%, rgba(228, 178, 78, 0.16), transparent 48%),
+      linear-gradient(145deg, #2a3a52 0%, #19273a 58%, #111824 100%);
     box-shadow:
       0 26px 54px rgba(17, 24, 39, 0.24),
       inset 0 1px 0 rgba(255, 255, 255, 0.16),
@@ -1658,7 +1658,7 @@
     width: 210px;
     height: 210px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(183, 127, 255, 0.36), rgba(225, 173, 77, 0.14) 42%, transparent 72%);
+    background: radial-gradient(circle, rgba(130, 166, 226, 0.4), rgba(225, 173, 77, 0.14) 42%, transparent 72%);
     filter: blur(16px);
     content: "";
     pointer-events: none;
@@ -2038,7 +2038,7 @@
 
   @media (prefers-reduced-transparency: reduce) {
     .journey-education-card {
-      background: linear-gradient(145deg, #24212f, #171923 68%, #1b1827);
+      background: linear-gradient(145deg, #2a3a52, #19273a 68%, #111824);
     }
 
     .journey-education-card::before,
