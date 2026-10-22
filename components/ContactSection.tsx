@@ -45,16 +45,11 @@ export function ContactSection() {
     <section className="section-contact relative isolate overflow-hidden py-[clamp(80px,10vw,148px)]" id="contact" ref={sectionRef} aria-labelledby="contact-title">
       <span className="pointer-events-none absolute -right-[0.08em] top-[0.12em] select-none text-[clamp(16rem,36vw,42rem)] font-semibold leading-[0.72] tracking-[-0.12em] text-[rgba(95,37,158,0.045)]" aria-hidden="true">05</span>
       <div className="relative mx-auto flex w-full max-w-[1480px] flex-col items-center gap-8 px-[clamp(20px,5vw,84px)] text-center">
-        <div className="flex items-center justify-center gap-3 font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--ultra-violet)]" data-contact-reveal>
-          <span>05</span><span className="text-[var(--orchid-wash)]" aria-hidden="true">/</span><span>{copy.contact}</span>
-        </div>
-
         <div className="flex w-full min-w-0 flex-col items-center">
-          <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--graphite)]" data-contact-reveal>Let’s connect</p>
-          <h2 className="mx-auto mt-4 max-w-[1050px] text-center text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-section-heading>
-            <span className="block">Open to</span>
+          <h2 className="mx-auto mt-0 max-w-[1050px] text-center text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-section-heading>
+            <span className="block text-[0.8em]">Open to</span>
             <span className="block text-[var(--ultra-violet)]">Senior Frontend</span>
-            <span className="block">roles</span>
+            <span className="block text-[0.8em]">roles</span>
           </h2>
           <p className="mx-auto mt-5 max-w-[610px] text-center text-sm leading-relaxed text-[var(--graphite)] sm:text-base" data-contact-reveal>
             React / Next.js roles at product companies, in India and remote.
@@ -70,12 +65,6 @@ export function ContactSection() {
           </a>
 
           <div className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-[9px] uppercase tracking-[0.08em]" data-contact-reveal>
-            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
-            </a>
-            <a className="group inline-flex min-h-9 items-center gap-1.5 text-[var(--graphite)] transition-colors hover:text-[var(--ultra-violet)] active:text-[var(--voltage-violet)] motion-reduce:transition-none" href={profile.links.github} target="_blank" rel="noreferrer">
-              GitHub<ArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none" size={13} aria-hidden="true" />
-            </a>
             <GlassButton
               className="group"
               href={profile.links.resume}
