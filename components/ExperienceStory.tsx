@@ -1,44 +1,39 @@
 "use client";
 
-import { ArrowDownRight, SkipForward } from "lucide-react";
 import { HeroSection } from "@/components/HeroSection";
-import { PhotoStage } from "@/components/PhotoStage";
-import { copy } from "@/data/profile";
+import { ShaderCanvas } from "@/components/ui/shader-canvas";
+
+const HERO_SHADER_COLORS = {
+  u_accent: "var(--voltage-violet)",
+  u_ink: "var(--midnight-ink)",
+  u_surface: "var(--fog)",
+};
 
 type ExperienceStoryProps = {
   introReady: boolean;
 };
 
-const scenes = [
-  { number: "01", label: "Mind", title: "Developer, Designer's Mindset", body: "Frontend craft with a UI/UX eye." },
-  { number: "02", label: "Heart", title: "I Love What I Do", body: "Passion shows in every detail." },
-  { number: "03", label: "Hands", title: "5 Years of Experience", body: "Crafting polished, fast interfaces." },
-] as const;
-
 export function ExperienceStory({ introReady }: ExperienceStoryProps) {
   return (
-    <>
-      <section className="experience-story" id="experience-story" aria-label="A scroll-led introduction to Amit Verma">
-        <div className="experience-story__stage">
-          <PhotoStage />
-          <HeroSection introReady={introReady} />
-          <a className="experience-story__skip" href="#what-i-do">
-            <span>Skip intro</span><SkipForward size={15} aria-hidden="true" />
-          </a>
-          <span className="experience-story__scroll-hint" aria-hidden="true">
-            {copy.scroll}<ArrowDownRight size={15} />
-          </span>
-        </div>
-      </section>
-      <section className="photo-story-captions" aria-label="How I work">
-        {scenes.map((scene) => (
-          <article className="photo-story-captions__item" key={scene.number}>
-            <p className="eyebrow">{scene.number} / {scene.label}</p>
-            <h2>{scene.title}</h2>
-            <p>{scene.body}</p>
-          </article>
-        ))}
-      </section>
-    </>
+    <section
+      className="experience-story relative isolate box-border flex h-screen supports-[height:100svh]:h-svh w-full items-center justify-center overflow-hidden bg-[var(--surface-warm)] p-[var(--layout-hero-inset)]"
+      id="experience-story"
+      data-hero-stage
+      aria-label="Portfolio introduction"
+    >
+      <div className="relative isolate h-full min-h-0 w-full max-w-[1600px] overflow-hidden rounded-[clamp(28px,4vw,54px)] border border-white/75 bg-[var(--fog)]" data-hero-card>
+        <ShaderCanvas
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          colors={HERO_SHADER_COLORS}
+          resolution={0.62}
+          stillTime={4}
+        />
+        <div
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[rgba(241,245,249,0.34)] via-[rgba(241,245,249,0.08)] to-[rgba(241,245,249,0.48)]"
+          aria-hidden="true"
+        />
+        <HeroSection introReady={introReady} />
+      </div>
+    </section>
   );
 }

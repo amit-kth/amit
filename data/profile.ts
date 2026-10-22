@@ -1,8 +1,8 @@
 export const profile = {
   name: "Amit Verma",
   displayName: "AMIT VERMA",
-  brandMark: "AV(R)",
   title: "Frontend Developer",
+  avatar: "https://media.licdn.com/dms/image/v2/D5603AQHkQ_1csElxbg/profile-displayphoto-crop_800_800/B56aFFzbtlHQAI-/0/1792172476100?e=1794441600&v=beta&t=XL4yICAd8t95Vr_PTmDKX3JOT_2mbDBhgHJ8o5peD9Y",
   location: "Kota, India",
   email: "amverma1204t@gmail.com",
   experienceYears: 5,
@@ -15,12 +15,14 @@ export const profile = {
     imageAlt: "Amit Verma — Frontend Developer (React, Next.js, TypeScript)",
   },
   links: {
+    instagram: null,
     linkedin: "https://www.linkedin.com/in/amit-verma-2a46971b4/",
     github: "https://github.com/it-is-amit",
     resume: "/resume.txt",
   },
   hero: {
-    roleLabel: "FRONTEND DEVELOPER · UI/UX MINDSET",
+    headline: ["Complex ideas.", "Effortless interfaces."],
+    roleLabel: "Frontend Developer",
     portfolioLabel: "PORTFOLIO 2026",
     tagline: "I build thoughtful, polished web experiences.",
     intro: "Frontend Developer. React, Next.js, TypeScript.",
@@ -30,93 +32,62 @@ export const profile = {
   },
   about: {
     statement:
-      "I design and build fast, scalable web products. 5 years of turning ideas into polished interfaces with React, Next.js and TypeScript.",
+      "I turn complex ideas into accessible, high-performance web experiences with React, Next.js, and TypeScript.",
     supporting:
       "I started as a UI/UX designer, then moved into frontend development. That design background is why my interfaces feel polished, and why I can work closely with designers and backend teams.",
-    stats: [
-      { id: "experience", value: "5", countTo: 5, suffix: "", label: "Years of experience" },
-      { id: "react-years", value: "4+", countTo: 4, suffix: "+", label: "Years in React / Next.js / TypeScript" },
-      { id: "user-range", value: "5K–50K+", countTo: 5, suffix: "K–50K+", label: "Users on products I've built" },
-    ],
   },
   roleInterest:
     "Open to senior frontend and React / Next.js roles at product companies, in India and remote.",
   copyright: "© 2026 Amit Verma",
-  builtWith: "Built with Next.js, TypeScript, GSAP and Lenis.",
-  localTimeZone: "Asia/Kolkata",
 } as const;
 
 export const copy = {
   skipToContent: "Skip to main content",
-  navigationLabel: "Main navigation",
-  currentSection: "Current section",
-  intro: "Intro",
-  profileSnapshot: "Profile snapshot",
-  yearsExperience: "Years of experience",
   siteFooter: "Site footer",
   journeyIntro: "I started in UI/UX design, which shapes how I build interfaces today.",
-  menu: "Menu",
-  openMenu: "Open full-screen menu",
-  closeMenu: "Close menu",
-  close: "Close",
   services: "Services",
   journey: "Journey",
-  stack: "Stack",
-  localTime: "Kota local time",
   scroll: "Scroll to explore",
   backToTop: "Back to top",
-  preloaderLabel: "AMIT VERMA, FRONTEND DEVELOPER",
-  portraitAlt: "A cut-out portrait placeholder for Amit Verma",
-  servicesEyebrow: "03 / What I do",
-  servicesTitle: "WHAT I DO",
+  preloaderLabel: "Frontend Developer · UI/UX Designer",
+  servicesTitle: "What I Do?",
+  contact: "Contact",
   journeyCaption: "From designer to frontend developer",
-  journeyTitle: "JOURNEY",
+  journeyTitle: "Journey",
   journeyEducation: "Education",
   recognition: "Recognition",
-  stackEyebrow: "04 / Skills",
-  stackTitle: "TOOLS & TECH",
-  linkedIn: "LinkedIn",
-  github: "GitHub",
-  downloadResume: "Download resume",
-  email: "Email",
-  timeLabel: "Kota, India",
-  srOpenTo: "Open to senior frontend roles",
-  nextPanel: "Scroll for next panel",
-  panelProgress: "Panel progress",
-  unknown: "[ADD]",
+  stackEyebrow: "02 / Tools & Tech",
+  stackTitle: "Tools & Tech",
+  downloadResume: "Download résumé",
 } as const;
 
 export const navigation = [
   { id: "hero", label: "Home", index: "00" },
   { id: "what-i-do", label: "What I Do", index: "01" },
-  { id: "skills", label: "Skills", index: "02" },
+  { id: "skills", label: "Tools & Tech", index: "02" },
   { id: "journey", label: "Journey", index: "03" },
+  { id: "gallery", label: "Gallery", index: "04" },
+  { id: "contact", label: "Contact", index: "05" },
 ] as const;
 
 export const services = [
   {
-    id: "frontend-engineering",
+    id: "frontend-development",
     number: "01",
+    title: "Frontend Development",
+    description: "High-performance, accessible React, Next.js, and TypeScript experiences built to scale."
+  },
+  {
+    id: "uiux-design",
+    number: "02",
     title: "UI/UX Design",
     description: "Clear flows and thoughtful interfaces shaped by a designer’s eye.",
   },
   {
-    id: "rendering-seo",
-    number: "02",
-    title: "Frontend Development",
-    description: "Accessible React, Next.js, and TypeScript experiences built to last.",
-  },
-  {
-    id: "performance",
+    id: "animation-interaction",
     number: "03",
     title: "Animation & Interaction",
     description: "Subtle motion that makes interfaces responsive and engaging.",
-  },
-  {
-    id: "uiux-to-code",
-    number: "04",
-    title: "Performance & Accessibility",
-    description: "Fast, inclusive experiences that work across devices.",
   },
 ] as const;
 
@@ -124,49 +95,49 @@ export const journey = [
   {
     id: "kriscent-frontend",
     year: "2024",
-    period: "JUL 2024 — PRESENT",
+    period: "Jul 2024 — Present",
     role: "Frontend Developer",
     company: "Kriscent Techno Hub, Kota",
     description:
-      "Fleet management dashboards, social media, e-commerce and AI astrology platforms, and the company website redesign. Worked in a 6 to 8 member team and led the full frontend on several projects.",
+      "Fleet, social, commerce, AI-astrology and company-site work; led frontend on key projects in a 6–8-person team.",
   },
   {
     id: "vysion-frontend",
     year: "2022",
-    period: "MAY 2022 — MAY 2024",
+    period: "May 2022 — May 2024",
     role: "Frontend Developer",
     company: "Vysion Technology",
     description:
-      "Built OCEMS, the Vidhya Bharti School website and admin, AttachClub admin dashboard, plus company and client websites.",
+      "OCEMS, Vidhya Bharti School’s site and admin, AttachClub admin, plus company and client websites.",
   },
   {
     id: "vysion-designer",
     year: "2021",
-    period: "JUN 2021 — APR 2022",
+    period: "Jun 2021 — Apr 2022",
     role: "UI/UX Designer",
     company: "Vysion Technology",
     description:
-      "Designed UI/UX for Gurucamp (EdTech), Dhruvaan (IoT device app) and the Decon IoT platform.",
+      "UI/UX for Gurucamp (EdTech), Dhruvaan’s IoT app, and the Decon IoT platform.",
   },
   {
     id: "safal-intern",
     year: "2021",
-    period: "JAN 2021 — MAY 2021",
+    period: "Jan 2021 — May 2021",
     role: "UI/UX Design Intern",
     company: "Safal Infotech Pvt. Ltd.",
     description:
-      "Wireframes, user flows and prototypes for the Market Time stock market mobile app.",
+      "Wireframes, user flows, and prototypes for Market Time’s stock-market app.",
   },
 ] as const;
 
 export const education = {
   qualification: "B.Tech in Computer Science and Engineering",
   institution: "IIIT Surat",
-  dates: "2017 to 2021",
+  dates: "2017 — 2021",
 } as const;
 
 export const awards = [
-  { title: "Employee of the Month" },
+  { title: "Employee of the Month", organization: "Kriscent Techno Hub" },
   { title: "Most Evergreen Person of the Year", organization: "Kriscent Techno Hub" },
 ] as const;
 

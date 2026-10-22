@@ -106,15 +106,15 @@ export function Preloader({ onComplete }: PreloaderProps) {
     <div className={`preloader${visible ? " is-active" : ""}`} ref={rootRef} aria-hidden="true" inert>
       <div className="preloader__curtain">
         <div className="preloader__topline">
-          <span>{profile.brandMark}</span>
-          <span>{copy.preloaderLabel}</span>
+          <span>{profile.name}</span>
+          <span>{profile.hero.portfolioLabel}</span>
         </div>
         <div className="preloader__count-wrap">
           <span className="preloader__count" ref={counterRef}>000</span>
           <span className="preloader__percent">%</span>
         </div>
         <div className="preloader__bottomline">
-          <span>{profile.hero.portfolioLabel}</span>
+          <span>{copy.preloaderLabel}</span>
           <span>{profile.location}</span>
         </div>
       </div>

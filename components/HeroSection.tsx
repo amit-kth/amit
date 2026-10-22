@@ -1,9 +1,12 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { education, profile } from "@/data/profile";
-import { gsap, registerGsapPlugins, SplitText } from "@/lib/gsap-client";
+import type { PointerEvent as ReactPointerEvent } from "react";
+import { ArrowDownRight, Download } from "lucide-react";
+import { GlassButton } from "@/components/ui/glass-button";
+import { copy, profile } from "@/data/profile";
+import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
+import { gsap, registerGsapPlugins } from "@/lib/gsap-client";
 
 type HeroSectionProps = {
   introReady: boolean;
@@ -12,109 +15,138 @@ type HeroSectionProps = {
 export function HeroSection({ introReady }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  const handleExperienceChipPointerMove = (
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => {
+    if (reducedMotion || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--mx", `${event.clientX - bounds.left}px`);
+    event.currentTarget.style.setProperty("--my", `${event.clientY - bounds.top}px`);
+  };
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const title = titleRef.current;
-    if (!introReady || !section || !title) return;
+    if (!introReady || !section || !title || reducedMotion) return;
+    const heroStage = section.closest<HTMLElement>("[data-hero-stage]") ?? section;
+
     registerGsapPlugins();
-
     const context = gsap.context(() => {
-      const media = gsap.matchMedia();
-      media.add(
+      const mobile = window.matchMedia("(max-width: 767px)").matches;
+      const enterElements = section.querySelectorAll<HTMLElement>("[data-hero-enter]");
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      intro.fromTo(
+        title,
+        { y: mobile ? 18 : 24, autoAlpha: 0 },
         {
-          desktop: "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-          tablet: "(min-width: 768px) and (max-width: 1023px) and (prefers-reduced-motion: no-preference)",
-          mobile: "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
-          reduced: "(prefers-reduced-motion: reduce)",
-        },
-        (mediaContext) => {
-          const conditions = mediaContext.conditions as
-            | { desktop: boolean; tablet: boolean; mobile: boolean; reduced: boolean }
-            | undefined;
-          if (conditions?.reduced) return;
-
-          const split = SplitText.create(title, { type: "words", wordsClass: "hero-title__word", aria: "auto" });
-          gsap.set(split.words, { yPercent: 110 });
-          const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
-          intro.to(split.words, {
-            yPercent: 0,
-            duration: conditions?.mobile ? 0.68 : 0.82,
-            stagger: conditions?.mobile ? 0.04 : 0.08,
-          });
-          const supporting = Array.from(section.querySelectorAll<HTMLElement>("[data-hero-enter]"));
-          intro.from(supporting, { y: 14, duration: 0.62, stagger: 0.07, ease: "power3.out" }, "-=0.52");
-
-          const magneticButtons = Array.from(section.querySelectorAll<HTMLAnchorElement>(".hero-actions .button"));
-          const magneticCleanups: Array<() => void> = [];
-          if (conditions?.desktop) {
-            for (const button of magneticButtons) {
-              const xTo = gsap.quickTo(button, "x", { duration: 0.38, ease: "power3.out" });
-              const yTo = gsap.quickTo(button, "y", { duration: 0.38, ease: "power3.out" });
-              const move = (event: PointerEvent) => {
-                if (event.pointerType === "touch") return;
-                const rect = button.getBoundingClientRect();
-                xTo(((event.clientX - rect.left) / rect.width - 0.5) * 8);
-                yTo(((event.clientY - rect.top) / rect.height - 0.5) * 6);
-              };
-              const leave = () => { xTo(0); yTo(0); };
-              button.addEventListener("pointermove", move, { passive: true });
-              button.addEventListener("pointerleave", leave, { passive: true });
-              magneticCleanups.push(() => {
-                button.removeEventListener("pointermove", move);
-                button.removeEventListener("pointerleave", leave);
-              });
-            }
-          }
-
-          const glow = section.querySelector<HTMLElement>(".hero-orbit");
-          if (glow && conditions?.desktop) {
-            gsap.to(glow, {
-              yPercent: -12,
-              scale: 1.04,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top top",
-                end: "bottom top",
-                scrub: 0.5,
-              },
-            });
-          }
-
-          return () => {
-            magneticCleanups.forEach((cleanup) => cleanup());
-            split.revert();
-          };
+          y: 0,
+          autoAlpha: 1,
+          duration: mobile ? 0.68 : 0.82,
+          clearProps: "transform,opacity,visibility",
         },
       );
-      return () => media.revert();
+      intro.fromTo(
+        enterElements,
+        { y: 12, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: mobile ? 0.48 : 0.56,
+          stagger: mobile ? 0.055 : 0.07,
+          clearProps: "transform,opacity,visibility",
+        },
+        "-=0.4",
+      );
+
+      const heroCard = heroStage.querySelector<HTMLElement>("[data-hero-card]");
+      if (heroCard) {
+        gsap.set(heroCard, {
+          filter: "blur(0px)",
+          transformOrigin: "50% 50%",
+          willChange: "transform, filter, opacity",
+        });
+
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: heroStage,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.55,
+            invalidateOnRefresh: true,
+          },
+        })
+          .to(heroCard, {
+            scale: mobile ? 1.04 : 1.08,
+            filter: "blur(1px)",
+            autoAlpha: 1,
+            ease: "none",
+            duration: 0.35,
+          })
+          .to(heroCard, {
+            scale: mobile ? 1.2 : 1.3,
+            filter: mobile ? "blur(10px)" : "blur(14px)",
+            autoAlpha: 0,
+            ease: "none",
+            duration: 0.65,
+          });
+      }
+
     }, section);
 
     return () => context.revert();
-  }, [introReady]);
+  }, [introReady, reducedMotion]);
 
   return (
-    <section className="hero-section" id="hero" ref={sectionRef} aria-labelledby="hero-title">
-      <div className="hero-section__inner">
-        <div className="hero-kicker" data-hero-enter>
-          <span className="status-dot" aria-hidden="true" />
-          <span>Open to work</span>
-        </div>
-        <div className="hero-main">
-          <div className="hero-main__copy">
-            <h1 className="hero-title" id="hero-title" ref={titleRef}>{profile.name}</h1>
-            <p className="hero-role" data-hero-enter>{profile.title} · UI/UX Mindset</p>
-            <p className="hero-tagline" data-hero-enter>{profile.hero.tagline}</p>
-            <dl className="hero-facts" data-hero-enter>
-              <div><dt>Experience</dt><dd>{profile.experienceYears}+ Years</dd></div>
-              <div><dt>Location</dt><dd>{profile.location}</dd></div>
-              <div className="hero-fact--education"><dt>Education</dt><dd>{education.qualification}, {education.institution}</dd></div>
-            </dl>
-            <div className="hero-actions" data-hero-enter>
-              <a className="button button--primary" href="#journey">View Journey<ArrowDownRight size={17} aria-hidden="true" /></a>
-              <a className="button button--quiet" href="/resume.txt" download>Download Resume<ArrowUpRight size={16} aria-hidden="true" /></a>
-            </div>
+    <section
+      className="relative z-10 h-full min-h-0 px-5 sm:px-8 lg:px-12"
+      id="hero"
+      ref={sectionRef}
+      aria-labelledby="hero-title"
+    >
+      <div className="grid h-full min-h-0 place-items-center pt-[76px] pb-[76px] sm:pt-[88px] sm:pb-[88px]">
+        <div className="w-full max-w-[1020px] text-center">
+          <div
+            className="hero-experience-chip mx-auto inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/75 bg-[rgba(255,255,255,0.42)] px-4 py-2 text-[12px] font-semibold normal-case tracking-[0.02em] text-[var(--ultra-violet)] shadow-[0_10px_28px_rgba(17,24,39,0.1),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-xl backdrop-saturate-150"
+            data-hero-enter
+            onPointerMove={handleExperienceChipPointerMove}
+          >
+            <span className="size-1.5 rounded-full bg-[var(--voltage-violet)]" aria-hidden="true" />
+            <span>{profile.experienceYears}+ years of experience</span>
+          </div>
+          <h1
+            className="mx-auto mt-4 block max-w-[1020px] text-center text-[clamp(2.5rem,6vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.085em] text-[var(--midnight-ink)] normal-case sm:mt-6"
+            id="hero-title"
+            ref={titleRef}
+            aria-label={profile.hero.headline.join(" ")}
+          >
+            <span className="block">{profile.hero.headline[0]}</span>
+            <span className="block text-[var(--ultra-violet)]">{profile.hero.headline[1]}</span>
+          </h1>
+          <p className="mx-auto mt-3 max-w-[640px] text-sm font-medium leading-snug text-[var(--graphite)] sm:mt-5 sm:text-lg" data-hero-enter>
+            {profile.hero.tagline}
+          </p>
+          <p className="mx-auto mt-1.5 max-w-[600px] text-[11px] leading-relaxed text-[var(--slate)] sm:mt-2 sm:text-xs" data-hero-enter>
+            {profile.hero.locationLine}
+          </p>
+          <div className="mx-auto mt-4 flex w-full max-w-[360px] flex-col justify-center gap-2 sm:mt-6 sm:w-auto sm:max-w-none sm:flex-row" data-hero-enter>
+            <GlassButton
+              href={profile.links.resume}
+              download
+              variant="primary"
+              className="w-full min-h-10 sm:min-h-11 sm:w-auto"
+            >
+              {copy.downloadResume}<Download size={15} aria-hidden="true" />
+            </GlassButton>
+            <GlassButton
+              href="#journey"
+              variant="secondary"
+              className="w-full min-h-10 sm:min-h-11 sm:w-auto"
+            >
+              View journey<ArrowDownRight size={16} aria-hidden="true" />
+            </GlassButton>
           </div>
         </div>
       </div>
