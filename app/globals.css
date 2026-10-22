@@ -1637,15 +1637,16 @@
     min-height: 232px;
     padding: clamp(20px, 2.1vw, 30px);
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(243, 214, 138, 0.24);
     border-radius: var(--shape-radius-xl);
     background:
-      radial-gradient(ellipse at 92% 0%, rgba(134, 47, 231, 0.24), transparent 50%),
-      radial-gradient(ellipse at 2% 100%, rgba(196, 151, 63, 0.11), transparent 45%),
-      linear-gradient(145deg, #24212f 0%, #171923 68%, #1b1827 100%);
+      radial-gradient(ellipse at 88% 0%, rgba(166, 112, 244, 0.34), transparent 52%),
+      radial-gradient(ellipse at 2% 100%, rgba(228, 178, 78, 0.17), transparent 48%),
+      linear-gradient(145deg, #33213f 0%, #1b1725 58%, #11131d 100%);
     box-shadow:
-      0 22px 48px rgba(17, 24, 39, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.13);
+      0 26px 54px rgba(17, 24, 39, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(196, 151, 63, 0.12);
     color: var(--pure-white);
   }
 
@@ -1657,8 +1658,24 @@
     width: 210px;
     height: 210px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(173, 109, 244, 0.19), rgba(196, 151, 63, 0.07) 42%, transparent 72%);
+    background: radial-gradient(circle, rgba(183, 127, 255, 0.36), rgba(225, 173, 77, 0.14) 42%, transparent 72%);
     filter: blur(16px);
+    content: "";
+    pointer-events: none;
+  }
+
+  .journey-education-card::after {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border-radius: inherit;
+    background: repeating-linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0.035) 0 1px,
+      transparent 1px 6px
+    );
+    mix-blend-mode: soft-light;
+    opacity: 0.72;
     content: "";
     pointer-events: none;
   }
@@ -1743,7 +1760,9 @@
   }
 
   .journey-award-card {
-    --award-accent: var(--champagne-gold);
+    --award-accent: #68480d;
+    --award-text: #352508;
+    --award-muted: rgba(53, 37, 8, 0.76);
     position: relative;
     isolation: isolate;
     display: grid;
@@ -1754,14 +1773,16 @@
     gap: 13px;
     padding: 15px 42px 15px 17px;
     overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--award-accent) 22%, white);
+    border: 1px solid rgba(255, 246, 217, 0.78);
     border-radius: var(--shape-radius-lg);
     background:
-      radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--award-accent) 10%, transparent), transparent 54%),
-      linear-gradient(145deg, #ffffff 0%, #fbfaf8 72%, color-mix(in srgb, var(--award-accent) 5%, white) 100%);
+      radial-gradient(ellipse at 92% 2%, rgba(255, 255, 255, 0.36), transparent 54%),
+      repeating-linear-gradient(128deg, rgba(255, 255, 255, 0.105) 0 1px, transparent 1px 6px),
+      linear-gradient(132deg, #efd98f 0%, #dbb655 45%, #c99537 100%);
     box-shadow:
-      0 14px 32px rgba(17, 24, 39, 0.07),
-      inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      0 16px 34px rgba(104, 72, 17, 0.17),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78),
+      inset 0 -1px 0 rgba(109, 75, 18, 0.2);
     transition:
       transform 240ms var(--ease-out),
       box-shadow 240ms ease,
@@ -1769,7 +1790,19 @@
   }
 
   .journey-award-card[data-award-tone="violet"] {
-    --award-accent: var(--ultra-violet);
+    --award-accent: #e1c7ff;
+    --award-text: #ffffff;
+    --award-muted: rgba(255, 255, 255, 0.72);
+    border-color: rgba(221, 193, 255, 0.34);
+    background:
+      radial-gradient(ellipse at 100% 0%, rgba(183, 127, 255, 0.38), transparent 58%),
+      radial-gradient(ellipse at 0% 100%, rgba(95, 37, 158, 0.28), transparent 58%),
+      repeating-linear-gradient(128deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
+      linear-gradient(145deg, #512781 0%, #3b2058 54%, #21172e 100%);
+    box-shadow:
+      0 18px 38px rgba(37, 17, 57, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(183, 127, 255, 0.18);
   }
 
   .journey-award-card::before {
@@ -1787,7 +1820,11 @@
     z-index: 0;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.46), transparent 42%);
+    background:
+      radial-gradient(ellipse at 95% 0%, rgba(255, 255, 255, 0.3), transparent 56%),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 42%);
+    mix-blend-mode: soft-light;
+    opacity: 0.88;
     content: "";
     pointer-events: none;
   }
@@ -1804,10 +1841,15 @@
     width: 42px;
     height: 42px;
     place-items: center;
-    border: 1px solid color-mix(in srgb, var(--award-accent) 20%, transparent);
+    border: 1px solid rgba(91, 61, 11, 0.2);
     border-radius: 14px;
-    background: color-mix(in srgb, var(--award-accent) 9%, white);
+    background: rgba(79, 51, 8, 0.1);
     color: var(--award-accent);
+  }
+
+  .journey-award-card[data-award-tone="violet"] .journey-award-card__icon {
+    border-color: rgba(225, 199, 255, 0.3);
+    background: rgba(255, 255, 255, 0.09);
   }
 
   .journey-award-card__copy {
@@ -1825,7 +1867,7 @@
 
   .journey-award-card h3 {
     margin: 0;
-    color: var(--journey-text);
+    color: var(--award-text);
     font-size: clamp(13px, 1.1vw, 15px);
     font-weight: 700;
     line-height: 1.24;
@@ -1834,7 +1876,7 @@
 
   .journey-award-card__organization {
     margin: 5px 0 0;
-    color: var(--journey-muted-strong);
+    color: var(--award-muted);
     font-size: 11px;
     font-weight: 600;
     line-height: 1.3;
@@ -2000,12 +2042,18 @@
     }
 
     .journey-education-card::before,
+    .journey-education-card::after,
     .journey-award-card::after {
       display: none;
     }
 
-    .journey-award-card {
-      background: #ffffff;
+    .journey-award-card[data-award-tone="gold"] {
+      background: linear-gradient(132deg, #efd98f, #c99537);
+      box-shadow: none;
+    }
+
+    .journey-award-card[data-award-tone="violet"] {
+      background: linear-gradient(145deg, #512781, #21172e);
       box-shadow: none;
     }
   }

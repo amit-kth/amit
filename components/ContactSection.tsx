@@ -52,7 +52,9 @@ export function ContactSection() {
         <div className="flex w-full min-w-0 flex-col items-center">
           <p className="font-mono text-[9px] uppercase tracking-[0.11em] text-[var(--graphite)]" data-contact-reveal>Let’s connect</p>
           <h2 className="mx-auto mt-4 max-w-[1050px] text-center text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="contact-title" data-section-heading>
-            Open to <span className="text-[var(--ultra-violet)]">senior frontend</span> roles.
+            <span className="block">Open to</span>
+            <span className="block text-[var(--ultra-violet)]">Senior Frontend</span>
+            <span className="block">roles</span>
           </h2>
           <p className="mx-auto mt-5 max-w-[610px] text-center text-sm leading-relaxed text-[var(--graphite)] sm:text-base" data-contact-reveal>
             React / Next.js roles at product companies, in India and remote.
