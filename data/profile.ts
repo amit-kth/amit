@@ -1,7 +1,8 @@
 export const profile = {
   name: "Amit Verma",
   displayName: "AMIT VERMA",
-  title: "Frontend Developer",
+  title: "Senior Frontend Developer",
+  phone: "+91 78916 72932",
   avatar: "https://media.licdn.com/dms/image/v2/D5603AQHkQ_1csElxbg/profile-displayphoto-crop_800_800/B56aFFzbtlHQAI-/0/1792172476100?e=1794441600&v=beta&t=XL4yICAd8t95Vr_PTmDKX3JOT_2mbDBhgHJ8o5peD9Y",
   location: "Kota, India",
   email: "amverma1204t@gmail.com",
@@ -9,24 +10,24 @@ export const profile = {
   userScale: "5K–50K+",
   techSummary: "React / Next.js / TypeScript",
   seo: {
-    title: "Amit Verma — Frontend Developer",
+    title: "Amit Verma — Senior Frontend Developer",
     description:
-      "Frontend developer with 5 years of experience building dashboards, platforms and websites for products used by 5K to 50K+ people.",
-    imageAlt: "Amit Verma — Frontend Developer (React, Next.js, TypeScript)",
+      "Senior frontend developer with 5 years of experience building dashboards, platforms, and websites for products used by 5K to 50K+ people.",
+    imageAlt: "Amit Verma — Senior Frontend Developer (React, Next.js, TypeScript)",
   },
   links: {
-    instagram: null,
+    instagram: "https://www.instagram.com/it_is_amit",
     linkedin: "https://www.linkedin.com/in/amit-verma-2a46971b4/",
     github: "https://github.com/it-is-amit",
+    phone: "tel:+917891672932",
     resume: "/resume.txt",
   },
   hero: {
-    headline: ["Complex ideas.", "Effortless interfaces."],
-    roleLabel: "Frontend Developer",
+    headline: ["Senior", "Frontend Developer"],
+    roleLabel: "Senior Frontend Developer",
     portfolioLabel: "PORTFOLIO 2026",
-    tagline: "I build thoughtful, polished web experiences.",
-    intro: "Frontend Developer. React, Next.js, TypeScript.",
-    locationLine: "Based in Kota, India. Open to senior frontend roles.",
+    tagline: "Amit Verma’s portfolio — polished React and Next.js experiences, built to perform.",
+    intro: "Senior Frontend Developer · React, Next.js, TypeScript.",
     scrollBadge: "SCROLL TO EXPLORE",
     marquee: "REACT · NEXT.JS · TYPESCRIPT · SEO · PERFORMANCE · UI/UX ·",
   },
@@ -37,7 +38,7 @@ export const profile = {
       "I started as a UI/UX designer, then moved into frontend development. That design background is why my interfaces feel polished, and why I can work closely with designers and backend teams.",
   },
   roleInterest:
-    "Open to senior frontend and React / Next.js roles at product companies, in India and remote.",
+    "Open to senior frontend and React / Next.js roles at product companies across India and remote.",
   copyright: "© 2026 Amit Verma",
 } as const;
 
@@ -49,7 +50,7 @@ export const copy = {
   journey: "Journey",
   scroll: "Scroll to explore",
   backToTop: "Back to top",
-  preloaderLabel: "Frontend Developer · UI/UX Designer",
+  preloaderLabel: "Senior Frontend Developer · UI/UX Designer",
   servicesTitle: "What I Do?",
   contact: "Contact",
   journeyCaption: "From designer to frontend developer",
@@ -58,7 +59,7 @@ export const copy = {
   recognition: "Recognition",
   stackEyebrow: "02 / Tools & Tech",
   stackTitle: "Tools & Tech",
-  downloadResume: "Download résumé",
+  downloadResume: "Download Resume",
 } as const;
 
 export const navigation = [
