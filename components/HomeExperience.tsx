@@ -165,7 +165,7 @@ export function HomeExperience() {
 
                 <div className="site-footer__bottom">
                   <span>{profile.location}</span>
-                  <span>{profile.techSummary}</span>
+                  {/* <span>{profile.techSummary}</span> */}
                   <small>{profile.copyright}</small>
                 </div>
               </div>
