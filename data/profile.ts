@@ -32,8 +32,7 @@ export const profile = {
     marquee: "REACT · NEXT.JS · TYPESCRIPT · SEO · PERFORMANCE · UI/UX ·",
   },
   about: {
-    statement:
-      "I turn complex ideas into accessible, high-performance web experiences with React, Next.js, and TypeScript.",
+    statement: "I design the experience, then build it.",
     supporting:
       "I started as a UI/UX designer, then moved into frontend development. That design background is why my interfaces feel polished, and why I can work closely with designers and backend teams.",
   },
@@ -46,12 +45,12 @@ export const copy = {
   skipToContent: "Skip to main content",
   siteFooter: "Site footer",
   journeyIntro: "I started in UI/UX design, which shapes how I build interfaces today.",
-  services: "Services",
+  services: "Capabilities",
   journey: "Journey",
   scroll: "Scroll to explore",
   backToTop: "Back to top",
   preloaderLabel: "Senior Frontend Developer · UI/UX Designer",
-  servicesTitle: "What I Do?",
+  servicesTitle: "Design meets engineering",
   contact: "Contact",
   journeyCaption: "From designer to frontend developer",
   journeyTitle: "Journey",
@@ -73,22 +72,18 @@ export const navigation = [
 
 export const services = [
   {
-    id: "frontend-development",
-    number: "01",
-    title: "Frontend Development",
-    description: "High-performance, accessible React, Next.js, and TypeScript experiences built to scale."
-  },
-  {
     id: "uiux-design",
-    number: "02",
+    number: "01",
     title: "UI/UX Design",
-    description: "Clear flows and thoughtful interfaces shaped by a designer’s eye.",
+    description: "User flows and polished interfaces, shaped from first idea to prototype.",
+    skills: ["User flows", "Wireframes", "Prototypes"],
   },
   {
-    id: "animation-interaction",
-    number: "03",
-    title: "Animation & Interaction",
-    description: "Subtle motion that makes interfaces responsive and engaging.",
+    id: "frontend-development",
+    number: "02",
+    title: "Frontend Development",
+    description: "Responsive, accessible product UI built with React, Next.js, and TypeScript.",
+    skills: ["React", "Next.js", "TypeScript"],
   },
 ] as const;
 

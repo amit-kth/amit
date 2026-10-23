@@ -1,13 +1,125 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile, services } from "@/data/profile";
 import { gsap, registerGsapPlugins, revealSectionHeading } from "@/lib/gsap-client";
 
+type ServiceId = (typeof services)[number]["id"];
+
+function DesignPreview() {
+  const steps = ["Discover", "Shape", "Prototype"];
+
+  return (
+    <div className="services-demo__design">
+      <div className="services-demo__flow">
+        <span className="services-demo__flow-label">USER FLOW</span>
+        <div className="services-demo__flow-steps">
+          {steps.map((step, index) => (
+            <span className="services-demo__flow-step" key={step}>
+              <span className="services-demo__flow-node">0{index + 1}</span>
+              {step}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="services-demo__wireframe">
+        <div className="services-demo__wireframe-nav">
+          <span className="services-demo__wireframe-logo" />
+          <div className="services-demo__wireframe-nav-items">
+            <span />
+            <span />
+            <span />
+          </div>
+          <span className="services-demo__wireframe-action" />
+        </div>
+        <div className="services-demo__wireframe-hero">
+          <div className="services-demo__wireframe-copy">
+            <span className="services-demo__skeleton services-demo__skeleton--headline" />
+            <span className="services-demo__skeleton services-demo__skeleton--wide" />
+            <span className="services-demo__skeleton services-demo__skeleton--short" />
+            <span className="services-demo__wireframe-button" />
+          </div>
+          <div className="services-demo__wireframe-art">
+            <span />
+            <i />
+          </div>
+        </div>
+        <div className="services-demo__wireframe-cards">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FrontendPreview() {
+  return (
+    <div className="services-demo__product">
+      <aside className="services-demo__product-sidebar" aria-hidden="true">
+        <span className="services-demo__product-mark" />
+        <span className="services-demo__product-nav services-demo__product-nav--active" />
+        <span className="services-demo__product-nav" />
+        <span className="services-demo__product-nav" />
+        <span className="services-demo__product-nav" />
+        <span className="services-demo__product-nav services-demo__product-nav--last" />
+      </aside>
+      <div className="services-demo__product-main">
+        <div className="services-demo__product-heading">
+          <div>
+            <span className="services-demo__product-eyebrow">PRODUCT OVERVIEW</span>
+            <strong>Workspace</strong>
+          </div>
+          <span className="services-demo__product-avatar" />
+        </div>
+        <div className="services-demo__product-stats">
+          <div className="services-demo__product-stat">
+            <span>Projects</span>
+            <i />
+            <b />
+          </div>
+          <div className="services-demo__product-stat">
+            <span>Activity</span>
+            <i />
+            <b />
+          </div>
+          <div className="services-demo__product-stat">
+            <span>Progress</span>
+            <i />
+            <b />
+          </div>
+        </div>
+        <div className="services-demo__product-chart">
+          <div className="services-demo__product-chart-heading">
+            <span>Activity</span>
+            <i />
+          </div>
+          <div className="services-demo__product-bars" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const [activeServiceId, setActiveServiceId] = useState<ServiceId>("uiux-design");
+  const activeService = services.find((service) => service.id === activeServiceId) ?? services[0];
+  const isDesignMode = activeService.id === "uiux-design";
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -17,115 +129,6 @@ export function ServicesSection() {
     const context = gsap.context(() => {
       const heading = section.querySelector<HTMLElement>("#services-title");
       if (heading) revealSectionHeading(heading);
-
-      const list = section.querySelector<HTMLElement>("[data-services-list]");
-      const progressFill = list?.querySelector<HTMLElement>(".services-list__track-fill");
-      if (list && progressFill) {
-        gsap.fromTo(
-          progressFill,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            transformOrigin: "top center",
-            ease: "none",
-            scrollTrigger: {
-              trigger: list,
-              start: "top 76%",
-              end: "bottom 48%",
-              scrub: 0.42,
-              invalidateOnRefresh: true,
-            },
-          },
-        );
-      }
-
-      const colors = getComputedStyle(section);
-      const accent = colors.getPropertyValue("--ultra-violet").trim() || "#5F259E";
-      const ink = colors.getPropertyValue("--midnight-ink").trim() || "#111827";
-      const lavender = colors.getPropertyValue("--lavender-field").trim() || "#EBDAFD";
-      const muted = colors.getPropertyValue("--slate").trim() || "#6B7589";
-      const line = "rgba(17, 24, 39, 0.2)";
-
-      const rows = Array.from(section.querySelectorAll<HTMLElement>("[data-service-row]"));
-      for (const row of rows) {
-        const title = row.querySelector<HTMLElement>("[data-service-title]");
-        const description = row.querySelector<HTMLElement>("[data-service-description]");
-        const number = row.querySelector<HTMLElement>("[data-service-number]");
-        const sequence = gsap.timeline({
-          scrollTrigger: {
-            trigger: row,
-            start: "top 82%",
-            end: "bottom 38%",
-            scrub: 0.45,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        sequence
-          .fromTo(
-            row,
-            { y: 18, opacity: 0.58 },
-            { y: 0, opacity: 1, duration: 0.42, ease: "none" },
-            0,
-          )
-          .to(row, { y: -3, opacity: 0.84, duration: 0.58, ease: "none" }, 0.42);
-
-        if (title) {
-          sequence
-            .fromTo(
-              title,
-              { x: -10, scale: 0.975, color: muted },
-              { x: 0, scale: 1.018, color: accent, duration: 0.4, ease: "none" },
-              0,
-            )
-            .to(title, { scale: 1, color: ink, duration: 0.6, ease: "none" }, 0.4);
-        }
-
-        if (description) {
-          sequence
-            .fromTo(
-              description,
-              { y: 8, opacity: 0.54 },
-              { y: 0, opacity: 1, duration: 0.42, ease: "none" },
-              0.04,
-            )
-            .to(description, { y: -2, opacity: 0.84, duration: 0.58, ease: "none" }, 0.42);
-        }
-
-        if (number) {
-          sequence
-            .fromTo(
-              number,
-              {
-                scale: 0.82,
-                color: muted,
-                borderColor: line,
-                backgroundColor: "rgba(235, 218, 253, 0)",
-              },
-              {
-                scale: 1,
-                color: accent,
-                borderColor: accent,
-                backgroundColor: lavender,
-                duration: 0.4,
-                ease: "none",
-              },
-              0,
-            )
-            .to(
-              number,
-              {
-                scale: 0.92,
-                color: muted,
-                borderColor: line,
-                backgroundColor: "rgba(235, 218, 253, 0.12)",
-                duration: 0.6,
-                ease: "none",
-              },
-              0.4,
-            );
-        }
-      }
     }, section);
 
     return () => context.revert();
@@ -139,39 +142,78 @@ export function ServicesSection() {
       aria-labelledby="services-title"
     >
       <div className="mx-auto max-w-[1480px] px-[clamp(20px,5vw,84px)]">
-        <header className="max-w-[920px]">
-          <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--ultra-violet)]">
-            01 <span className="mx-2 text-[var(--orchid-wash)]">/</span>{copy.services}
-          </p>
-          <h2 className="mt-3 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="services-title" data-section-heading>
-            {copy.servicesTitle}<span className="text-[var(--voltage-violet)]">.</span>
-          </h2>
-          <p className="mt-5 max-w-[720px] text-sm leading-relaxed text-[var(--graphite)] sm:text-base">
-            {profile.about.statement}
-          </p>
+        <header className="services-section-header">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--ultra-violet)]">
+              01 <span className="mx-2 text-[var(--orchid-wash)]" aria-hidden="true">/</span>{copy.services}
+            </p>
+            <h2 className="mt-3 text-section-heading font-semibold leading-[0.88] tracking-[-0.09em] text-[var(--midnight-ink)]" id="services-title" data-section-heading>
+              {copy.servicesTitle}<span className="text-[var(--voltage-violet)]">.</span>
+            </h2>
+          </div>
+          <p className="services-section-header__intro">{profile.about.statement}</p>
         </header>
 
-        <div className="services-list-wrap mt-8 sm:mt-10" data-services-list>
-          <span className="services-list__track" aria-hidden="true">
-            <span className="services-list__track-fill" />
-          </span>
-          <ol className="services-list m-0 list-none" aria-label={copy.services}>
-            {services.map((service) => (
-              <li className="services-list__row" key={service.id} data-service-row>
-                <article className="services-list__article">
-                  <span className="services-list__number" data-service-number aria-hidden="true">{service.number}</span>
-                  <div className="services-list__copy">
-                    <h3 className="services-list__title" data-service-title>
-                      {service.title}
-                    </h3>
-                    <p className="services-list__description" data-service-description>
-                      {service.description}
-                    </p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ol>
+        <div className="services-experience" data-mode={activeService.id}>
+          <div className="services-experience__controls">
+            <div className="services-mode-switch" role="group" aria-label={`Explore my ${copy.services.toLowerCase()}`}>
+              {services.map((service) => {
+                const isActive = service.id === activeService.id;
+                return (
+                  <button
+                    className="services-mode-switch__button"
+                    type="button"
+                    key={service.id}
+                    aria-pressed={isActive}
+                    aria-controls="services-demo"
+                    onClick={() => setActiveServiceId(service.id)}
+                  >
+                    <span className="services-mode-switch__number">{service.number}</span>
+                    <span className="services-mode-switch__title">{service.title}</span>
+                    <ArrowUpRight className="services-mode-switch__arrow" size={17} aria-hidden="true" />
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="services-experience__details" key={activeService.id} aria-live="polite">
+              <p className="services-experience__description">{activeService.description}</p>
+              <ul className="services-experience__skills" aria-label={`${activeService.title} skills`}>
+                {activeService.skills.map((skill) => <li key={skill}>{skill}</li>)}
+              </ul>
+              <a className="services-experience__link" href="#gallery">
+                Explore selected work <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="services-experience__bridge" aria-hidden="true">
+              <span className={isDesignMode ? "is-active" : ""}>Design</span>
+              <span className="services-experience__bridge-line"><i /></span>
+              <span className={!isDesignMode ? "is-active" : ""}>Build</span>
+            </div>
+          </div>
+
+          <div className="services-demo" id="services-demo" data-mode={activeService.id}>
+            <div className="services-demo__topbar">
+              <div className="services-demo__window-dots" aria-hidden="true"><i /><i /><i /></div>
+              <span className="services-demo__window-title">PRODUCT EXPERIENCE</span>
+              <span className="services-demo__status"><i />{isDesignMode ? "DESIGN" : "LIVE UI"}</span>
+            </div>
+            <div
+              className="services-demo__stage"
+              role="img"
+              aria-label={isDesignMode ? "A user flow and low-fidelity product wireframe" : "A responsive product dashboard interface"}
+            >
+              <div className="services-demo__scene" key={activeService.id}>
+                {isDesignMode ? <DesignPreview /> : <FrontendPreview />}
+              </div>
+            </div>
+            <div className="services-demo__process" aria-hidden="true">
+              <span className={isDesignMode ? "is-active" : ""}>01&nbsp; Design</span>
+              <span className="services-demo__process-line"><i /></span>
+              <span className={!isDesignMode ? "is-active" : ""}>02&nbsp; Build</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
