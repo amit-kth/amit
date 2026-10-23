@@ -29,10 +29,10 @@ function resetCardStyle(card: HTMLElement) {
   card.style.setProperty("--award-pointer-y", "50%");
   card.style.setProperty("--award-tilt-x", "0deg");
   card.style.setProperty("--award-tilt-y", "0deg");
-  card.style.setProperty("--award-glare-opacity", "0");
+  card.style.removeProperty("--award-glare-opacity");
 }
 
-/** Adds a restrained pointer tilt and foil highlight to the existing award card. */
+/** Adds pointer-driven tilt, prismatic foil, and a moving specular glare. */
 export function AwardBadge({
   children,
   className,
@@ -82,7 +82,7 @@ export function AwardBadge({
       card.style.setProperty("--award-pointer-y", `${(position.y * 100).toFixed(1)}%`);
       card.style.setProperty("--award-tilt-x", `${((0.5 - position.y) * 8).toFixed(2)}deg`);
       card.style.setProperty("--award-tilt-y", `${((position.x - 0.5) * 10).toFixed(2)}deg`);
-      card.style.setProperty("--award-glare-opacity", "0.72");
+      card.style.setProperty("--award-glare-opacity", "0.95");
       pendingPosition.current = null;
     });
   };

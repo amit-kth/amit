@@ -2130,7 +2130,7 @@
     --award-pointer-y: 50%;
     --award-tilt-x: 0deg;
     --award-tilt-y: 0deg;
-    --award-glare-opacity: 0;
+    --award-glare-opacity: 0.42;
     --award-lift: 0px;
     position: relative;
     isolation: isolate;
@@ -2205,23 +2205,83 @@
     position: absolute;
     z-index: 1;
     inset: 0;
+    overflow: hidden;
     border-radius: inherit;
     background:
       radial-gradient(
         ellipse 70% 115% at var(--award-pointer-x) var(--award-pointer-y),
-        color-mix(in srgb, var(--award-glow) 72%, transparent),
+        color-mix(in srgb, var(--award-glow) 88%, transparent),
         transparent 72%
       ),
       linear-gradient(
         118deg,
         transparent 27%,
-        color-mix(in srgb, var(--pure-white) 42%, transparent) 49%,
+        color-mix(in srgb, var(--pure-white) 88%, transparent) 49%,
         transparent 72%
       );
-    mix-blend-mode: soft-light;
+    mix-blend-mode: overlay;
     opacity: var(--award-glare-opacity);
-    transition: opacity 220ms ease;
+    transition: opacity 180ms ease;
     pointer-events: none;
+  }
+
+  .journey-award-card__foil::before {
+    position: absolute;
+    inset: -115% -48%;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      hsl(358 100% 62% / 0.58) 0deg,
+      hsl(30 100% 50% / 0.52) 48deg,
+      hsl(60 100% 50% / 0.46) 96deg,
+      hsl(96 100% 50% / 0.36) 144deg,
+      hsl(233 85% 47% / 0.48) 204deg,
+      hsl(271 85% 47% / 0.5) 264deg,
+      hsl(300 20% 35% / 0.42) 312deg,
+      hsl(358 100% 62% / 0.58) 360deg
+    );
+    filter: blur(5px);
+    opacity: 0.72;
+    animation: award-foil-orbit 7s linear infinite;
+    transform-origin: center;
+    will-change: transform;
+    content: "";
+    pointer-events: none;
+  }
+
+  .journey-award-card__foil::after {
+    position: absolute;
+    inset: -48% -72%;
+    background: linear-gradient(
+      112deg,
+      transparent 44%,
+      color-mix(in srgb, var(--pure-white) 88%, transparent) 50%,
+      transparent 56%
+    );
+    filter: blur(3px);
+    opacity: 0.78;
+    animation: award-foil-glint 4.8s ease-in-out infinite;
+    will-change: transform;
+    content: "";
+    pointer-events: none;
+  }
+
+  @keyframes award-foil-orbit {
+    from { transform: rotate(0deg) scale(1.12); }
+    to { transform: rotate(360deg) scale(1.12); }
+  }
+
+  @keyframes award-foil-glint {
+    0%, 100% { transform: translateX(-34%) rotate(12deg); }
+    50% { transform: translateX(34%) rotate(12deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .journey-award-card__foil::before,
+    .journey-award-card__foil::after {
+      animation: none;
+      will-change: auto;
+    }
   }
 
   .journey-award-card__icon,
