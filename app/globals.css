@@ -2123,11 +2123,20 @@
 
   .journey-award-card {
     --award-accent: #68480d;
+    --award-glow: var(--champagne-gold);
     --award-text: #352508;
     --award-muted: rgba(53, 37, 8, 0.76);
+    --award-pointer-x: 50%;
+    --award-pointer-y: 50%;
+    --award-tilt-x: 0deg;
+    --award-tilt-y: 0deg;
+    --award-glare-opacity: 0;
+    --award-lift: 0px;
     position: relative;
     isolation: isolate;
     display: grid;
+    transform: perspective(900px) rotateX(var(--award-tilt-x)) rotateY(var(--award-tilt-y)) translateY(var(--award-lift));
+    transform-style: preserve-3d;
     min-width: 0;
     min-height: 104px;
     grid-template-columns: 42px minmax(0, 1fr);
@@ -2153,6 +2162,7 @@
 
   .journey-award-card[data-award-tone="violet"] {
     --award-accent: #e1c7ff;
+    --award-glow: var(--lavender-mist);
     --award-text: #ffffff;
     --award-muted: rgba(255, 255, 255, 0.72);
     border-color: rgba(221, 193, 255, 0.34);
@@ -2188,6 +2198,29 @@
     mix-blend-mode: soft-light;
     opacity: 0.88;
     content: "";
+    pointer-events: none;
+  }
+
+  .journey-award-card__foil {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(
+        ellipse 70% 115% at var(--award-pointer-x) var(--award-pointer-y),
+        color-mix(in srgb, var(--award-glow) 72%, transparent),
+        transparent 72%
+      ),
+      linear-gradient(
+        118deg,
+        transparent 27%,
+        color-mix(in srgb, var(--pure-white) 42%, transparent) 49%,
+        transparent 72%
+      );
+    mix-blend-mode: soft-light;
+    opacity: var(--award-glare-opacity);
+    transition: opacity 220ms ease;
     pointer-events: none;
   }
 
@@ -2254,14 +2287,15 @@
     letter-spacing: 0.08em;
   }
 
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     .journey-award-card:hover {
+      --award-lift: -3px;
       border-color: color-mix(in srgb, var(--award-accent) 38%, white);
       box-shadow:
         0 19px 40px rgba(17, 24, 39, 0.1),
         0 6px 18px color-mix(in srgb, var(--award-accent) 10%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.96);
-      transform: translateY(-3px);
+      will-change: transform;
     }
   }
 
@@ -2405,7 +2439,8 @@
 
     .journey-education-card::before,
     .journey-education-card::after,
-    .journey-award-card::after {
+    .journey-award-card::after,
+    .journey-award-card__foil {
       display: none;
     }
 

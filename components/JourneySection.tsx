@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { Award, GraduationCap, Star } from "lucide-react";
 import { awards, copy, education, journey } from "@/data/profile";
+import { AwardBadge } from "@/components/ui/award-badge";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { gsap, registerGsapPlugins, revealSectionHeading } from "@/lib/gsap-client";
 
@@ -156,9 +157,9 @@ export function JourneySection() {
               {awards.map((award, index) => {
                 const AwardIcon = index === 0 ? Award : Star;
                 return (
-                  <article
+                  <AwardBadge
                     className="journey-award-card"
-                    data-award-tone={index === 0 ? "gold" : "violet"}
+                    tone={index === 0 ? "gold" : "violet"}
                     key={award.title}
                     role="listitem"
                     aria-labelledby={`journey-award-${index}`}
@@ -172,7 +173,7 @@ export function JourneySection() {
                       <p className="journey-award-card__organization">{award.organization}</p>
                     </div>
                     <span className="journey-award-card__index" aria-hidden="true">0{index + 1}</span>
-                  </article>
+                  </AwardBadge>
                 );
               })}
             </div>
