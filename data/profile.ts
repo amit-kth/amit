@@ -72,18 +72,16 @@ export const navigation = [
 
 export const services = [
   {
-    id: "uiux-design",
+    id: "frontend-development",
     number: "01",
-    title: "UI/UX Design",
-    description: "User flows and polished interfaces, shaped from first idea to prototype.",
-    skills: ["User flows", "Wireframes", "Prototypes"],
+    title: "Frontend Developer",
+    skills: ["React", "Next.js", "TypeScript"],
   },
   {
-    id: "frontend-development",
+    id: "uiux-design",
     number: "02",
-    title: "Frontend Development",
-    description: "Responsive, accessible product UI built with React, Next.js, and TypeScript.",
-    skills: ["React", "Next.js", "TypeScript"],
+    title: "UI/UX Designer",
+    skills: ["User flows", "Wireframes", "Prototypes"],
   },
 ] as const;
 

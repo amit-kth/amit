@@ -1,115 +1,43 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { usePrefersReducedMotion } from "@/components/ui/shader-canvas-utils/motion";
 import { copy, profile, services } from "@/data/profile";
 import { gsap, registerGsapPlugins, revealSectionHeading } from "@/lib/gsap-client";
 
-type ServiceId = (typeof services)[number]["id"];
+type DemoView = "overview" | "activity";
 
-function DesignPreview() {
-  const steps = ["Discover", "Shape", "Prototype"];
-
+function DashboardOverview() {
   return (
-    <div className="services-demo__design">
-      <div className="services-demo__flow">
-        <span className="services-demo__flow-label">USER FLOW</span>
-        <div className="services-demo__flow-steps">
-          {steps.map((step, index) => (
-            <span className="services-demo__flow-step" key={step}>
-              <span className="services-demo__flow-node">0{index + 1}</span>
-              {step}
-            </span>
-          ))}
-        </div>
+    <div className="services-demo__overview">
+      <div className="services-demo__metrics" aria-hidden="true">
+        <div className="services-demo__metric"><span>Projects</span><i /><b /></div>
+        <div className="services-demo__metric"><span>Activity</span><i /><b /></div>
+        <div className="services-demo__metric"><span>Progress</span><i /><b /></div>
       </div>
-
-      <div className="services-demo__wireframe">
-        <div className="services-demo__wireframe-nav">
-          <span className="services-demo__wireframe-logo" />
-          <div className="services-demo__wireframe-nav-items">
-            <span />
-            <span />
-            <span />
-          </div>
-          <span className="services-demo__wireframe-action" />
-        </div>
-        <div className="services-demo__wireframe-hero">
-          <div className="services-demo__wireframe-copy">
-            <span className="services-demo__skeleton services-demo__skeleton--headline" />
-            <span className="services-demo__skeleton services-demo__skeleton--wide" />
-            <span className="services-demo__skeleton services-demo__skeleton--short" />
-            <span className="services-demo__wireframe-button" />
-          </div>
-          <div className="services-demo__wireframe-art">
-            <span />
-            <i />
-          </div>
-        </div>
-        <div className="services-demo__wireframe-cards">
-          <span />
-          <span />
-          <span />
+      <div className="services-demo__chart">
+        <div className="services-demo__chart-head"><span>Weekly activity</span><i /></div>
+        <div className="services-demo__bars" aria-hidden="true">
+          <span /><span /><span /><span /><span /><span /><span /><span />
         </div>
       </div>
     </div>
   );
 }
 
-function FrontendPreview() {
+function DashboardActivity() {
+  const items = ["User flow refined", "Responsive layout", "Interface review"];
+  const stages = ["Design", "Build", "Review"];
+
   return (
-    <div className="services-demo__product">
-      <aside className="services-demo__product-sidebar" aria-hidden="true">
-        <span className="services-demo__product-mark" />
-        <span className="services-demo__product-nav services-demo__product-nav--active" />
-        <span className="services-demo__product-nav" />
-        <span className="services-demo__product-nav" />
-        <span className="services-demo__product-nav" />
-        <span className="services-demo__product-nav services-demo__product-nav--last" />
-      </aside>
-      <div className="services-demo__product-main">
-        <div className="services-demo__product-heading">
-          <div>
-            <span className="services-demo__product-eyebrow">PRODUCT OVERVIEW</span>
-            <strong>Workspace</strong>
-          </div>
-          <span className="services-demo__product-avatar" />
+    <div className="services-demo__activity">
+      {items.map((item, index) => (
+        <div className="services-demo__activity-row" key={item}>
+          <span className={`services-demo__activity-dot services-demo__activity-dot--${index + 1}`} />
+          <span className="services-demo__activity-label">{item}</span>
+          <span className="services-demo__activity-state">{stages[index]}</span>
         </div>
-        <div className="services-demo__product-stats">
-          <div className="services-demo__product-stat">
-            <span>Projects</span>
-            <i />
-            <b />
-          </div>
-          <div className="services-demo__product-stat">
-            <span>Activity</span>
-            <i />
-            <b />
-          </div>
-          <div className="services-demo__product-stat">
-            <span>Progress</span>
-            <i />
-            <b />
-          </div>
-        </div>
-        <div className="services-demo__product-chart">
-          <div className="services-demo__product-chart-heading">
-            <span>Activity</span>
-            <i />
-          </div>
-          <div className="services-demo__product-bars" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
@@ -117,9 +45,7 @@ function FrontendPreview() {
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [activeServiceId, setActiveServiceId] = useState<ServiceId>("uiux-design");
-  const activeService = services.find((service) => service.id === activeServiceId) ?? services[0];
-  const isDesignMode = activeService.id === "uiux-design";
+  const [demoView, setDemoView] = useState<DemoView>("overview");
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -154,64 +80,57 @@ export function ServicesSection() {
           <p className="services-section-header__intro">{profile.about.statement}</p>
         </header>
 
-        <div className="services-experience" data-mode={activeService.id}>
-          <div className="services-experience__controls">
-            <div className="services-mode-switch" role="group" aria-label={`Explore my ${copy.services.toLowerCase()}`}>
-              {services.map((service) => {
-                const isActive = service.id === activeService.id;
-                return (
-                  <button
-                    className="services-mode-switch__button"
-                    type="button"
-                    key={service.id}
-                    aria-pressed={isActive}
-                    aria-controls="services-demo"
-                    onClick={() => setActiveServiceId(service.id)}
-                  >
-                    <span className="services-mode-switch__number">{service.number}</span>
-                    <span className="services-mode-switch__title">{service.title}</span>
-                    <ArrowUpRight className="services-mode-switch__arrow" size={17} aria-hidden="true" />
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="services-experience__details" key={activeService.id} aria-live="polite">
-              <p className="services-experience__description">{activeService.description}</p>
-              <ul className="services-experience__skills" aria-label={`${activeService.title} skills`}>
-                {activeService.skills.map((skill) => <li key={skill}>{skill}</li>)}
-              </ul>
-              <a className="services-experience__link" href="#gallery">
-                Explore selected work <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
-            </div>
-
-            <div className="services-experience__bridge" aria-hidden="true">
-              <span className={isDesignMode ? "is-active" : ""}>Design</span>
-              <span className="services-experience__bridge-line"><i /></span>
-              <span className={!isDesignMode ? "is-active" : ""}>Build</span>
-            </div>
+        <div className="services-showcase">
+          <div className="services-roles">
+            {services.map((service, index) => (
+              <article
+                className={`services-role-card ${index === 0 ? "services-role-card--primary" : "services-role-card--secondary"}`}
+                key={service.id}
+              >
+                <span className="services-role-card__number">{service.number}</span>
+                <div className="services-role-card__content">
+                  <h3>{service.title}</h3>
+                  <ul aria-label={`${service.title} skills`}>
+                    {service.skills.map((skill) => <li key={skill}>{skill}</li>)}
+                  </ul>
+                </div>
+              </article>
+            ))}
           </div>
 
-          <div className="services-demo" id="services-demo" data-mode={activeService.id}>
-            <div className="services-demo__topbar">
-              <div className="services-demo__window-dots" aria-hidden="true"><i /><i /><i /></div>
-              <span className="services-demo__window-title">PRODUCT EXPERIENCE</span>
-              <span className="services-demo__status"><i />{isDesignMode ? "DESIGN" : "LIVE UI"}</span>
-            </div>
-            <div
-              className="services-demo__stage"
-              role="img"
-              aria-label={isDesignMode ? "A user flow and low-fidelity product wireframe" : "A responsive product dashboard interface"}
-            >
-              <div className="services-demo__scene" key={activeService.id}>
-                {isDesignMode ? <DesignPreview /> : <FrontendPreview />}
+          <div className="services-demo" id="services-demo">
+            <div className="services-demo__toolbar">
+              <span className="services-demo__toolbar-label">INTERACTIVE PREVIEW</span>
+              <div className="services-demo__tabs" role="group" aria-label="Dashboard preview views">
+                <button type="button" aria-pressed={demoView === "overview"} aria-controls="services-demo-view" onClick={() => setDemoView("overview")}>
+                  Overview
+                </button>
+                <button type="button" aria-pressed={demoView === "activity"} aria-controls="services-demo-view" onClick={() => setDemoView("activity")}>
+                  Activity
+                </button>
               </div>
             </div>
-            <div className="services-demo__process" aria-hidden="true">
-              <span className={isDesignMode ? "is-active" : ""}>01&nbsp; Design</span>
-              <span className="services-demo__process-line"><i /></span>
-              <span className={!isDesignMode ? "is-active" : ""}>02&nbsp; Build</span>
+
+            <div className="services-demo__window">
+              <div className="services-demo__window-bar">
+                <div className="services-demo__window-dots" aria-hidden="true"><i /><i /><i /></div>
+                <span>Workspace</span>
+                <span className="services-demo__window-avatar" aria-hidden="true" />
+              </div>
+              <div className="services-demo__window-body">
+                <aside className="services-demo__sidebar" aria-hidden="true">
+                  <i className="is-active" /><i /><i /><i />
+                </aside>
+                <div className="services-demo__content" id="services-demo-view" aria-live="polite">
+                  <div className="services-demo__content-heading">
+                    <span>{demoView === "overview" ? "Overview" : "Recent activity"}</span>
+                    <i aria-hidden="true" />
+                  </div>
+                  <div className="services-demo__view" key={demoView}>
+                    {demoView === "overview" ? <DashboardOverview /> : <DashboardActivity />}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
